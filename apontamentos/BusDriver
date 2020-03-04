@@ -1,0 +1,11 @@
+Metodos:
+    - hasDaysWorkEnded (Bus driver)
+    - announcingBusBoarding (arrival terminal transfer quay)
+    - goToDepartureTerminal (arrival terminal transfer quay)
+    - parkTheBusAndLetPassOff (departure terminal transfer quay)
+    - goToArrivalTerminal (departure terminal transfer quay)
+    - parkTheBus (arrival terminal transfer quay)
+
+Interfaces:
+    - ATTQBusDriver
+    - DTTQBusDriver

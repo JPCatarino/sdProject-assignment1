@@ -1,0 +1,10 @@
+Metodos:
+    - takeARest (Arrival Lounge)
+    - tryToCollectABag (Arrival Lounge)
+    - noMoreBagsToCollect (Arrival Lounge, Porter)
+    - carryItToAppropriateStore (Baggage Collection Point / Temporary Storage Area)
+
+Interfaces:
+    - ALPorter
+    - BCDPorter
+    - TSAPorter
