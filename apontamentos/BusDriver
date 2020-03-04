@@ -9,3 +9,17 @@ Metodos:
 Interfaces:
     - ATTQBusDriver
     - DTTQBusDriver
+
+Variables:
+    - List busSeats<Passenger>
+    - int TTL
+
+
+Lifecycle:
+    while(ArrivalQuay.hasDaysWorkEnded() != "E"){
+        ArrivalQuay.AnnouncingBusBoarding();        -- Lets passengers know it's okay to board the bus
+        goToDepartureTerminal();
+        DepartureQuay.parkTheBusAndLetPassOff();    -- Should change state to Parked, and block waiting for people to get out of the bus
+        goToArrivalTerminal();                      -- Switch state to driving t state
+        ArrivalQuay.parkTheBus()                    -- Set the stage for another spin
+    }
