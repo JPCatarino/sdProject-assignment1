@@ -1,5 +1,6 @@
 Atributos:
-    -
+    - List busSeats<Passenger>      -- Simulating bus seats
+    - int TTL                       -- Time to Leave Terminal
 
 Metodos:
     - hasDaysWorkEnded (Bus driver)
@@ -12,10 +13,6 @@ Metodos:
 Interfaces:
     - ATTQBusDriver
     - DTTQBusDriver
-
-Variables:
-    - List busSeats<Passenger>
-    - int TTL
 
 
 Lifecycle:
