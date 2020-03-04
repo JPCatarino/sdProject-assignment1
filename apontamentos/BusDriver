@@ -1,3 +1,6 @@
+Atributos:
+    -
+
 Metodos:
     - hasDaysWorkEnded (Bus driver)
     - announcingBusBoarding (arrival terminal transfer quay)

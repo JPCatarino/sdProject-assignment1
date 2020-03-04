@@ -1,0 +1,23 @@
+Atributos:
+    -
+
+Metodos:
+    - whatShouldIDo (Passenger)
+    - goCollectABag (arrival lounge | baggage collection point)
+    - goCollectABag (baggage collection point)
+    - reportMissingBags (baggage collection point)
+    - goHome (arrival lounge)
+    - goHome (baggage collection point)
+    - goHome (baggage reclaim office)
+    - takeABus (arrival lounge)
+    - enterTheBus (Arrival terminal transfer quay)
+    - leaveTheBus (departure terminal transfer quay)
+    - prepareNextLeg (departure terminal entrance)
+
+Interfaces:
+    - ALPassenger
+    - BCPPassenger
+    - BROPassenger
+    - ATTQPassenger
+    - DTTQPassenger
+    - DTEPassenger
