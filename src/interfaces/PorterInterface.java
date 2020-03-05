@@ -1,4 +1,4 @@
-package entities;
+package interfaces;
 
 /**
  * Interface for the Porter entity.
