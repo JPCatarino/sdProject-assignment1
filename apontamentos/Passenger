@@ -21,3 +21,20 @@ Interfaces:
     - ATTQPassenger
     - DTTQPassenger
     - DTEPassenger
+
+Lifecycle:
+switch(WhatShouldIDo()){                 -- Not sure if switch case is actually necessary here
+    case "home":
+        ArrivalLounge.goHome()
+    case "bag":                   -- These values are tentative, implementation shall be different
+        if(ArrivalLounge.goCollectABag())               -- Blocking state, return true if bag collected ?
+            BaggageCollectionPoint.goHome()
+        else{
+            BaggageCollectionPoint.reportMissingBags()
+            BaggageReclaimOffice.goHome()
+            }
+    case "NextFlight":
+        ArrivalLounge.takeABus()
+        ArrivalQuay.enterTheBus()
+        DepartureQuay.leaveTheBus()
+        DepartureTerminalEntrance.prepareNextLeg()
