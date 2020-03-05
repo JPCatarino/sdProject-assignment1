@@ -2,10 +2,13 @@ package entities;
 
 import sharedRegions.ArrivalQuay;
 import sharedRegions.DepartureQuay;
+import states.BusDriverStates;
 
 import java.util.List;
 
 public class BusDriver {
+
+    private BusDriverStates state;
 
     private List<Passenger> busSeats;
     private int TTL;
@@ -18,6 +21,7 @@ public class BusDriver {
         this.TTL = TTL;
         this.aq = aq;
         this.dq = dq;
+        this.state = BusDriverStates.PARKING_AT_THE_ARRIVAL_TERMINAL;
     }
 
     public boolean hasDaysWorkEnded (){
