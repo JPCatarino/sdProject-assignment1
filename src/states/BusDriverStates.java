@@ -15,3 +15,4 @@ public enum BusDriverStates {
     public String getState() {
         return state;
     }
+}
