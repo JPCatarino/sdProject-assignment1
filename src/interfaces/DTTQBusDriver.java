@@ -9,17 +9,7 @@ package interfaces;
  * @author Fabio Alves
  */
 
-public interface BusDriverInterface {
-
-    /**
-     * announcingBusBoarding
-     */
-    public void announcingBusBoarding ();
-
-    /**
-     * goToDepartureTerminal
-     */
-    public void goToDepartureTerminal ();
+public interface DTTQBusDriver {
 
     /**
      * parkTheBusAndLetPassOff
@@ -30,9 +20,4 @@ public interface BusDriverInterface {
      * goToArrivalTerminal
      */
     public void goToArrivalTerminal ();
-
-    /**
-     * parkTheBus
-     */
-    public void parkTheBus ();
 }
