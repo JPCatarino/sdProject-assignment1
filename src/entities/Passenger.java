@@ -1,4 +1,4 @@
 package entities;
 
-public class Passenger {
+public class Passenger extends Thread {
 }

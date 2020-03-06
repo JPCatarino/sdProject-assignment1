@@ -1,4 +1,4 @@
 package entities;
 
-public class Porter {
+public class Porter extends Thread {
 }

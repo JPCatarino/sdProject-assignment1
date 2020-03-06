@@ -6,17 +6,17 @@ import states.BusDriverStates;
 
 import java.util.List;
 
-public class BusDriver {
+public class BusDriver extends Thread {
 
     private BusDriverStates state;
 
-    private List<Passenger> busSeats;
+    private List<Integer> busSeats;
     private int TTL;
 
     private final ArrivalQuay aq;
     private final DepartureQuay dq;
 
-    public BusDriver(List<Passenger> busSeats, int TTL, ArrivalQuay aq, DepartureQuay dq) {
+    public BusDriver(List<Integer> busSeats, int TTL, ArrivalQuay aq, DepartureQuay dq) {
         this.busSeats = busSeats;
         this.TTL = TTL;
         this.aq = aq;
@@ -28,6 +28,7 @@ public class BusDriver {
         return true;
     }
 
+    @Override
     public void run(){
         while(!hasDaysWorkEnded()){
             aq.announcingBusBoarding();
