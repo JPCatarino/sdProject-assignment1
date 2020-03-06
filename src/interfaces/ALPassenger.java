@@ -11,4 +11,6 @@ public interface ALPassenger {
      *
      */
     public void takeABus();
+
+    public void goHome();
 }

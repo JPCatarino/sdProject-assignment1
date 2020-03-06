@@ -21,4 +21,7 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
 
     @Override
     public synchronized void tryToCollectABag(){}
+
+    @Override
+    public synchronized void goHome(){};
 }
