@@ -38,4 +38,16 @@ public class BusDriver extends Thread {
             aq.parkTheBus();
         }
     }
+
+    public List<Integer> getBusSeats() {
+        return busSeats;
+    }
+
+    /**
+     * Set Bus Driver state
+     * @param state new state of the Bus Driver
+     */
+    public void setBusDriverState(BusDriverStates state){
+        this.state = state;
+    }
 }
