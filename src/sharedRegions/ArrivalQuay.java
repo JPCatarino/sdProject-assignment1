@@ -26,7 +26,7 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
     }
 
     /**
-     * Annoucing the boarding, the Bus Driver is letting the Passenger in the queue know it's okay
+     * Announcing the boarding, the Bus Driver is letting the Passenger in the queue know it's okay
      * to get inside the bus.
      */
     @Override
@@ -51,6 +51,10 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
         boardingTheBus = false;
     }
 
+    /**
+     * After boarding all passangers, the bus driver then drives to the DepartureTerminal
+     * This function changes state to DRIVING_FORWARD and unparks the bus.
+     */
     @Override
     public synchronized void goToDepartureTerminal(){
         BusDriver bd = (BusDriver) Thread.currentThread();
@@ -58,6 +62,10 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
         bd.setBusDriverState(BusDriverStates.DRIVING_FORWARD);      // TODO Add function to update REPO
     }
 
+    /**
+     * Parks the bus after returning from Departure Terminal
+     * It assumes the Bus comes back empty from the terminal.
+     */
     @Override
     public synchronized void parkTheBus(){
         BusDriver bd = (BusDriver) Thread.currentThread();
@@ -65,13 +73,19 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
         bd.setBusDriverState(BusDriverStates.PARKING_AT_THE_ARRIVAL_TERMINAL);      // TODO Add function to update REPO
     }
 
+    /**
+     * Simulates the entrance of a passenger on the bus.
+     * The passenger gets in the queue and waits orders from the BusDriver to board.
+     */
     @Override
     public synchronized void enterTheBus(){
         Passenger p = (Passenger) Thread.currentThread();
+
+        busWaitingLine.add(p.getID());
+
         if(busWaitingLine.size() == repo.getT_SEATS()){
             notifyAll();
         }
-
         try {
             while (!boardingTheBus) {
                 wait();
