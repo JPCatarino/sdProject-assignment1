@@ -5,19 +5,24 @@ import entities.Passenger;
 import interfaces.ATTQBusDriver;
 import interfaces.ATTQPassenger;
 import states.BusDriverStates;
+import states.PassengerStates;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Queue;
 
 public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
 
     Repository repo;
     Queue<Integer> busWaitingLine;
+    List<Integer> parkedBus;
     int timeForDeparture;
     boolean boardingTheBus;             // To let passengers know it's okay to board the bus
 
     public ArrivalQuay(Repository repo){
         this.repo = repo;
         boardingTheBus = false;
+        parkedBus = new ArrayList<>();
     }
 
     /**
@@ -49,12 +54,14 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
     @Override
     public synchronized void goToDepartureTerminal(){
         BusDriver bd = (BusDriver) Thread.currentThread();
+        bd.setBusSeats(parkedBus);
         bd.setBusDriverState(BusDriverStates.DRIVING_FORWARD);      // TODO Add function to update REPO
     }
 
     @Override
     public synchronized void parkTheBus(){
         BusDriver bd = (BusDriver) Thread.currentThread();
+        this.parkedBus = new ArrayList<>();
         bd.setBusDriverState(BusDriverStates.PARKING_AT_THE_ARRIVAL_TERMINAL);      // TODO Add function to update REPO
     }
 
@@ -75,8 +82,10 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
             System.exit(1);
         }
 
-        busWaitingLine.remove();
         sitOnTheBus(p.getID());
+
+        p.setPassengerState(PassengerStates.TERMINAL_TRANSFER);
+
 
         if(busWaitingLine.size() == 0){
             notifyAll();
@@ -85,9 +94,9 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
 
     @Override
     public synchronized void sitOnTheBus(int id){
-        BusDriver bd = (BusDriver) Thread.currentThread();
-        if(bd.getBusSeats().size() < repo.getT_SEATS()){
-            bd.addPassengerToBus(id);
+        if(parkedBus.size() < repo.getT_SEATS()){
+            busWaitingLine.remove();
+            parkedBus.add(id);
         }
     }
     

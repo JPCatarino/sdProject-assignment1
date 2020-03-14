@@ -1,6 +1,7 @@
 package entities;
 
 import sharedRegions.*;
+import states.PassengerStates;
 
 public class Passenger extends Thread {
 
@@ -9,6 +10,13 @@ public class Passenger extends Thread {
      * @serialField id
      */
     private int id; // Same as bag id?
+
+    /**
+     * Passenger's current state
+     * @serialField PassengerStates
+     */
+    private PassengerStates state;
+
 
     private ArrivalLounge al;
     private BagColPoint bcp;
@@ -38,5 +46,13 @@ public class Passenger extends Thread {
 
     public int getID() {
         return id;
+    }
+
+    /**
+     * Set Passenger state
+     * @param state new state of the Passenger
+     */
+    public void setPassengerState(PassengerStates state) {
+        this.state = state;
     }
 }

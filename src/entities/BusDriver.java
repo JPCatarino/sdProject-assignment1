@@ -39,16 +39,12 @@ public class BusDriver extends Thread {
         }
     }
 
-    /**
-     * Adds passenger ID to busSeats, simulating a passenger sitting on the bus
-     * @param id id of the passenger entering the bus.
-     */
-    public void addPassengerToBus(int id){
-        busSeats.add(id);
-    }
-
     public List<Integer> getBusSeats() {
         return busSeats;
+    }
+
+    public void setBusSeats(List<Integer> busSeats){
+        this.busSeats = busSeats;
     }
 
     /**
