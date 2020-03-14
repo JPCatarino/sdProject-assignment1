@@ -4,12 +4,18 @@ import sharedRegions.*;
 
 public class Passenger extends Thread {
 
-    ArrivalLounge al;
-    BagColPoint bcp;
-    BagRecOffice bro;
-    ArrivalQuay aq;
-    DepartureQuay dq;
-    DepartureTerminalEntrance dte;
+    /**
+     * Passengers's id
+     * @serialField id
+     */
+    private int id; // Same as bag id?
+
+    private ArrivalLounge al;
+    private BagColPoint bcp;
+    private BagRecOffice bro;
+    private ArrivalQuay aq;
+    private DepartureQuay dq;
+    private DepartureTerminalEntrance dte;
 
     public String WhatShouldIDo(){
         return "";
@@ -30,4 +36,7 @@ public class Passenger extends Thread {
         }
     }
 
+    public int getID() {
+        return id;
+    }
 }

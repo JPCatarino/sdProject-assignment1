@@ -41,6 +41,7 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
         }
         catch(InterruptedException iex){
             System.err.println("announcingBusBoarding - Thread was interrupted.");
+            System.exit(1);
         }
         boardingTheBus = false;
     }
@@ -48,16 +49,46 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
     @Override
     public synchronized void goToDepartureTerminal(){
         BusDriver bd = (BusDriver) Thread.currentThread();
-        bd.setBusDriverState(BusDriverStates.DRIVING_FORWARD);
+        bd.setBusDriverState(BusDriverStates.DRIVING_FORWARD);      // TODO Add function to update REPO
     }
 
     @Override
     public synchronized void parkTheBus(){
         BusDriver bd = (BusDriver) Thread.currentThread();
-        bd.setBusDriverState(BusDriverStates.PARKING_AT_THE_ARRIVAL_TERMINAL);
+        bd.setBusDriverState(BusDriverStates.PARKING_AT_THE_ARRIVAL_TERMINAL);      // TODO Add function to update REPO
     }
 
     @Override
-    public synchronized void enterTheBus(){}
+    public synchronized void enterTheBus(){
+        Passenger p = (Passenger) Thread.currentThread();
+        if(busWaitingLine.size() == repo.getT_SEATS()){
+            notifyAll();
+        }
+
+        try {
+            while (!boardingTheBus) {
+                wait();
+            }
+        }
+        catch(InterruptedException ex){
+            System.err.println("enterTheBus - Thread was interrupted");
+            System.exit(1);
+        }
+
+        busWaitingLine.remove();
+        sitOnTheBus(p.getID());
+
+        if(busWaitingLine.size() == 0){
+            notifyAll();
+        }
+    }
+
+    @Override
+    public synchronized void sitOnTheBus(int id){
+        BusDriver bd = (BusDriver) Thread.currentThread();
+        if(bd.getBusSeats().size() < repo.getT_SEATS()){
+            bd.addPassengerToBus(id);
+        }
+    }
     
 }

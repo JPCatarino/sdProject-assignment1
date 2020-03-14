@@ -1,5 +1,7 @@
 package sharedRegions;
 
+import java.util.Arrays;
+
 public class Repository {
     /**
      * Number of landings for this simulation.
