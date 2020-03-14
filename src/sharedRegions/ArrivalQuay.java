@@ -11,7 +11,7 @@ import java.util.Queue;
 public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
 
     Repository repo;
-    Queue<Passenger> busWaitingLine;
+    Queue<Integer> busWaitingLine;
     int timeForDeparture;
     boolean boardingTheBus;             // To let passengers know it's okay to board the bus
 
