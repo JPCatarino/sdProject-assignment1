@@ -25,24 +25,42 @@ public class Passenger extends Thread {
     private DepartureQuay dq;
     private DepartureTerminalEntrance dte;
 
-    public String WhatShouldIDo(){
-        return "";
+    private enum PassengerDecisions{
+        COLLECT_A_BAG,
+        GO_HOME,
+        TAKE_A_BUS
+    }
+
+    public Passenger(int id, ArrivalLounge al, BagColPoint bcp, BagRecOffice bro, ArrivalQuay aq, DepartureQuay dq, DepartureTerminalEntrance dte) {
+        this.id = id;
+        this.state = PassengerStates.AT_THE_DISEMBARKING_ZONE;
+        this.al = al;
+        this.bcp = bcp;
+        this.bro = bro;
+        this.aq = aq;
+        this.dq = dq;
+        this.dte = dte;
     }
 
     @Override
     public void run(){
         switch(WhatShouldIDo()){
-            case "Home":
+            case "GO_HOME":
                 al.goHome();
-            case "Bag":
+            case "COLLECT_A_BAG":
                 // if else
-            case "NextFlight":
+            case "TAKE_A_BUS":
                 al.takeABus();
                 aq.enterTheBus();
                 dq.leaveTheBus();
                 dte.prepareNextLeg();
         }
     }
+
+    private String WhatShouldIDo(){
+        return "";
+    }
+
 
     public int getID() {
         return id;
