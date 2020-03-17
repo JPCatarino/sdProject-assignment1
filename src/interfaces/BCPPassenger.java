@@ -12,8 +12,4 @@ public interface BCPPassenger {
      */
     public void reportMissingBags();
 
-    /**
-     *
-     */
-    public void goHome();
 }

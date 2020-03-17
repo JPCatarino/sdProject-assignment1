@@ -29,8 +29,9 @@ public class Passenger extends Thread {
     private ArrivalQuay aq;
     private DepartureQuay dq;
     private DepartureTerminalEntrance dte;
+    private ArrivalTerminalExit ate;
 
-    public Passenger(int id, int nBagsToCollect, boolean journeyEnding, ArrivalLounge al, BagColPoint bcp, BagRecOffice bro, ArrivalQuay aq, DepartureQuay dq, DepartureTerminalEntrance dte) {
+    public Passenger(int id, int nBagsToCollect, boolean journeyEnding, ArrivalLounge al, BagColPoint bcp, BagRecOffice bro, ArrivalQuay aq, DepartureQuay dq, DepartureTerminalEntrance dte, ArrivalTerminalExit ate) {
         this.id = id;
         this.nBagsToCollect = nBagsToCollect;
         this.journeyEnding = journeyEnding;
@@ -41,13 +42,14 @@ public class Passenger extends Thread {
         this.aq = aq;
         this.dq = dq;
         this.dte = dte;
+        this.ate = ate;
     }
 
     @Override
     public void run(){
         switch(al.whatShouldIDo()){
             case GO_HOME:
-                al.goHome();
+                ate.goHome();
             case COLLECT_A_BAG:
                 // if else
             case TAKE_A_BUS:

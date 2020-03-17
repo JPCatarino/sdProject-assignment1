@@ -30,14 +30,6 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
     public synchronized void tryToCollectABag(){}
 
     @Override
-    public synchronized void goHome(){
-        Passenger p = (Passenger) Thread.currentThread();
-        p.setPassengerState(PassengerStates.EXITING_THE_ARRIVAL_TERMINAL);
-
-        // TODO : WAIT FOR ALL PASSENGERS TO BE READY TO LEAVE
-    }
-
-    @Override
     public synchronized PassengerDecisions whatShouldIDo(){
         Passenger p = (Passenger) Thread.currentThread();
 
