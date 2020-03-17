@@ -58,7 +58,7 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
             System.err.println("whatShouldIDo - Thread Interrupted");
         }
 
-
+        numberOfPassengers--;
         // If journey is ending, passenger should either collect bags or go home
         // otherwise, he takes a bus
         if(p.isJourneyEnding()){
