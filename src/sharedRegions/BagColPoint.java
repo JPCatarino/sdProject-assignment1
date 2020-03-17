@@ -1,7 +1,9 @@
 package sharedRegions;
 
+import entities.Passenger;
 import interfaces.BCPPassenger;
 import interfaces.BCPPorter;
+import states.PassengerStates;
 
 public class BagColPoint implements BCPPassenger, BCPPorter {
 
@@ -18,7 +20,12 @@ public class BagColPoint implements BCPPassenger, BCPPorter {
     public synchronized void reportMissingBags(){};
 
     @Override
-    public synchronized void goHome(){};
+    public synchronized void goHome(){
+        Passenger p = (Passenger) Thread.currentThread();
+        p.setPassengerState(PassengerStates.EXITING_THE_ARRIVAL_TERMINAL);
+
+        // TODO : WAIT FOR ALL PASSENGERS TO BE READY TO LEAVE
+    };
 
     @Override
     public synchronized void carryItToAppropriateStore(){};
