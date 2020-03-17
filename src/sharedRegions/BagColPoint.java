@@ -14,18 +14,13 @@ public class BagColPoint implements BCPPassenger, BCPPorter {
     }
 
     @Override
-    public synchronized void goCollectABag (){};
+    public synchronized void goCollectABag (){
+        Passenger p = (Passenger) Thread.currentThread();
+        p.setPassengerState(PassengerStates.AT_THE_LUGGAGE_COLLECTION_POINT);
+    };
 
     @Override
     public synchronized void reportMissingBags(){};
-
-    @Override
-    public synchronized void goHome(){
-        Passenger p = (Passenger) Thread.currentThread();
-        p.setPassengerState(PassengerStates.EXITING_THE_ARRIVAL_TERMINAL);
-
-        // TODO : WAIT FOR ALL PASSENGERS TO BE READY TO LEAVE
-    };
 
     @Override
     public synchronized void carryItToAppropriateStore(){};

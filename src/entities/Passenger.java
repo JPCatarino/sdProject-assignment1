@@ -51,7 +51,7 @@ public class Passenger extends Thread {
             case GO_HOME:
                 ate.goHome();
             case COLLECT_A_BAG:
-                // if else
+                bcp.goCollectABag();
             case TAKE_A_BUS:
                 al.takeABus();
                 aq.enterTheBus();

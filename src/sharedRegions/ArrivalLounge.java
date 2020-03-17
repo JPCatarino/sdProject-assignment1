@@ -18,10 +18,10 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
     }
 
     @Override
-    public synchronized void goCollectABag(){}
-
-    @Override
-    public synchronized void takeABus(){}
+    public synchronized void takeABus(){
+        Passenger p = (Passenger) Thread.currentThread();
+        p.setPassengerState(PassengerStates.AT_THE_ARRIVAL_TRANSFER_TERMINAL);
+    }
 
     @Override
     public synchronized void takeARest(){}
