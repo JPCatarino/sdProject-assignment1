@@ -1,6 +1,7 @@
 package entities;
 
 import sharedRegions.*;
+import states.PassengerDecisions;
 import states.PassengerStates;
 
 public class Passenger extends Thread {
@@ -17,6 +18,10 @@ public class Passenger extends Thread {
      */
     private PassengerStates state;
 
+    private int nBagsToCollect;
+
+    private boolean journeyEnding;
+
 
     private ArrivalLounge al;
     private BagColPoint bcp;
@@ -25,14 +30,10 @@ public class Passenger extends Thread {
     private DepartureQuay dq;
     private DepartureTerminalEntrance dte;
 
-    private enum PassengerDecisions{
-        COLLECT_A_BAG,
-        GO_HOME,
-        TAKE_A_BUS
-    }
-
-    public Passenger(int id, ArrivalLounge al, BagColPoint bcp, BagRecOffice bro, ArrivalQuay aq, DepartureQuay dq, DepartureTerminalEntrance dte) {
+    public Passenger(int id, int nBagsToCollect, boolean journeyEnding, ArrivalLounge al, BagColPoint bcp, BagRecOffice bro, ArrivalQuay aq, DepartureQuay dq, DepartureTerminalEntrance dte) {
         this.id = id;
+        this.nBagsToCollect = nBagsToCollect;
+        this.journeyEnding = journeyEnding;
         this.state = PassengerStates.AT_THE_DISEMBARKING_ZONE;
         this.al = al;
         this.bcp = bcp;
@@ -44,12 +45,12 @@ public class Passenger extends Thread {
 
     @Override
     public void run(){
-        switch(WhatShouldIDo()){
-            case "GO_HOME":
+        switch(al.whatShouldIDo()){
+            case GO_HOME:
                 al.goHome();
-            case "COLLECT_A_BAG":
+            case COLLECT_A_BAG:
                 // if else
-            case "TAKE_A_BUS":
+            case TAKE_A_BUS:
                 al.takeABus();
                 aq.enterTheBus();
                 dq.leaveTheBus();
@@ -57,13 +58,16 @@ public class Passenger extends Thread {
         }
     }
 
-    private String WhatShouldIDo(){
-        return "";
-    }
-
-
     public int getID() {
         return id;
+    }
+
+    public int getnBagsToCollect() {
+        return nBagsToCollect;
+    }
+
+    public boolean isJourneyEnding() {
+        return journeyEnding;
     }
 
     /**
