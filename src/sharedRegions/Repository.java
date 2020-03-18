@@ -1,5 +1,8 @@
 package sharedRegions;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Arrays;
 
 import UI.Color;
@@ -223,12 +226,12 @@ public class Repository {
         String result;
         StringBuilder passagers = new StringBuilder();
 
-        result = Color.B_GREEN + "PLANE" + Color.RESET;
-        result += Color.B_BLUE + "      PORTER" + Color.RESET;
-        result += Color.B_RED + "                   DRIVER" + Color.RESET + "\n";
-        result += "FN BN    Stat  CB SR    Stat  Q1 Q2 Q3 Q4 Q5 Q6  S1 S2 S3\n";
+        result = "PLANE";
+        result += "      PORTER";
+        result += "                     DRIVER";
         result += new String(new char[(19 * N_PASSENGERS - 14) / 2]);
-        result += Color.B_MAGENTA + "PASSENGERS" + Color.RESET + "\n";
+        result += "                 PASSENGERS" + "\n";
+        result += "FN BN    Stat  CB SR    Stat  Q1 Q2 Q3 Q4 Q5 Q6  S1 S2 S3    ";
 
         for (int num_passager = 1; num_passager <= N_PASSENGERS; num_passager++) {
             passagers.append("St").append(num_passager)
@@ -281,7 +284,6 @@ public class Repository {
         result = new StringBuilder(String.format("%-2d %-2d    ", FN, BN));
         result.append(String.format("%-4s  %-2d %-2d    ", P_Stat, CB, SR));
         result.append(String.format("%-4s  %-2s %-2s %-2s %-2s %-2s %-2s  %-2s %-2s %-2s    ", D_Stat, Q[0], Q[1], Q[2], Q[3], Q[4], Q[5], S[0], S[1], S[2]));
-        result.append("\n");
 
         for (int num_passager = 1; num_passager <= N_PASSENGERS; num_passager++) {
             result.append(String.format("%-3s", ST[num_passager - 1]))
@@ -331,5 +333,38 @@ public class Repository {
         result.append("\n");
 
         return result.toString();
+    }
+
+    /**
+     * Write the initial State (Create file and header).
+     */
+    public void reportInitialStatus() {
+        FileWriter fw;
+        try {
+            fw = new FileWriter("Log.txt", false);
+            try (PrintWriter pw = new PrintWriter(fw)) {
+                pw.print(new String(new char[31 + (19 * N_PASSENGERS - 4) / 2 - 34]) + "AIRPORT RHAPSODY - Description of the internal state of the problem\n");
+                pw.println();
+                pw.print(header_requested());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        reportStatus();
+    }
+
+    /**
+     * Write the current State.
+     */
+    public void reportStatus() {
+        FileWriter fw;
+        try {
+            fw = new FileWriter("Log.txt", true);
+            try (PrintWriter pw = new PrintWriter(fw)) {
+                pw.print(toString());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
