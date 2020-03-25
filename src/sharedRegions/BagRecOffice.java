@@ -13,10 +13,14 @@ public class BagRecOffice implements BROPassenger {
     }
 
     @Override
-    public synchronized void goHome(){
+    public synchronized void reportMissingBags(){
         Passenger p = (Passenger) Thread.currentThread();
-        p.setPassengerState(PassengerStates.EXITING_THE_ARRIVAL_TERMINAL);
-
-        // TODO : WAIT FOR ALL PASSENGERS TO BE READY TO LEAVE
+        p.setPassengerState(PassengerStates.AT_THE_BAGGAGE_RECLAIM_OFFICE);
+        try {
+            Thread.sleep(100);
+        }
+        catch(InterruptedException ex){
+            System.err.println("reportMissingBags - Thread Interrupted");
+        }
     };
 }

@@ -7,9 +7,5 @@ public interface BCPPassenger {
      */
     public void goCollectABag ();
 
-    /**
-     *
-     */
-    public void reportMissingBags();
 
 }

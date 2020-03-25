@@ -6,7 +6,7 @@ import states.PassengerStates;
 
 public class ArrivalTerminalExit implements ATEPassenger{
 
-    Repository repo;
+    private Repository repo;
 
     @Override
     public synchronized void goHome(){

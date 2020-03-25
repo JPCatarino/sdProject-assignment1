@@ -20,6 +20,8 @@ public class Passenger extends Thread {
 
     private int nBagsToCollect;
 
+    private int nBagsCollected;
+
     private boolean journeyEnding;
 
 
@@ -31,9 +33,10 @@ public class Passenger extends Thread {
     private DepartureTerminalEntrance dte;
     private ArrivalTerminalExit ate;
 
-    public Passenger(int id, int nBagsToCollect, boolean journeyEnding, ArrivalLounge al, BagColPoint bcp, BagRecOffice bro, ArrivalQuay aq, DepartureQuay dq, DepartureTerminalEntrance dte, ArrivalTerminalExit ate) {
+    public Passenger(int id, int nBagsToCollect, int nBagsCollected, boolean journeyEnding, ArrivalLounge al, BagColPoint bcp, BagRecOffice bro, ArrivalQuay aq, DepartureQuay dq, DepartureTerminalEntrance dte, ArrivalTerminalExit ate) {
         this.id = id;
         this.nBagsToCollect = nBagsToCollect;
+        this.nBagsCollected = 0;
         this.journeyEnding = journeyEnding;
         this.state = PassengerStates.AT_THE_DISEMBARKING_ZONE;
         this.al = al;
@@ -52,6 +55,9 @@ public class Passenger extends Thread {
                 ate.goHome();
             case COLLECT_A_BAG:
                 bcp.goCollectABag();
+                if(nBagsCollected != nBagsToCollect)
+                    bro.reportMissingBags();
+                ate.goHome();
             case TAKE_A_BUS:
                 al.takeABus();
                 aq.enterTheBus();
@@ -60,8 +66,14 @@ public class Passenger extends Thread {
         }
     }
 
+
+
     public int getID() {
         return id;
+    }
+
+    public void collectedABag(){
+        this.nBagsCollected++;
     }
 
     public int getnBagsToCollect() {
