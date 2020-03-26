@@ -41,7 +41,7 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
 
             while(!busWaitingLine.isEmpty()){
                 notifyAll();                                                // Notify passengers for them to enter the bus.
-                wait();                                                     // Block while passengers enter bus;
+                wait(bd.getTTL());                                                     // Block while passengers enter bus;
             }
         }
         catch(InterruptedException iex){

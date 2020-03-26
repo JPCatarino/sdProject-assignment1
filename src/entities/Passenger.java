@@ -4,6 +4,13 @@ import sharedRegions.*;
 import states.PassengerDecisions;
 import states.PassengerStates;
 
+
+/**
+ * Passenger thread and life cycle.
+ * It stores all relevant information about the Passenger.
+ * @author Fábio Alves
+ * @author Jorge Catarino
+ */
 public class Passenger extends Thread {
 
     /**
@@ -33,7 +40,21 @@ public class Passenger extends Thread {
     private DepartureTerminalEntrance dte;
     private ArrivalTerminalExit ate;
 
-    public Passenger(int id, int nBagsToCollect, int nBagsCollected, boolean journeyEnding, ArrivalLounge al, BagColPoint bcp, BagRecOffice bro, ArrivalQuay aq, DepartureQuay dq, DepartureTerminalEntrance dte, ArrivalTerminalExit ate) {
+    /**
+     * Passenger Constructor.
+     * It initiates a passenger thread.
+     * @param id Passenger Identifier.
+     * @param nBagsToCollect Number of Bags the Passenger has to collect.
+     * @param journeyEnding  True if Passenger journey is ending.
+     * @param al  Arrival Lounge Shared Region
+     * @param bcp Baggage Collection Point Shared Region
+     * @param bro Baggage Reclaim Office Shared Region
+     * @param aq  Arrival Quay Shared Region
+     * @param dq  Departure Quay Shared Region
+     * @param dte Departure Terminal Exit Shared Region
+     * @param ate Arrival Terminal Exit Shared Region
+     */
+    public Passenger(int id, int nBagsToCollect, boolean journeyEnding, ArrivalLounge al, BagColPoint bcp, BagRecOffice bro, ArrivalQuay aq, DepartureQuay dq, DepartureTerminalEntrance dte, ArrivalTerminalExit ate) {
         this.id = id;
         this.nBagsToCollect = nBagsToCollect;
         this.nBagsCollected = 0;
@@ -48,6 +69,13 @@ public class Passenger extends Thread {
         this.ate = ate;
     }
 
+    /**
+     * Passenger Life cycle.
+     * When the passenger arrives to arrival lounge, he ask himself what to do.
+     * If his journey has ended and he has no bags, he'll go home.
+     * If he has bags, he goes to collect them.
+     * In case his journey hasn't ended, he goes to catch a bus.
+     */
     @Override
     public void run(){
         switch(al.whatShouldIDo()){
