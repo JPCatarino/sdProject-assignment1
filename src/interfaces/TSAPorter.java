@@ -14,6 +14,7 @@ public interface TSAPorter {
 
     /**
      *
+     *
      */
-    public void carryItToAppropriateStore();
+    public void carryItToAppropriateStore(Object [] bag);
 }

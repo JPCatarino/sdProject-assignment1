@@ -15,10 +15,16 @@ public interface ALPorter {
     /**
      *
      */
-    public void takeARest();
+    public char takeARest();
 
     /**
      *
      */
-    public void tryToCollectABag();
+    public Object[] tryToCollectABag();
+
+    /**
+     *
+     */
+    public void noMoreBagsToCollect();
+}
 }

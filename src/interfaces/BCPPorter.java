@@ -16,6 +16,6 @@ public interface BCPPorter {
     /**
      *
      */
-    public void carryItToAppropriateStore();
+    public void carryItToAppropriateStore(Object [] bag);
 
 }
