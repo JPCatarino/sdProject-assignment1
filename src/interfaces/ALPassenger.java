@@ -1,5 +1,6 @@
 package interfaces;
 
+import entities.Passenger;
 import states.PassengerDecisions;
 
 /**
@@ -15,7 +16,18 @@ import states.PassengerDecisions;
  */
 public interface ALPassenger {
 
+    /**
+     *  If the passenger journey hasn't ended, he takes a bus.
+     *  This function makes sure he transits to the next state.
+     */
     public void takeABus();
 
+    /**
+     * When the passenger arrives at the airport,
+     * this function is called so he decides what to do next.
+     * Check the Passenger.run() documentation for the logic behind this.
+     * @see Passenger#run()
+     * @return the passenger decision of what to do next.
+     */
     public PassengerDecisions whatShouldIDo();
 }

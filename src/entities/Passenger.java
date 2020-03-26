@@ -71,10 +71,12 @@ public class Passenger extends Thread {
 
     /**
      * Passenger Life cycle.
+     * <p>
      * When the passenger arrives to arrival lounge, he ask himself what to do.
      * If his journey has ended and he has no bags, he'll go home.
      * If he has bags, he goes to collect them.
      * In case his journey hasn't ended, he goes to catch a bus.
+     * </p>
      */
     @Override
     public void run(){

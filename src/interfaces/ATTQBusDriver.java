@@ -15,17 +15,20 @@ package interfaces;
 public interface ATTQBusDriver {
 
     /**
-     * announcingBusBoarding
+     * The bus driver waits until there's passengers in the queue or it's time to leave
+     * After this, he notifies all passengers that the bus is ready to board.
      */
     public void announcingBusBoarding ();
 
     /**
-     * goToDepartureTerminal
+     * After boarding all passengers, the bus driver then drives to the DepartureTerminal
+     * This function changes state to DRIVING_FORWARD and unparks the bus.
      */
     public void goToDepartureTerminal ();
 
     /**
-     * parkTheBus
+     * Parks the bus after returning from Departure Terminal
+     * It assumes the Bus comes back empty from the terminal.
      */
     public void parkTheBus ();
 }

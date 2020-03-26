@@ -33,15 +33,15 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
     public synchronized void announcingBusBoarding(){
         BusDriver bd = (BusDriver)Thread.currentThread();
         try {
-            while (busWaitingLine.size() != repo.getT_SEATS()) {            // TODO: Add departure time as a condition
-                wait();
+            while (busWaitingLine.size() != repo.getT_SEATS() && !busWaitingLine.isEmpty()) {
+                wait(bd.getTTL());                                          // Block while passengers enter bus
             }
 
             boardingTheBus = true;
 
             while(!busWaitingLine.isEmpty()){
                 notifyAll();                                                // Notify passengers for them to enter the bus.
-                wait(bd.getTTL());                                                     // Block while passengers enter bus;
+                wait();                                                     ;
             }
         }
         catch(InterruptedException iex){

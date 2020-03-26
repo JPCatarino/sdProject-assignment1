@@ -49,11 +49,13 @@ public class BusDriver extends Thread {
 
     /**
      * BusDriver lifecycle
-     * While he is on is shift, the BusDriver follows a routine:
-     * First he announces the bus is available to board.
-     * When it's time to leave, he drives to the departure terminal.
-     * After parking he let's the passengers off and drives back to the Arrival Terminal.
+     * <p>
+     * While he is on is shift, the BusDriver follows a routine: <p>
+     * First he announces the bus is available to board.<p>
+     * When it's time to leave, he drives to the departure terminal.<p>
+     * After parking he let's the passengers off and drives back to the Arrival Terminal.<p>
      * If his shift hasn't ended by then, he repeats.
+     *
      */
     @Override
     public void run(){
