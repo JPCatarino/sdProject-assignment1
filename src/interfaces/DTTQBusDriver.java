@@ -1,12 +1,15 @@
 package interfaces;
 
 /**
- * Interface for the Bus Driver entity.
- * This interface contains the signatures of the functions to be instantiated on
- * shared memory regions.
+ * Baggage Reclaim Office BusDriver Interface
  *
- * @author Jorge Catarino
+ * <p>
+ *     It provides the necessary BusDriver methods to be implemented in Departure Terminal Transfer Quay
+ *     shared region.
+ * </p>
+ *
  * @author Fabio Alves
+ * @author Jorge Catarino
  */
 
 public interface DTTQBusDriver {

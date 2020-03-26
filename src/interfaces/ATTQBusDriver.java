@@ -1,12 +1,15 @@
 package interfaces;
 
 /**
- * Interface for the Bus Driver entity.
- * This interface contains the signatures of the functions to be instantiated on
- * shared memory regions.
+ * Arrival Terminal Transfer Quay BusDriver Interface
  *
- * @author Jorge Catarino
+ * <p>
+ *     It provides the necessary BusDriver methods to be implemented in Arrival Terminal Transfer Quay
+ *     shared region.
+ * </p>
+ *
  * @author Fabio Alves
+ * @author Jorge Catarino
  */
 
 public interface ATTQBusDriver {
