@@ -110,6 +110,10 @@ public class Passenger extends Thread {
         return nBagsToCollect;
     }
 
+    public int getnBagsCollected() {
+        return nBagsCollected;
+    }
+
     public boolean isJourneyEnding() {
         return journeyEnding;
     }

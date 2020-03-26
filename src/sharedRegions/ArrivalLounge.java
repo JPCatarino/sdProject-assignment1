@@ -21,6 +21,7 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
     public synchronized void takeABus(){
         Passenger p = (Passenger) Thread.currentThread();
         p.setPassengerState(PassengerStates.AT_THE_ARRIVAL_TRANSFER_TERMINAL);
+        repo.setST(p.getID(), PassengerStates.AT_THE_ARRIVAL_TRANSFER_TERMINAL.getState());
     }
 
     @Override
