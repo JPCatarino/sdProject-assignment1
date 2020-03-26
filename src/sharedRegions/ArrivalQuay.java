@@ -59,7 +59,8 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
     public synchronized void goToDepartureTerminal(){
         BusDriver bd = (BusDriver) Thread.currentThread();
         bd.setBusSeats(parkedBus);
-        bd.setBusDriverState(BusDriverStates.DRIVING_FORWARD);      // TODO Add function to update REPO
+        bd.setBusDriverState(BusDriverStates.DRIVING_FORWARD);
+        repo.setD_Stat(BusDriverStates.DRIVING_FORWARD.getState());
     }
 
     /**
@@ -70,7 +71,8 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
     public synchronized void parkTheBus(){
         BusDriver bd = (BusDriver) Thread.currentThread();
         this.parkedBus = new ArrayList<>();
-        bd.setBusDriverState(BusDriverStates.PARKING_AT_THE_ARRIVAL_TERMINAL);      // TODO Add function to update REPO
+        bd.setBusDriverState(BusDriverStates.PARKING_AT_THE_ARRIVAL_TERMINAL);
+        repo.setD_Stat(BusDriverStates.PARKING_AT_THE_ARRIVAL_TERMINAL.getState());
     }
 
     /**
@@ -82,6 +84,7 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
         Passenger p = (Passenger) Thread.currentThread();
 
         busWaitingLine.add(p.getID());
+        repo.setQ(busWaitingLine.size(), String.valueOf(p.getID()));
 
         if(busWaitingLine.size() == repo.getT_SEATS()){
             notifyAll();
@@ -99,7 +102,7 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
         sitOnTheBus(p.getID());
 
         p.setPassengerState(PassengerStates.TERMINAL_TRANSFER);
-
+        repo.setST(p.getID(), PassengerStates.TERMINAL_TRANSFER.getState());
 
         if(busWaitingLine.size() == 0){
             notifyAll();
@@ -108,9 +111,12 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
 
     @Override
     public synchronized void sitOnTheBus(int id){
+
         if(parkedBus.size() < repo.getT_SEATS()){
+            repo.setQ(busWaitingLine.size(), "-");
             busWaitingLine.remove();
             parkedBus.add(id);
+            repo.setS(parkedBus.indexOf(id), String.valueOf(id));
         }
     }
     

@@ -24,6 +24,7 @@ public class DepartureQuay implements DTTQBusDriver, DTTQPassenger {
     public synchronized void parkTheBusAndLetPassOff(){
         BusDriver bd = (BusDriver) Thread.currentThread();
         bd.setBusDriverState(BusDriverStates.PARKING_AT_THE_DEPARTURE_TERMINAL);
+        repo.setD_Stat(BusDriverStates.PARKING_AT_THE_DEPARTURE_TERMINAL.getState());
         parkedBus = bd.getBusSeats();
         busHasArrived = true;
 
@@ -45,6 +46,7 @@ public class DepartureQuay implements DTTQBusDriver, DTTQPassenger {
     public synchronized void goToArrivalTerminal(){
         BusDriver bd = (BusDriver) Thread.currentThread();
         bd.setBusDriverState(BusDriverStates.DRIVING_BACKWARD);
+        repo.setD_Stat(BusDriverStates.DRIVING_BACKWARD.getState());
     }
 
     @Override
@@ -63,6 +65,7 @@ public class DepartureQuay implements DTTQBusDriver, DTTQPassenger {
 
         getOffTheSeat(p.getID());
         p.setPassengerState(PassengerStates.AT_THE_DEPARTURE_TRANSFER_TERMINAL);
+        repo.setST(p.getID(), PassengerStates.AT_THE_DEPARTURE_TRANSFER_TERMINAL.getState());
 
         if(parkedBus.size() == 0){
             notifyAll();
@@ -71,6 +74,7 @@ public class DepartureQuay implements DTTQBusDriver, DTTQPassenger {
 
     @Override
     public synchronized void getOffTheSeat(int id){
+        repo.setS(parkedBus.indexOf(id), "-");
         parkedBus.remove(Integer.valueOf(id));
     }
 }
