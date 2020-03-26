@@ -14,9 +14,13 @@ package interfaces;
 
 public interface DTTQPassenger {
     /**
-     *
+     * Arriving at the Departure Terminal Transfer Quay, the passenger leaves the bus.
      */
     public void leaveTheBus();
 
+    /**
+     * Simulates a passenger leaving the bus.
+     * @param id Identifier of the passenger leaving the bus.
+     */
     public void getOffTheSeat(int id);
 }

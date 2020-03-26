@@ -15,7 +15,10 @@ package interfaces;
 public interface BCPPassenger {
 
     /**
-     * goCollectABag
+     * Passenger goes to Baggage Collection Point trying to collect it's bags.
+     * It waits for the Porter to put the bag on the conveyor belt.
+     * If it's one of their bags, they go try to collect it.
+     * A passenger can only collect one bag per attempt.
      */
     public void goCollectABag ();
 
