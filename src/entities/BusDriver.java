@@ -4,6 +4,7 @@ import sharedRegions.ArrivalQuay;
 import sharedRegions.DepartureQuay;
 import states.BusDriverStates;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,13 +27,12 @@ public class BusDriver extends Thread {
     /**
      * BusDriver Constructor.
      * It initiates a new BusDriver thread.
-     * @param busSeats Maximum Number of Seats
      * @param TTL Time the bus driver waits before leaving the Arrival Quay.
      * @param aq  Arrival Quay Shared Region
      * @param dq  Departure Quay Shared Region
      */
-    public BusDriver(List<Integer> busSeats, int TTL, ArrivalQuay aq, DepartureQuay dq) {
-        this.busSeats = busSeats;
+    public BusDriver(int TTL, ArrivalQuay aq, DepartureQuay dq) {
+        this.busSeats = new ArrayList<>();
         this.TTL = TTL;
         this.aq = aq;
         this.dq = dq;
