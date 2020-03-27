@@ -3,6 +3,7 @@ package sharedRegions;
 import interfaces.TSAPorter;
 import states.PorterStates;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TempStgArea implements TSAPorter {
@@ -12,6 +13,7 @@ public class TempStgArea implements TSAPorter {
 
     public TempStgArea(Repository repo){
         this.repo = repo;
+        this.storeroom = new ArrayList<>();
     }
 
     @Override
