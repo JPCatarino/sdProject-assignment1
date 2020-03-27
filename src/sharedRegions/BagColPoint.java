@@ -7,6 +7,7 @@ import interfaces.BCPPorter;
 import states.PassengerStates;
 import states.PorterStates;
 
+import javax.swing.plaf.synth.SynthTextAreaUI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class BagColPoint implements BCPPassenger, BCPPorter {
         // If there's bags on the conveyor belt it tries to collect one with it's ID
         // In case the passengers find one, it collects it.
         try{
-            while(!noMoreBags){
+            while(!noMoreBags && p.getnBagsToCollect() != p.getnBagsCollected()){
                 if(bagsInTheConveyorBelt){
                     for(int i = 0; i < conveyorBelt.size(); i++){
                         if(conveyorBelt.get(i)[0] == p.getID()){
@@ -64,10 +65,11 @@ public class BagColPoint implements BCPPassenger, BCPPorter {
     public synchronized void carryItToAppropriateStore(int [] bag){
         Porter pt = (Porter) Thread.currentThread();
 
+        System.out.println("Here");
+
         this.conveyorBelt.add(bag);
         this.bagsInTheConveyorBelt = true;
         this.noMoreBags = false;
-
         repo.setP_Stat(PorterStates.AT_THE_LUGGAGE_BELT_CONVEYOR.getState());
         repo.setCB(conveyorBelt.size());
         repo.toString_debug();
