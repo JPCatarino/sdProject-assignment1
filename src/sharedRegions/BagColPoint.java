@@ -1,6 +1,7 @@
 package sharedRegions;
 
 import entities.Passenger;
+import entities.Porter;
 import interfaces.BCPPassenger;
 import interfaces.BCPPorter;
 import states.PassengerStates;
@@ -61,6 +62,7 @@ public class BagColPoint implements BCPPassenger, BCPPorter {
 
     @Override
     public synchronized void carryItToAppropriateStore(int [] bag){
+        Porter pt = (Porter) Thread.currentThread();
 
         this.conveyorBelt.add(bag);
         this.bagsInTheConveyorBelt = true;
@@ -72,7 +74,6 @@ public class BagColPoint implements BCPPassenger, BCPPorter {
         repo.reportStatus();
 
         notifyAll();
-
     };
 
     @Override
