@@ -18,14 +18,14 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
     Queue<Integer> busWaitingLine;
     List<Integer> parkedBus;
     boolean boardingTheBus;             // To let passengers know it's okay to board the bus
-    int availableSeats;
+    int maxNumberOfSeats;
 
-    public ArrivalQuay(Repository repo){
+    public ArrivalQuay(Repository repo, int T_SEATS){
         this.repo = repo;
         this.boardingTheBus = false;
         this.parkedBus = new ArrayList<>();
         this.busWaitingLine = new LinkedList<>();
-        this.availableSeats = repo.getT_SEATS();
+        this.maxNumberOfSeats = T_SEATS;
     }
 
     /**
@@ -36,13 +36,13 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
     public synchronized void announcingBusBoarding(){
         BusDriver bd = (BusDriver)Thread.currentThread();
         try {
-            while ((busWaitingLine.size() != repo.getT_SEATS()) && busWaitingLine.isEmpty()) {
+            while ((busWaitingLine.size() != maxNumberOfSeats) && busWaitingLine.isEmpty()) {
                 wait(bd.getTTL());                                          // Block while passengers enter queue
             }
 
             boardingTheBus = true;
 
-            while(!busWaitingLine.isEmpty() && parkedBus.size() < repo.getT_SEATS()){
+            while(!busWaitingLine.isEmpty() && parkedBus.size() < maxNumberOfSeats){
                 notifyAll();                                                // Notify passengers for them to enter the bus.
                 wait();                                                     ;
             }
@@ -95,7 +95,7 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
         repo.toString_debug();
         repo.reportStatus();
 
-        if(busWaitingLine.size() == repo.getT_SEATS()){
+        if(busWaitingLine.size() == maxNumberOfSeats){
             notifyAll();
         }
         try {
@@ -115,7 +115,7 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
         repo.toString_debug();
         repo.reportStatus();
 
-        if(busWaitingLine.size() == 0 || parkedBus.size() == repo.getT_SEATS()){
+        if(busWaitingLine.size() == 0 || parkedBus.size() == maxNumberOfSeats){
             notifyAll();
         }
     }
@@ -123,7 +123,7 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
     @Override
     public synchronized void sitOnTheBus(int id){
 
-        if(parkedBus.size() < repo.getT_SEATS()){
+        if(parkedBus.size() < maxNumberOfSeats){
             repo.setQ(busWaitingLine.size() - 1 , "-");
             busWaitingLine.remove();
             parkedBus.add(id);
