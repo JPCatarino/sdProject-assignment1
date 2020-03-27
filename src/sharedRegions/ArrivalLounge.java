@@ -27,6 +27,8 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
         Passenger p = (Passenger) Thread.currentThread();
         p.setPassengerState(PassengerStates.AT_THE_ARRIVAL_TRANSFER_TERMINAL);
         repo.setST(p.getID(), PassengerStates.AT_THE_ARRIVAL_TRANSFER_TERMINAL.getState());
+        repo.toString_debug();
+        repo.reportStatus();
     }
 
     @Override
