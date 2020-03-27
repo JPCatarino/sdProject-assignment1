@@ -17,7 +17,6 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
     Repository repo;
     Queue<Integer> busWaitingLine;
     List<Integer> parkedBus;
-    int timeForDeparture;
     boolean boardingTheBus;             // To let passengers know it's okay to board the bus
     int availableSeats;
 
