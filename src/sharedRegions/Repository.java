@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.util.Arrays;
 
 import UI.Color;
+import states.BusDriverStates;
 import states.PorterStates;
 
 public class Repository {
@@ -78,7 +79,7 @@ public class Repository {
      *
      * @serialField D_Stat
      */
-    private String D_Stat;
+    private String D_Stat = BusDriverStates.PARKING_AT_THE_ARRIVAL_TERMINAL.getState();
 
     /**
      * Occupation state for the waiting queue (passenger id / - (empty))

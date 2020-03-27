@@ -8,6 +8,7 @@ import states.BusDriverStates;
 import states.PassengerStates;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
@@ -21,8 +22,9 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
 
     public ArrivalQuay(Repository repo){
         this.repo = repo;
-        boardingTheBus = false;
-        parkedBus = new ArrayList<>();
+        this.boardingTheBus = false;
+        this.parkedBus = new ArrayList<>();
+        this.busWaitingLine = new LinkedList<>();
     }
 
     /**
