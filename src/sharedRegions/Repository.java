@@ -56,7 +56,7 @@ public class Repository {
      *
      * @serialField P_Stat
      */
-    private String P_Stat;
+    private String P_Stat = PorterStates.WAITING_FOR_A_PLANE_TO_LAND.getState();
 
     /**
      * Number of pieces of luggage presently on the conveyor belt.
@@ -135,6 +135,7 @@ public class Repository {
         Arrays.fill(this.SI, "-");
         this.NR = new int[N_PASSENGERS];
         this.NA = new int[N_PASSENGERS];
+        reportInitialStatus();
     }
 
     /**
@@ -156,6 +157,8 @@ public class Repository {
         Arrays.fill(this.SI, "-");
         this.NR = new int[N_PASSENGERS];
         this.NA = new int[N_PASSENGERS];
+        reportInitialStatus();
+
     }
 
     public void setFN(int FN) {

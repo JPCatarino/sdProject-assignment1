@@ -13,12 +13,8 @@ import states.PorterStates;
  */
 public class Porter extends Thread {
 
-    /**
-     * Current state of the Porter.
-     *
-     *    @serialField state
-     */
-    private PorterStates state;
+    private final static int TRANSIT = 0,
+            END_OF_STATE = 1;
 
     /**
      *  Arrival Lounge.
@@ -49,7 +45,7 @@ public class Porter extends Thread {
     private Object[] bag;
 
     /**
-     *  Report if the plane hold is empty.                                      ?? descriçao para editar
+     *  Report if the plane hold is empty.
      *
      *    @serialField planeHoldEmpty
      */
@@ -67,7 +63,6 @@ public class Porter extends Thread {
         this.bcp = bcp;
         this.tsa = tsa;
         bag = new Object[2];
-        this.state = PorterStates.WAITING_FOR_A_PLANE_TO_LAND;
     }
 
     /**
@@ -97,14 +92,6 @@ public class Porter extends Thread {
      *  If there are noo more bags to collect set the Porter state to WAITING_FOR_A_PLANE_TO_LAND.
      */
     private void noMoreBagsToCollect() {
-        this.state = PorterStates.WAITING_FOR_A_PLANE_TO_LAND;
-    }
-
-    /**
-     * Set Porter state
-     * @param state new state of the Porter
-     */
-    public void setState(PorterStates state) {
-        this.state = state;
+        bcp.setNoMoreBags(true);
     }
 }

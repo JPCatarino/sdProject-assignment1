@@ -9,6 +9,8 @@ import states.PassengerStates;
 public class ArrivalLounge implements ALPassenger, ALPorter {
     Repository repo;
 
+    private List<int[]> plainBags;
+    private boolean pWake;
     int numberOfPassengers;
     int maxNumberOfPassengers;
 
@@ -25,10 +27,43 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
     }
 
     @Override
-    public synchronized void takeARest(){}
+    public synchronized int takeARest() {
+        if (false)
+            return 1;
+        else
+            return 0;
+    }
 
     @Override
-    public synchronized void tryToCollectABag(){}
+    public synchronized int[] tryToCollectABag() {
+        int[] bag= new int[2];
+
+        if (!plainBags.isEmpty()) {
+            bag = plainBags.get(0);
+        }
+
+        repo.setP_Stat(PorterStates.AT_THE_PLANES_HOLD.getState());
+        repo.toString_debug();
+        repo.reportStatus();
+
+        return bag;
+    }
+
+    @Override
+    public synchronized void noMoreBagsToCollect() {
+
+        repo.setP_Stat(PorterStates.WAITING_FOR_A_PLANE_TO_LAND.getState());
+        repo.toString_debug();
+        repo.reportStatus();
+
+        try {
+            while (!pWake) {
+                wait();
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public synchronized PassengerDecisions whatShouldIDo(){

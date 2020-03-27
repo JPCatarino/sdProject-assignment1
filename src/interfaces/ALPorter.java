@@ -15,12 +15,12 @@ public interface ALPorter {
     /**
      *
      */
-    public char takeARest();
+    public int takeARest();
 
     /**
      *
      */
-    public Object[] tryToCollectABag();
+    public int[] tryToCollectABag();
 
     /**
      *

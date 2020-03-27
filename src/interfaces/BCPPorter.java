@@ -17,6 +17,7 @@ public interface BCPPorter {
      * Move a bag from the plane hold to the bag collection point.
      * @param bag Bag to be moved to the bag collection point.
      */
-    public void carryItToAppropriateStore(Object [] bag);
+    public void carryItToAppropriateStore(int [] bag);
 
+    public void setNoMoreBags(boolean noMoreBags);
 }
