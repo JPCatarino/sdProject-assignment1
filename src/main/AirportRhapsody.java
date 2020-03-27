@@ -34,7 +34,7 @@ public class AirportRhapsody {
         // initiate N passenger
         Passenger[][] flights = new Passenger [repository.getK_LANDINGS()][repository.getN_PASSENGERS()];
         for(int i = 0; i < flights.length; i++) {
-            for (int z = 0; i < flights[i].length; z++){
+            for (int z = 0; z < flights[i].length; z++){
                 flights[i][z] = new Passenger(z, (int) Math.random() * (2 + 1), new Random().nextBoolean(), arrivalLounge, bagColPoint, bagRecOffice, arrivalQuay, departureQuay, departureTerminalEntrance, arrivalTerminalExit);
             }
         }
