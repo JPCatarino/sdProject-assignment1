@@ -34,6 +34,15 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
 
     @Override
     public synchronized int takeARest() {
+
+        try {
+            while (!pWake) {
+                wait();
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         if (false)
             return 1;
         else
@@ -48,11 +57,11 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
             bag = plainBags.remove(0);
 
         }
-        notifyAll();
 
         repo.setP_Stat(PorterStates.AT_THE_PLANES_HOLD.getState());
         repo.toString_debug();
         repo.reportStatus();
+        notifyAll();
 
         return bag;
     }
@@ -64,13 +73,6 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
         repo.toString_debug();
         repo.reportStatus();
 
-        try {
-            while (!pWake) {
-                wait();
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override

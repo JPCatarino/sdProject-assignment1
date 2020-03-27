@@ -45,7 +45,7 @@ public class AirportRhapsody {
         TempStgArea tempStgArea = new TempStgArea(repository);
 
         // Initiate entities
-        BusDriver busDriver = new BusDriver(1000, arrivalQuay, departureQuay);
+        BusDriver busDriver = new BusDriver(100, arrivalQuay, departureQuay);
         // Initiate Porter
         Porter porter = new Porter(arrivalLounge, bagColPoint, tempStgArea);
         // Initiate passengers

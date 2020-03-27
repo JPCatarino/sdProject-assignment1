@@ -70,6 +70,7 @@ public class BagColPoint implements BCPPassenger, BCPPorter {
         repo.setCB(conveyorBelt.size());
         repo.toString_debug();
         repo.reportStatus();
+
         notifyAll();
 
     };
