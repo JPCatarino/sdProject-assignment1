@@ -90,7 +90,7 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
         Passenger p = (Passenger) Thread.currentThread();
 
         busWaitingLine.add(p.getID());
-        repo.setQ(busWaitingLine.size(), String.valueOf(p.getID()));
+        repo.setQ(busWaitingLine.size()-1, String.valueOf(p.getID()));
         repo.toString_debug();
         repo.reportStatus();
 
