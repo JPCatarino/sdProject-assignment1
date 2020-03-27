@@ -71,14 +71,14 @@ public class Porter extends Thread {
     @Override
     public void run() {
 
-        while (al.takeARest() != 'E') {
+        while (al.takeARest() != END_OF_STATE) {
             planeHoldEmpty = false;
             while (!planeHoldEmpty) {
                 bag = al.tryToCollectABag();
                 if (bag == null) {
                     planeHoldEmpty = true;
                     noMoreBagsToCollect();
-                } else if ((char) bag[1] == 'T') {
+                } else if ( bag[1] == TRANSIT) {
                     tsa.carryItToAppropriateStore(bag);
                 } else {
                     bcp.carryItToAppropriateStore(bag);
