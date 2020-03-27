@@ -42,7 +42,7 @@ public class Porter extends Thread {
      *
      *    @serialField bag
      */
-    private Object[] bag;
+    private int[] bag;
 
     /**
      *  Report if the plane hold is empty.
@@ -62,7 +62,7 @@ public class Porter extends Thread {
         this.al = al;
         this.bcp = bcp;
         this.tsa = tsa;
-        bag = new Object[2];
+        bag = new int[2];
     }
 
     /**
@@ -71,14 +71,14 @@ public class Porter extends Thread {
     @Override
     public void run() {
 
-        while (al.takeARest() != 'E') {
+        while (al.takeARest() != END_OF_STATE) {
             planeHoldEmpty = false;
             while (!planeHoldEmpty) {
                 bag = al.tryToCollectABag();
                 if (bag == null) {
                     planeHoldEmpty = true;
                     noMoreBagsToCollect();
-                } else if ((char) bag[1] == 'T') {
+                } else if ( bag[1] == TRANSIT) {
                     tsa.carryItToAppropriateStore(bag);
                 } else {
                     bcp.carryItToAppropriateStore(bag);
