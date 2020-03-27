@@ -17,9 +17,10 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
     int numberOfPassengers;
     int maxNumberOfPassengers;
 
-    public ArrivalLounge(Repository repo){
+    public ArrivalLounge(Repository repo, List<int[]> plainBags){
         this.repo = repo;
         this.maxNumberOfPassengers = repo.getN_PASSENGERS();
+        this.plainBags = plainBags;
     }
 
     @Override
@@ -41,10 +42,11 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
 
     @Override
     public synchronized int[] tryToCollectABag() {
-        int[] bag= new int[2];
+        int[] bag = null;
 
         if (!plainBags.isEmpty()) {
-            bag = plainBags.get(0);
+            bag = plainBags.remove(0);
+
         }
 
         repo.setP_Stat(PorterStates.AT_THE_PLANES_HOLD.getState());

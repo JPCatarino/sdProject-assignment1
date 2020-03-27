@@ -5,6 +5,8 @@ import entities.Passenger;
 import entities.Porter;
 import sharedRegions.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -15,8 +17,25 @@ public class AirportRhapsody {
 
     public static void main(String args[]){
         // Initiate Shared Regions
+
+        List<int[]> plainBags=new ArrayList<>();
+
+        int [] arr1=  {1,0};
+        int [] arr2=  {2,0};
+        int [] arr3=  {3,0};
+        int [] arr4=  {4,0};
+        int [] arr5=  {5,0};
+        int [] arr6=  {6,0};
+
+        plainBags.add(arr1);
+        plainBags.add(arr2);
+        plainBags.add(arr3);
+        plainBags.add(arr4);
+        plainBags.add(arr5);
+        plainBags.add(arr6);
+
         Repository repository = new Repository();
-        ArrivalLounge arrivalLounge = new ArrivalLounge(repository);
+        ArrivalLounge arrivalLounge = new ArrivalLounge(repository,plainBags);
         ArrivalQuay arrivalQuay = new ArrivalQuay(repository);
         ArrivalTerminalExit arrivalTerminalExit = new ArrivalTerminalExit(repository);
         BagColPoint bagColPoint = new BagColPoint(repository);
