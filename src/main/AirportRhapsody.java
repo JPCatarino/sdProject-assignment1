@@ -67,6 +67,7 @@ public class AirportRhapsody {
         // before starting another batch of passengers.
         // After, we wait till the porter and bus driver finished and close the program successfully
         for(int i = 0; i < flights.length; i++){
+            repository.setFN(i);
             for(int z = 0; z < flights[i].length; z++){
                 flights[i][z].start();
             }

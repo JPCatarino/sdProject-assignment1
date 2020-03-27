@@ -76,7 +76,9 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
     @Override
     public synchronized PassengerDecisions whatShouldIDo(){
         Passenger p = (Passenger) Thread.currentThread();
-
+        p.setPassengerState(PassengerStates.AT_THE_DISEMBARKING_ZONE);
+        repo.setST(p.getID(), PassengerStates.AT_THE_DISEMBARKING_ZONE.getState());
+        repo.reportStatus();
         // Increment number of passengers on the ArrivalLounge
         numberOfPassengers++;
 
