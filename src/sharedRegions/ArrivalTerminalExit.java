@@ -8,6 +8,10 @@ public class ArrivalTerminalExit implements ATEPassenger{
 
     private Repository repo;
 
+    public ArrivalTerminalExit(Repository repo) {
+        this.repo = repo;
+    }
+
     @Override
     public synchronized void goHome(){
         Passenger p = (Passenger) Thread.currentThread();

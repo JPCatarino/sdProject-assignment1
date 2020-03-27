@@ -16,9 +16,9 @@ public class AirportRhapsody {
     public static void main(String args[]){
         // Initiate Shared Regions
         Repository repository = new Repository();
-        ArrivalLounge arrivalLounge = new ArrivalLounge();
+        ArrivalLounge arrivalLounge = new ArrivalLounge(repository);
         ArrivalQuay arrivalQuay = new ArrivalQuay(repository);
-        ArrivalTerminalExit arrivalTerminalExit = new ArrivalTerminalExit();
+        ArrivalTerminalExit arrivalTerminalExit = new ArrivalTerminalExit(repository);
         BagColPoint bagColPoint = new BagColPoint(repository);
         BagRecOffice bagRecOffice = new BagRecOffice(repository);
         DepartureQuay departureQuay = new DepartureQuay(repository);
