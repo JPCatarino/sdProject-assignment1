@@ -82,6 +82,7 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
 
             // Wake up Porter
             if(numberOfPassengers == maxNumberOfPassengers){
+                pWake = true;
                 notifyAll();
             }
         }
