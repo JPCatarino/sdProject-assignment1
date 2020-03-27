@@ -54,7 +54,7 @@ public class AirportRhapsody {
         Passenger[][] flights = new Passenger [repository.getK_LANDINGS()][repository.getN_PASSENGERS()];
         for(int i = 0; i < flights.length; i++) {
             for (int z = 0; z < flights[i].length; z++){
-                flights[i][z] = new Passenger(z, (int) Math.random() * (2 ), new Random().nextBoolean(), arrivalLounge, bagColPoint, bagRecOffice, arrivalQuay, departureQuay, departureTerminalEntrance, arrivalTerminalExit);
+                flights[i][z] = new Passenger(z, 1, new Random().nextBoolean(), arrivalLounge, bagColPoint, bagRecOffice, arrivalQuay, departureQuay, departureTerminalEntrance, arrivalTerminalExit);
             }                                                                         // change to 2+1
         }
 

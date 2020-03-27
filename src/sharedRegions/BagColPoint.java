@@ -32,18 +32,19 @@ public class BagColPoint implements BCPPassenger, BCPPorter {
         repo.setST(p.getID(), PassengerStates.AT_THE_LUGGAGE_COLLECTION_POINT.getState());
         repo.toString_debug();
         repo.reportStatus();
-
         // Logic may be changed
         // While there's bags on the hold the passenger waits
         // If there's bags on the conveyor belt it tries to collect one with it's ID
         // In case the passengers find one, it collects it.
+
         try{
-            while(!noMoreBags && p.getnBagsToCollect() != p.getnBagsCollected()){
+            while(!noMoreBags && !(p.getnBagsToCollect() == p.getnBagsCollected())){
                 if(bagsInTheConveyorBelt){
                     for(int i = 0; i < conveyorBelt.size(); i++){
                         if(conveyorBelt.get(i)[0] == p.getID()){
                             conveyorBelt.remove(i);
                             p.collectedABag();
+                            System.out.println(p.getID() + " collected");
                             repo.setNA(p.getID(), p.getnBagsCollected());
                             repo.toString_debug();
                             repo.reportStatus();
@@ -51,8 +52,12 @@ public class BagColPoint implements BCPPassenger, BCPPorter {
                         }
                     }
                 }
-                else
+                if(!(p.getnBagsToCollect() == p.getnBagsCollected())) {
                     wait();
+                }
+                else{
+                    break;
+                }
             }
         }
         catch(InterruptedException ex){
@@ -64,8 +69,6 @@ public class BagColPoint implements BCPPassenger, BCPPorter {
     @Override
     public synchronized void carryItToAppropriateStore(int [] bag){
         Porter pt = (Porter) Thread.currentThread();
-
-        System.out.println("Here");
 
         this.conveyorBelt.add(bag);
         this.bagsInTheConveyorBelt = true;

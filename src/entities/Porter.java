@@ -74,29 +74,18 @@ public class Porter extends Thread {
     public void run() {
 
         while (al.takeARest() != END_OF_STATE) {
-            System.out.print("O");
             planeHoldEmpty = false;
             while (!planeHoldEmpty) {
                 bag = al.tryToCollectABag();
-                System.out.print("M");
                 if (bag == null) {
-                    System.out.print("N");
                     planeHoldEmpty = true;
                     noMoreBagsToCollect();
-                    System.out.print("N1");
                 } else if ( bag[1] == TRANSIT) {
-                    System.out.print("T");
                     tsa.carryItToAppropriateStore(bag);
-                    System.out.print("T1");
                 } else {
-                    System.out.print("B");
                     bcp.carryItToAppropriateStore(bag);
-                    System.out.print("B1");
-
                 }
             }
-            System.out.print("E");
-
             al.noMoreBagsToCollect();
         }
     }
