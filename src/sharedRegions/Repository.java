@@ -404,7 +404,7 @@ public class Repository {
         transit = N_PASSENGERS -  finalDest;
 
         try {
-            fw = new FileWriter("Log.txt", true);
+            fw = new FileWriter(filename, true);
             try (PrintWriter pw = new PrintWriter(fw)) {
                 pw.println();
                 pw.println("Final report");
