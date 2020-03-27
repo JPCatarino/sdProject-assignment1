@@ -370,4 +370,34 @@ public class Repository {
             e.printStackTrace();
         }
     }
+
+    public void finalReport(){
+        FileWriter fw;
+        int finalDest = 0;
+        int transit = 0;
+        int totalbags = 0;
+        int bagslost = 0;
+
+        for (String tmp : SI){
+            if (tmp.equals("FDT"))
+                finalDest++;
+        }
+
+        transit = N_PASSENGERS -  finalDest;
+
+        try {
+            fw = new FileWriter("Log.txt", true);
+            try (PrintWriter pw = new PrintWriter(fw)) {
+                pw.println();
+                pw.println("Final report");
+                pw.println("N. of passengers which have this airport as their final destination = " + finalDest);
+                pw.println("N. of passengers in transit = " + transit);
+                pw.println("N. of bags that should have been transported in the the planes hold = " + totalbags);
+                pw.println("N. of bags that were lost = " + bagslost);
+                pw.println();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
