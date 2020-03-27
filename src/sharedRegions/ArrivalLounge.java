@@ -21,6 +21,7 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
         this.repo = repo;
         this.maxNumberOfPassengers = repo.getN_PASSENGERS();
         this.plainBags = plainBags;
+        repo.setBN(plainBags.size());
     }
 
     @Override
@@ -36,7 +37,7 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
     public synchronized int takeARest() {
 
         try {
-            while (!pWake) {
+            while (!pWake | plainBags.isEmpty()) {
                 wait();
             }
         } catch (InterruptedException e) {
@@ -53,12 +54,13 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
     public synchronized int[] tryToCollectABag() {
         int[] bag = null;
 
+        repo.setP_Stat(PorterStates.AT_THE_PLANES_HOLD.getState());
+
         if (!plainBags.isEmpty()) {
             bag = plainBags.remove(0);
-
+            repo.setBN(plainBags.size());
         }
 
-        repo.setP_Stat(PorterStates.AT_THE_PLANES_HOLD.getState());
         repo.toString_debug();
         repo.reportStatus();
         notifyAll();
@@ -99,5 +101,9 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
 
         return PassengerDecisions.TAKE_A_BUS;
 
+    }
+
+    public void setPlainBags(List<int[]> plainBags) {
+        this.plainBags = plainBags;
     }
 }

@@ -25,7 +25,7 @@ public class AirportRhapsody {
         int [] arr3=  {3,2};
         int [] arr4=  {4,2};
         int [] arr5=  {5,2};
-        int [] arr6=  {6,2};
+        int [] arr6=  {0,2};
 
         plainBags.add(arr1);
         plainBags.add(arr2);
