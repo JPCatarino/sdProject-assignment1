@@ -48,6 +48,7 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
             bag = plainBags.remove(0);
 
         }
+        notifyAll();
 
         repo.setP_Stat(PorterStates.AT_THE_PLANES_HOLD.getState());
         repo.toString_debug();

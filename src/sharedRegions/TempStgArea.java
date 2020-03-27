@@ -20,6 +20,7 @@ public class TempStgArea implements TSAPorter {
     public synchronized void carryItToAppropriateStore(int [] bag) {
 
         this.storeroom.add(bag);
+        notifyAll();
 
         repo.setP_Stat(PorterStates.AT_THE_STOREROOM.getState());
         repo.setSR(storeroom.size());
