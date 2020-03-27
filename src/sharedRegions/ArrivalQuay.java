@@ -19,12 +19,14 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
     List<Integer> parkedBus;
     int timeForDeparture;
     boolean boardingTheBus;             // To let passengers know it's okay to board the bus
+    int availableSeats;
 
     public ArrivalQuay(Repository repo){
         this.repo = repo;
         this.boardingTheBus = false;
         this.parkedBus = new ArrayList<>();
         this.busWaitingLine = new LinkedList<>();
+        this.availableSeats = repo.getT_SEATS();
     }
 
     /**
@@ -41,7 +43,7 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
 
             boardingTheBus = true;
 
-            while(!busWaitingLine.isEmpty()){
+            while(!busWaitingLine.isEmpty() && parkedBus.size() < repo.getT_SEATS()){
                 notifyAll();                                                // Notify passengers for them to enter the bus.
                 wait();                                                     ;
             }
@@ -114,7 +116,7 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
         repo.toString_debug();
         repo.reportStatus();
 
-        if(busWaitingLine.size() == 0){
+        if(busWaitingLine.size() == 0 || parkedBus.size() == repo.getT_SEATS()){
             notifyAll();
         }
     }
