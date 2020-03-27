@@ -35,7 +35,7 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
     public synchronized void announcingBusBoarding(){
         BusDriver bd = (BusDriver)Thread.currentThread();
         try {
-            while ((busWaitingLine.size() != repo.getT_SEATS()) && !busWaitingLine.isEmpty()) {
+            while ((busWaitingLine.size() != repo.getT_SEATS()) && busWaitingLine.isEmpty()) {
                 wait(bd.getTTL());                                          // Block while passengers enter queue
             }
 
@@ -123,7 +123,7 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
     public synchronized void sitOnTheBus(int id){
 
         if(parkedBus.size() < repo.getT_SEATS()){
-            repo.setQ(busWaitingLine.size(), "-");
+            repo.setQ(busWaitingLine.size() - 1 , "-");
             busWaitingLine.remove();
             parkedBus.add(id);
             repo.setS(parkedBus.indexOf(id), String.valueOf(id));

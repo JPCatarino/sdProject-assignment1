@@ -44,7 +44,7 @@ public class BusDriver extends Thread {
      * @return True, if the day has ended.
      */
     public boolean hasDaysWorkEnded (){
-        return true;
+        return false;
     }
 
     /**
