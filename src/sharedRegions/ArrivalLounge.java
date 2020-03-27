@@ -80,22 +80,13 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
         // Increment number of passengers on the ArrivalLounge
         numberOfPassengers++;
 
-        try{
-            while(numberOfPassengers < maxNumberOfPassengers){
-                wait();
-            }
-
-            // Wake up Porter
-            if(numberOfPassengers == maxNumberOfPassengers){
-                pWake = true;
-                notifyAll();
-            }
-        }
-        catch(InterruptedException ex){
-            System.err.println("whatShouldIDo - Thread Interrupted");
+        // Wake up Porter
+        if(numberOfPassengers == maxNumberOfPassengers){
+            pWake = true;
+            numberOfPassengers = 0;
+            notifyAll();
         }
 
-        numberOfPassengers--;
         // If journey is ending, passenger should either collect bags or go home
         // otherwise, he takes a bus
         if(p.isJourneyEnding()){
