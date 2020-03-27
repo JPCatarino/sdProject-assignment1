@@ -3,7 +3,11 @@ package sharedRegions;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.stream.Stream;
 
 import UI.Color;
 import states.BusDriverStates;
@@ -123,6 +127,7 @@ public class Repository {
      */
     private int[] NA;
 
+    private String filename;
     /**
      * Repository Instanciation.
      */
@@ -160,7 +165,6 @@ public class Repository {
         this.NR = new int[N_PASSENGERS];
         this.NA = new int[N_PASSENGERS];
         reportInitialStatus();
-
     }
 
     public void setFN(int FN) {
@@ -345,8 +349,20 @@ public class Repository {
      */
     public void reportInitialStatus() {
         FileWriter fw;
+
+        long count=0;
+
+        try (Stream<Path> walk = Files.walk(Paths.get("./LOG"))) {
+            count = walk.filter(Files::isRegularFile).count();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        filename="./LOG/log"+count+".txt";
+
         try {
-            fw = new FileWriter("Log.txt", false);
+            fw = new FileWriter(filename, false);
             try (PrintWriter pw = new PrintWriter(fw)) {
                 pw.print(new String(new char[31 + (19 * N_PASSENGERS - 4) / 2 - 34]) + "AIRPORT RHAPSODY - Description of the internal state of the problem\n");
                 pw.println();
@@ -364,7 +380,7 @@ public class Repository {
     public void reportStatus() {
         FileWriter fw;
         try {
-            fw = new FileWriter("Log.txt", true);
+            fw = new FileWriter(filename, true);
             try (PrintWriter pw = new PrintWriter(fw)) {
                 pw.print(toString());
             }
@@ -388,7 +404,7 @@ public class Repository {
         transit = N_PASSENGERS -  finalDest;
 
         try {
-            fw = new FileWriter("Log.txt", true);
+            fw = new FileWriter(filename, true);
             try (PrintWriter pw = new PrintWriter(fw)) {
                 pw.println();
                 pw.println("Final report");

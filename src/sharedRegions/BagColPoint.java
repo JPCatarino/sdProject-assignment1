@@ -65,12 +65,13 @@ public class BagColPoint implements BCPPassenger, BCPPorter {
         this.conveyorBelt.add(bag);
         this.bagsInTheConveyorBelt = true;
         this.noMoreBags = false;
-        notifyAll();
 
         repo.setP_Stat(PorterStates.AT_THE_LUGGAGE_BELT_CONVEYOR.getState());
-        repo.setSR(conveyorBelt.size());
+        repo.setCB(conveyorBelt.size());
         repo.toString_debug();
         repo.reportStatus();
+        notifyAll();
+
     };
 
     @Override
