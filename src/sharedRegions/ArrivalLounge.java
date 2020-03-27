@@ -5,6 +5,9 @@ import interfaces.ALPassenger;
 import interfaces.ALPorter;
 import states.PassengerDecisions;
 import states.PassengerStates;
+import states.PorterStates;
+
+import java.util.List;
 
 public class ArrivalLounge implements ALPassenger, ALPorter {
     Repository repo;

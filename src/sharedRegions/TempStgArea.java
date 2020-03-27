@@ -1,6 +1,9 @@
 package sharedRegions;
 
 import interfaces.TSAPorter;
+import states.PorterStates;
+
+import java.util.List;
 
 public class TempStgArea implements TSAPorter {
 

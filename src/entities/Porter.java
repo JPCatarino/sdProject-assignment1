@@ -42,7 +42,7 @@ public class Porter extends Thread {
      *
      *    @serialField bag
      */
-    private Object[] bag;
+    private int[] bag;
 
     /**
      *  Report if the plane hold is empty.
@@ -62,7 +62,7 @@ public class Porter extends Thread {
         this.al = al;
         this.bcp = bcp;
         this.tsa = tsa;
-        bag = new Object[2];
+        bag = new int[2];
     }
 
     /**
