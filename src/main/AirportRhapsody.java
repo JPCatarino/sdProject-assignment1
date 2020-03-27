@@ -20,12 +20,12 @@ public class AirportRhapsody {
 
         List<int[]> plainBags=new ArrayList<>();
 
-        int [] arr1=  {1,0};
-        int [] arr2=  {2,0};
-        int [] arr3=  {3,0};
-        int [] arr4=  {4,0};
-        int [] arr5=  {5,0};
-        int [] arr6=  {6,0};
+        int [] arr1=  {1,2};
+        int [] arr2=  {2,2};
+        int [] arr3=  {3,2};
+        int [] arr4=  {4,2};
+        int [] arr5=  {5,2};
+        int [] arr6=  {6,2};
 
         plainBags.add(arr1);
         plainBags.add(arr2);
@@ -54,8 +54,8 @@ public class AirportRhapsody {
         Passenger[][] flights = new Passenger [repository.getK_LANDINGS()][repository.getN_PASSENGERS()];
         for(int i = 0; i < flights.length; i++) {
             for (int z = 0; z < flights[i].length; z++){
-                flights[i][z] = new Passenger(z, (int) Math.random() * (2 + 1), new Random().nextBoolean(), arrivalLounge, bagColPoint, bagRecOffice, arrivalQuay, departureQuay, departureTerminalEntrance, arrivalTerminalExit);
-            }
+                flights[i][z] = new Passenger(z, (int) Math.random() * (2 ), new Random().nextBoolean(), arrivalLounge, bagColPoint, bagRecOffice, arrivalQuay, departureQuay, departureTerminalEntrance, arrivalTerminalExit);
+            }                                                                         // change to 2+1
         }
 
         // Join BusDriver and Porter
