@@ -92,7 +92,7 @@ public class AirportRhapsody {
                     tmpArr[1] = statePassenger[i][j];
                     plainBags.add(tmpArr);
                 }
-                repository.reset_Passenger(j,numBagsPassenger[i][j][0]);
+                repository.reset_Passenger(j);
             }
             tempStgArea.clearStoreroom();
             repository.reset_Porter();

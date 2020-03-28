@@ -214,6 +214,7 @@ public class Repository {
     }
 
     public void setNR(int num, int NR) {
+        totalbags += NR;
         this.NR[num] = NR;
     }
 
@@ -225,12 +226,11 @@ public class Repository {
         bagslost += SR;
         this.SR = 0;
     }
-    public void reset_Passenger(int num, int numBag) {
+    public void reset_Passenger(int num) {
         bagslost += NA[num];
-        totalbags += NR[num];
         this.ST[num]="-";
         this.SI[num]="-";
-        this.NR[num]=numBag;
+        this.NR[num]=0;
         this.NA[num]=0;
     }
     public String header_requested() {
@@ -373,7 +373,6 @@ public class Repository {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        reportStatus();
     }
 
     /**
@@ -393,6 +392,11 @@ public class Repository {
 
     public void finalReport(){
         FileWriter fw;
+        int tmp=SR;
+
+        for (int k=0; k<N_PASSENGERS;k++ ){
+            tmp += NA[k];
+        }
 
         try {
             fw = new FileWriter(filename, true);
@@ -402,7 +406,7 @@ public class Repository {
                 pw.println("N. of passengers which have this airport as their final destination = " + finalDest);
                 pw.println("N. of passengers in transit = " + transit);
                 pw.println("N. of bags that should have been transported in the the planes hold = " + totalbags);
-                pw.println("N. of bags that were lost = " + (totalbags-bagslost));
+                pw.println("N. of bags that were lost = " + (totalbags-(bagslost + tmp)));
                 pw.println();
             }
         } catch (IOException e) {
