@@ -44,7 +44,7 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
         Porter pt = (Porter) Thread.currentThread();
 
         try {
-            while ((!pWake || (plainBags.isEmpty() && flightNumber != maxNumberOfFlights))) {
+            while (!pWake) {
                 wait();
             }
         } catch (InterruptedException e) {
@@ -81,7 +81,8 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
         repo.setP_Stat(PorterStates.WAITING_FOR_A_PLANE_TO_LAND.getState());
         repo.reportStatus();
         notifyAll();
-
+        if(flightNumber != maxNumberOfFlights)
+            pWake = false;
 
     }
 
