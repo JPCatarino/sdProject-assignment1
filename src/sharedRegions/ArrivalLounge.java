@@ -93,7 +93,6 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
         Passenger p = (Passenger) Thread.currentThread();
         p.setPassengerState(PassengerStates.AT_THE_DISEMBARKING_ZONE);
         repo.setST(p.getID(), PassengerStates.AT_THE_DISEMBARKING_ZONE.getState());
-        repo.reportStatus();
         // Increment number of passengers on the ArrivalLounge
         numberOfPassengers++;
 
@@ -108,9 +107,11 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
         // otherwise, he takes a bus
         if(p.isJourneyEnding()){
             repo.setSI(p.getID(), PassengerStates.FINAL_DESTINATION.getState());
+            repo.reportStatus();
             return p.getnBagsToCollect() != 0 ? PassengerDecisions.COLLECT_A_BAG : PassengerDecisions.GO_HOME;
         }
         repo.setSI(p.getID(), PassengerStates.IN_TRANSIT.getState());
+        repo.reportStatus();
         return PassengerDecisions.TAKE_A_BUS;
 
     }
