@@ -22,7 +22,6 @@ public class ArrivalTerminalExit implements ATEPassenger{
         Passenger p = (Passenger) Thread.currentThread();
         p.setPassengerState(PassengerStates.EXITING_THE_ARRIVAL_TERMINAL);
         repo.setST(p.getID(), PassengerStates.EXITING_THE_ARRIVAL_TERMINAL.getState());
-        repo.toString_debug();
         repo.reportStatus();
 
         al.updateFinishedPassenger();

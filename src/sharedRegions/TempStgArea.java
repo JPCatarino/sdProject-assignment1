@@ -23,7 +23,6 @@ public class TempStgArea implements TSAPorter {
 
         repo.setP_Stat(PorterStates.AT_THE_STOREROOM.getState());
         repo.setSR(storeroom.size());
-        repo.toString_debug();
         repo.reportStatus();
 
         notifyAll();

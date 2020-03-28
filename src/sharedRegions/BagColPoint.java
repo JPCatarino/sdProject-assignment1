@@ -29,7 +29,6 @@ public class BagColPoint implements BCPPassenger, BCPPorter {
         Passenger p = (Passenger) Thread.currentThread();
         p.setPassengerState(PassengerStates.AT_THE_LUGGAGE_COLLECTION_POINT);
         repo.setST(p.getID(), PassengerStates.AT_THE_LUGGAGE_COLLECTION_POINT.getState());
-        repo.toString_debug();
         repo.reportStatus();
         // Logic may be changed
         // While there's bags on the hold the passenger waits
@@ -45,7 +44,6 @@ public class BagColPoint implements BCPPassenger, BCPPorter {
                             p.collectedABag();
                             repo.setCB(conveyorBelt.size());
                             repo.setNA(p.getID(), p.getnBagsCollected());
-                            repo.toString_debug();
                             repo.reportStatus();
                             break;
                         }
@@ -74,7 +72,6 @@ public class BagColPoint implements BCPPassenger, BCPPorter {
         this.noMoreBags = false;
         repo.setP_Stat(PorterStates.AT_THE_LUGGAGE_BELT_CONVEYOR.getState());
         repo.setCB(conveyorBelt.size());
-        repo.toString_debug();
         repo.reportStatus();
 
         notifyAll();

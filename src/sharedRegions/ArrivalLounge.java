@@ -36,7 +36,6 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
         Passenger p = (Passenger) Thread.currentThread();
         p.setPassengerState(PassengerStates.AT_THE_ARRIVAL_TRANSFER_TERMINAL);
         repo.setST(p.getID(), PassengerStates.AT_THE_ARRIVAL_TRANSFER_TERMINAL.getState());
-        repo.toString_debug();
         repo.reportStatus();
     }
 
@@ -70,7 +69,6 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
             repo.setBN(plainBags.size());
         }
 
-        repo.toString_debug();
         repo.reportStatus();
         notifyAll();
 
@@ -81,7 +79,6 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
     public synchronized void noMoreBagsToCollect() {
 
         repo.setP_Stat(PorterStates.WAITING_FOR_A_PLANE_TO_LAND.getState());
-        repo.toString_debug();
         repo.reportStatus();
         notifyAll();
 
