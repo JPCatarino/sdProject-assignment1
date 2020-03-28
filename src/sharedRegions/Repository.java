@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.stream.Stream;
 
 import UI.Color;
@@ -90,7 +91,7 @@ public class Repository {
      *
      * @serialField Q
      */
-    private String[] Q;
+    private LinkedList<String> Q;
 
     /**
      * Occupation state for seat in the bus (passenger id / - (empty))
@@ -143,8 +144,9 @@ public class Repository {
         this.M_LUGGAGE = M_luggage;
         this.N_PASSENGERS = N_passengers;
         this.T_SEATS = T_seats;
-        this.Q = new String[N_PASSENGERS];
-        Arrays.fill(this.Q, "-");
+        this.Q = new LinkedList<>();
+        for(int i = 0; i < N_PASSENGERS; i++)
+            Q.add("-");
         this.S = new String[T_SEATS];
         Arrays.fill(this.S, "-");
         this.ST = new String[N_PASSENGERS];
@@ -180,8 +182,13 @@ public class Repository {
         D_Stat = d_Stat;
     }
 
-    public void setQ(int num, String q) {
-        this.Q[num] = q;
+    public void setQIn(int num,String q) {
+        this.Q.add(num,q);
+    }
+
+    public synchronized void setQOut(){
+        this.Q.removeFirst();
+        this.Q.add("-");
     }
 
     public void setS(int num, String s) {
@@ -265,7 +272,7 @@ public class Repository {
 
         result = new StringBuilder(String.format("%-2d %-2d    ", FN, BN));
         result.append(String.format("%-4s  %-2d %-2d    ", P_Stat, CB, SR));
-        result.append(String.format("%-4s  %-2s %-2s %-2s %-2s %-2s %-2s  %-2s %-2s %-2s    ", D_Stat, Q[0], Q[1], Q[2], Q[3], Q[4], Q[5], S[0], S[1], S[2]));
+        result.append(String.format("%-4s  %-2s %-2s %-2s %-2s %-2s %-2s  %-2s %-2s %-2s    ", D_Stat, Q.get(0), Q.get(1), Q.get(2), Q.get(3), Q.get(4), Q.get(5), S[0], S[1], S[2]));
 
         for (int num_passager = 1; num_passager <= N_PASSENGERS; num_passager++) {
             result.append(String.format("%-3s", ST[num_passager - 1]))
@@ -291,7 +298,7 @@ public class Repository {
                 .append("    ");
 
         result.append(Color.BACK_BLACK)
-                .append(String.format("%-4s  %-2s %-2s %-2s %-2s %-2s %-2s  %-2s %-2s %-2s", D_Stat, Q[0], Q[1], Q[2], Q[3], Q[4], Q[5], S[0], S[1], S[2]))
+                .append(String.format("%-4s  %-2s %-2s %-2s %-2s %-2s %-2s  %-2s %-2s %-2s", D_Stat, Q.get(0), Q.get(1), Q.get(2), Q.get(3), Q.get(4), Q.get(5), S[0], S[1], S[2]))
                 .append(Color.RESET)
                 .append("    ");
 

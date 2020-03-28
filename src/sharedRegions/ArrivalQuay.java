@@ -97,7 +97,7 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
         Passenger p = (Passenger) Thread.currentThread();
 
         busWaitingLine.add(p.getID());
-        repo.setQ(busWaitingLine.size()-1, String.valueOf(p.getID()));
+        repo.setQIn(busWaitingLine.size()-1,String.valueOf(p.getID()));
         repo.toString_debug();
         repo.reportStatus();
 
@@ -130,8 +130,8 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
     public synchronized void sitOnTheBus(int id){
 
         if(parkedBus.size() < maxNumberOfSeats){
-            repo.setQ(busWaitingLine.size() - 1 , "-");
-            busWaitingLine.remove();
+            repo.setQOut();
+            busWaitingLine.remove(id);
             parkedBus.add(id);
             repo.setS(parkedBus.indexOf(id), String.valueOf(id));
             repo.toString_debug();
