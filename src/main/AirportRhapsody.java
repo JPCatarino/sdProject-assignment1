@@ -18,6 +18,11 @@ public class AirportRhapsody {
     public static void main(String args[]){
         // Initiate Shared Regions
 
+        int K_LANDINGS = 5;
+        int N_PASSENGERS = 6;
+        int M_LUGGAGE = 2;
+        int T_SEATS = 3;
+
         List<int[]> plainBags=new ArrayList<>();
 
         int [] arr1=  {1,2};
@@ -34,9 +39,9 @@ public class AirportRhapsody {
         plainBags.add(arr5);
         plainBags.add(arr6);
 
-        Repository repository = new Repository();
-        ArrivalLounge arrivalLounge = new ArrivalLounge(repository,plainBags);
-        ArrivalQuay arrivalQuay = new ArrivalQuay(repository);
+        Repository repository = new Repository(N_PASSENGERS, T_SEATS,K_LANDINGS, M_LUGGAGE);
+        ArrivalLounge arrivalLounge = new ArrivalLounge(repository,plainBags,N_PASSENGERS, K_LANDINGS);
+        ArrivalQuay arrivalQuay = new ArrivalQuay(repository,T_SEATS);
         ArrivalTerminalExit arrivalTerminalExit = new ArrivalTerminalExit(repository, arrivalLounge);
         BagColPoint bagColPoint = new BagColPoint(repository);
         BagRecOffice bagRecOffice = new BagRecOffice(repository);
@@ -52,7 +57,7 @@ public class AirportRhapsody {
         // Initiate passengers
         // For each flight
         // initiate N passenger
-        Passenger[][] flights = new Passenger [repository.getK_LANDINGS()][repository.getN_PASSENGERS()];
+        Passenger[][] flights = new Passenger [K_LANDINGS][N_PASSENGERS];
         for(int i = 0; i < flights.length; i++) {
             for (int z = 0; z < flights[i].length; z++){
                 flights[i][z] = new Passenger(z, 1, new Random().nextBoolean(), arrivalLounge, bagColPoint, bagRecOffice, arrivalQuay, departureQuay, departureTerminalEntrance, arrivalTerminalExit);

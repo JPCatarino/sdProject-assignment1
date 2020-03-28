@@ -20,28 +20,28 @@ public class Repository {
      *
      * @serialField K_LANDINGS
      */
-    private int K_LANDINGS = 5;
+    private int K_LANDINGS;
 
     /**
      * Number of passengers for this simulation.
      *
      * @serialField N_PASSENGERS
      */
-    private int N_PASSENGERS = 6;
+    private int N_PASSENGERS;
 
     /**
      * Number of luggage allowed on plane hold for this simulation.
      *
      * @serialField M_LUGGAGE
      */
-    private int M_LUGGAGE = 2;
+    private int M_LUGGAGE;
 
     /**
      * Capacity of the transfer bus.
      *
      * @serialField T_SEATS
      */
-    private int T_SEATS = 3;
+    private int T_SEATS;
 
     /**
      * Flight number.
@@ -128,30 +128,19 @@ public class Repository {
     private int[] NA;
 
     private String filename;
-    /**
-     * Repository Instanciation.
-     */
-    public Repository() {
-        this.Q = new String[N_PASSENGERS];
-        Arrays.fill(this.Q, "-");
-        this.S = new String[T_SEATS];
-        Arrays.fill(this.S, "-");
-        this.ST = new String[N_PASSENGERS];
-        Arrays.fill(this.ST, "-");
-        this.SI = new String[N_PASSENGERS];
-        Arrays.fill(this.SI, "-");
-        this.NR = new int[N_PASSENGERS];
-        this.NA = new int[N_PASSENGERS];
-        reportInitialStatus();
-    }
 
     /**
      * Repository Instanciation with custom number of passengers and seats.
      *
-     * @param N_passengers number of passengers for this simulation.
+     * @param N_passengers Number of passengers for this simulation.
      * @param T_seats      Capacity of the transfer bus.
+     * @param K_landings   Number of flights.
+     * @param M_luggage    Number max of bags by passenger.
      */
-    public Repository(int N_passengers, int T_seats) {
+    public Repository(int N_passengers, int T_seats, int K_landings, int M_luggage) {
+
+        this.K_LANDINGS = K_landings;
+        this.M_LUGGAGE = M_luggage;
         this.N_PASSENGERS = N_passengers;
         this.T_SEATS = T_seats;
         this.Q = new String[N_PASSENGERS];
@@ -213,22 +202,6 @@ public class Repository {
 
     public void setNA(int num, int NA) {
         this.NA[num] = NA;
-    }
-
-    public int getK_LANDINGS() {
-        return K_LANDINGS;
-    }
-
-    public int getN_PASSENGERS() {
-        return N_PASSENGERS;
-    }
-
-    public int getM_LUGGAGE() {
-        return M_LUGGAGE;
-    }
-
-    public int getT_SEATS() {
-        return T_SEATS;
     }
 
     public String header_requested() {

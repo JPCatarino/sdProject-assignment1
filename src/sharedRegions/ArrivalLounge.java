@@ -21,10 +21,10 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
     private int finishedPassengers;
     private boolean finishedFlight;
 
-    public ArrivalLounge(Repository repo, List<int[]> plainBags){
+    public ArrivalLounge(Repository repo, List<int[]> plainBags, int N_PASSENGERS, int K_LANDINGS){
         this.repo = repo;
-        this.maxNumberOfPassengers = repo.getN_PASSENGERS();
-        this.maxNumberOfFlights = repo.getK_LANDINGS();
+        this.maxNumberOfPassengers = N_PASSENGERS;
+        this.maxNumberOfFlights = K_LANDINGS;
         this.plainBags = plainBags;
         repo.setBN(plainBags.size());
     }
