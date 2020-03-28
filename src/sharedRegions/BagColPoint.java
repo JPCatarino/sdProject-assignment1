@@ -44,7 +44,6 @@ public class BagColPoint implements BCPPassenger, BCPPorter {
                         if(conveyorBelt.get(i)[0] == p.getID()){
                             conveyorBelt.remove(i);
                             p.collectedABag();
-                            System.out.println(p.getID() + " collected");
                             repo.setCB(conveyorBelt.size());
                             repo.setNA(p.getID(), p.getnBagsCollected());
                             repo.toString_debug();
