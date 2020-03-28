@@ -92,6 +92,7 @@ public class DepartureQuay implements DTTQBusDriver, DTTQPassenger {
         parkedBus.remove(Integer.valueOf(id));
         }
         catch(ArrayIndexOutOfBoundsException ex){
+            System.out.println("Passenger id " + id);
             System.out.println(parkedBus.indexOf(id));
             System.out.println(parkedBus.toString());
             System.out.println("Passengers probably ended");

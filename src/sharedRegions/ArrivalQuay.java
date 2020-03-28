@@ -93,27 +93,27 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
     @Override
     public synchronized void enterTheBus(){
         Passenger p = (Passenger) Thread.currentThread();
+        boolean notOnBoard = true;
 
         busWaitingLine.add(p.getID());
         repo.setQIn(busWaitingLine.size()-1,String.valueOf(p.getID()));
         repo.reportStatus();
 
-        if(busWaitingLine.size() == maxNumberOfSeats){
-            notifyAll();
-        }
-        try {
-            while (!boardingTheBus) {
-                wait();
-            }
-        }
-        catch(InterruptedException ex){
-            System.err.println("enterTheBus - Thread was interrupted");
-            System.exit(1);
-        }
-
-        boolean notOnBoard = true;
         while(notOnBoard) {
-            if (busWaitingLine.peek() == p.getID()) {
+
+            if (busWaitingLine.size() == maxNumberOfSeats) {
+                notifyAll();
+            }
+            try {
+                while (!boardingTheBus) {
+                    wait();
+                }
+            } catch (InterruptedException ex) {
+                System.err.println("enterTheBus - Thread was interrupted");
+                System.exit(1);
+            }
+
+            if (busWaitingLine.peek() == p.getID() && parkedBus.size() != maxNumberOfSeats) {
                 sitOnTheBus(p.getID());
                 notOnBoard = false;
             } else {
