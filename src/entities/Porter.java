@@ -16,7 +16,8 @@ import java.util.Arrays;
 public class Porter extends Thread {
 
     private final static int TRANSIT = 0,
-            END_OF_STATE = 1;
+            FINAL_DESTINATION = 1,
+            END_OF_STATE = 2;
 
     /**
      *  Arrival Lounge.

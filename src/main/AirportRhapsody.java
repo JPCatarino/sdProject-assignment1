@@ -16,32 +16,51 @@ import java.util.Random;
 public class AirportRhapsody {
 
     public static void main(String args[]){
+
+        int K_landings = 5;
+        int N_passengers = 6;
+        int M_luggage = 2;
+        int T_seats = 3;
+
+        final int TRANSIT = 0,
+                  FINAL_DESTINATION = 1;
+
+        int[][] statePassenger = new int[K_landings][N_passengers];
+        int[][][] numBagsPassenger = new int[K_landings][N_passengers][2];
+
+        List<int[]> plainBags = new ArrayList<>();
+
+        for (int i=0;i<K_landings;i++){
+            for (int j=0;j<N_passengers;j++) {
+                statePassenger[i][j] = (Math.random() < 0.40) ? TRANSIT : FINAL_DESTINATION;
+                numBagsPassenger[i][j][0] = new Random().nextInt(2 + 1);
+                if( numBagsPassenger[i][j][0] > 0){
+                    if(Math.random() < 0.10)
+                        numBagsPassenger[i][j][1] = new Random().nextInt(numBagsPassenger[i][j][0]);
+                    else
+                        numBagsPassenger[i][j][1] = numBagsPassenger[i][j][0];
+                }
+                else{
+                    numBagsPassenger[i][j][1] = numBagsPassenger[i][j][0];
+                }
+            }
+        }
+
+        for (int j=0;j<N_passengers;j++) {
+            for (int i=0;i<numBagsPassenger[0][j][1];i++){
+                int[] tmpArr = new int[2];
+                tmpArr[0] = j;
+                tmpArr[1] = statePassenger[0][j];
+                //System.out.println("passager= " + tmpArr[0] + "    state= "+tmpArr[1] + " numbags= "+ numBagsPassenger[0][j][1]);
+                plainBags.add(tmpArr);
+            }
+        }
+
         // Initiate Shared Regions
 
-        int K_LANDINGS = 5;
-        int N_PASSENGERS = 6;
-        int M_LUGGAGE = 2;
-        int T_SEATS = 3;
-
-        List<int[]> plainBags=new ArrayList<>();
-
-        int [] arr1=  {1,2};
-        int [] arr2=  {2,2};
-        int [] arr3=  {3,2};
-        int [] arr4=  {4,2};
-        int [] arr5=  {5,2};
-        int [] arr6=  {0,2};
-
-        plainBags.add(arr1);
-        plainBags.add(arr2);
-        plainBags.add(arr3);
-        plainBags.add(arr4);
-        plainBags.add(arr5);
-        plainBags.add(arr6);
-
-        Repository repository = new Repository(N_PASSENGERS, T_SEATS,K_LANDINGS, M_LUGGAGE);
-        ArrivalLounge arrivalLounge = new ArrivalLounge(repository,plainBags,N_PASSENGERS);
-        ArrivalQuay arrivalQuay = new ArrivalQuay(repository,T_SEATS);
+        Repository repository = new Repository(N_passengers, T_seats,K_landings, M_luggage);
+        ArrivalLounge arrivalLounge = new ArrivalLounge(repository,plainBags,N_passengers);
+        ArrivalQuay arrivalQuay = new ArrivalQuay(repository,T_seats);
         ArrivalTerminalExit arrivalTerminalExit = new ArrivalTerminalExit(repository);
         BagColPoint bagColPoint = new BagColPoint(repository);
         BagRecOffice bagRecOffice = new BagRecOffice(repository);
@@ -56,11 +75,11 @@ public class AirportRhapsody {
         // Initiate passengers
         // For each flight
         // initiate N passenger
-        Passenger[][] flights = new Passenger [K_LANDINGS][N_PASSENGERS];
+        Passenger[][] flights = new Passenger [K_landings][N_passengers];
         for(int i = 0; i < flights.length; i++) {
             for (int z = 0; z < flights[i].length; z++){
-                flights[i][z] = new Passenger(z, 1, new Random().nextBoolean(), arrivalLounge, bagColPoint, bagRecOffice, arrivalQuay, departureQuay, departureTerminalEntrance, arrivalTerminalExit);
-            }                                                                         // change to 2+1
+                flights[i][z] = new Passenger(z, numBagsPassenger[i][z][0], statePassenger[i][z] == 1, arrivalLounge, bagColPoint, bagRecOffice, arrivalQuay, departureQuay, departureTerminalEntrance, arrivalTerminalExit);
+            }
         }
 
         // Join BusDriver and Porter
