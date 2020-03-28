@@ -84,7 +84,7 @@ public class AirportRhapsody {
         for(int i = 0; i < flights.length; i++){
             repository.setFN(i + 1);
             arrivalLounge.setFlightNumber(i+1);
-
+            System.out.println("Flight  "+ (i+1));
             for (int j=0;j<N_passengers;j++) {
                 for (int l=0;l<numBagsPassenger[i][j][1];l++){
                     int[] tmpArr = new int[2];
@@ -92,17 +92,12 @@ public class AirportRhapsody {
                     tmpArr[1] = statePassenger[i][j];
                     plainBags.add(tmpArr);
                 }
-                repository.setNR(j,numBagsPassenger[i][j][0]);
-                repository.setST(j, "-");
-                repository.setSI(j, "-");
-                repository.setNR(j,numBagsPassenger[i][j][0]);
-                repository.setNA(j, 0);
+                repository.reset_Passenger(j,numBagsPassenger[i][j][0]);
             }
+            tempStgArea.clearStoreroom();
+            repository.reset_Porter();
             arrivalLounge.setPlainBags(plainBags);
             repository.setBN(plainBags.size());
-            repository.setSR(0);
-            tempStgArea.clearStoreroom();
-            repository.setCB(0);
             bagColPoint.setNoMoreBags(false);
 
             for(int z = 0; z < flights[i].length; z++){
@@ -125,6 +120,8 @@ public class AirportRhapsody {
             busDriver.join();
         }
         catch(InterruptedException ex){}
+
+        repository.finalReport();
 
         // TODO Ver se é necessário meter aqui alguma coisa do repo
     }
