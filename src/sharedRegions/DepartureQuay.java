@@ -52,7 +52,7 @@ public class DepartureQuay implements DTTQBusDriver, DTTQPassenger {
         repo.toString_debug();
         repo.reportStatus();
         try {
-            bd.sleep(500);
+            bd.sleep(10);
         }
         catch(InterruptedException ex){
             System.err.println("goToArrivalTerminal - Thread Interrupted");

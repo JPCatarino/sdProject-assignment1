@@ -65,6 +65,13 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
         bd.setBusDriverState(BusDriverStates.DRIVING_FORWARD);
         repo.setD_Stat(BusDriverStates.DRIVING_FORWARD.getState());
         repo.reportStatus();
+
+        try {
+            bd.sleep(10);
+        }
+        catch(InterruptedException ex){
+            System.err.println("goToDepartureTerminal - Thread Interrupted");
+        }
     }
 
     /**
