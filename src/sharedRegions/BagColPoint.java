@@ -7,7 +7,6 @@ import interfaces.BCPPorter;
 import states.PassengerStates;
 import states.PorterStates;
 
-import javax.swing.plaf.synth.SynthTextAreaUI;
 import java.util.ArrayList;
 import java.util.List;
 
