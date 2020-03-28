@@ -42,7 +42,7 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
     public synchronized int takeARest() {
 
         try {
-            while (!pWake | plainBags.isEmpty()) {
+            while (!pWake || plainBags.isEmpty()) {
                 wait();
             }
         } catch (InterruptedException e) {
@@ -147,7 +147,7 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
     }
 
     public boolean isDayFinished() {
-        if((this.maxNumberOfFlights == this.flightNumber) && finishedFlight){
+        if((this.maxNumberOfFlights == this.flightNumber) && this.finishedFlight){
             return true;
         }
         return false;
