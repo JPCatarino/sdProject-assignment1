@@ -98,8 +98,9 @@ public class AirportRhapsody {
             arrivalLounge.setPlainBags(plainBags);
             repository.setBN(plainBags.size());
             repository.setSR(0);
+            tempStgArea.clearStoreroom();
             repository.setCB(0);
-
+            bagColPoint.setNoMoreBags(false);
 
 
             for(int z = 0; z < flights[i].length; z++){

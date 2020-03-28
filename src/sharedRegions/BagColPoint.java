@@ -87,7 +87,4 @@ public class BagColPoint implements BCPPassenger, BCPPorter {
         this.noMoreBags = noMoreBags;
     }
 
-    public synchronized void clearConveyorBelt() {
-        this.conveyorBelt.clear();
-    }
 }
