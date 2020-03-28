@@ -7,6 +7,7 @@ import states.PassengerDecisions;
 import states.PassengerStates;
 import states.PorterStates;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class ArrivalLounge implements ALPassenger, ALPorter {
@@ -50,7 +51,7 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
         }
 
         if (false)
-            return 1;
+            return 2;
         else
             return 0;
     }
@@ -126,6 +127,7 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
     }
 
     public synchronized void setPlainBags(List<int[]> plainBags) {
+        System.out.println("set"+plainBags.size());
         this.plainBags = plainBags;
     }
 

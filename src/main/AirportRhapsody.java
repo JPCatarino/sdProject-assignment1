@@ -94,6 +94,8 @@ public class AirportRhapsody {
         for(int i = 0; i < flights.length; i++){
             repository.setFN(i + 1);
             arrivalLounge.setFlightNumber(i+1);
+            List<int[]> tmp = new ArrayList<>(plainBags);
+            arrivalLounge.setPlainBags(tmp);
             for(int z = 0; z < flights[i].length; z++){
                 flights[i][z].start();
             }
