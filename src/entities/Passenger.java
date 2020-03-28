@@ -83,16 +83,19 @@ public class Passenger extends Thread {
         switch(al.whatShouldIDo()){
             case GO_HOME:
                 ate.goHome();
+                break;
             case COLLECT_A_BAG:
                 bcp.goCollectABag();
                 if(nBagsCollected != nBagsToCollect)
                     bro.reportMissingBags();
                 ate.goHome();
+                break;
             case TAKE_A_BUS:
                 al.takeABus();
                 aq.enterTheBus();
                 dq.leaveTheBus();
                 dte.prepareNextLeg();
+                break;
         }
     }
 

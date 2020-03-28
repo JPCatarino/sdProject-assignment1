@@ -59,17 +59,18 @@ public class AirportRhapsody {
         // Initiate Shared Regions
 
         Repository repository = new Repository(N_passengers, T_seats,K_landings, M_luggage);
-        ArrivalLounge arrivalLounge = new ArrivalLounge(repository,plainBags,N_passengers);
+        ArrivalLounge arrivalLounge = new ArrivalLounge(repository,plainBags,N_passengers,K_landings);
         ArrivalQuay arrivalQuay = new ArrivalQuay(repository,T_seats);
-        ArrivalTerminalExit arrivalTerminalExit = new ArrivalTerminalExit(repository);
+        ArrivalTerminalExit arrivalTerminalExit = new ArrivalTerminalExit(repository, arrivalLounge);
         BagColPoint bagColPoint = new BagColPoint(repository);
         BagRecOffice bagRecOffice = new BagRecOffice(repository);
         DepartureQuay departureQuay = new DepartureQuay(repository);
-        DepartureTerminalEntrance departureTerminalEntrance = new DepartureTerminalEntrance(repository);
+        DepartureTerminalEntrance departureTerminalEntrance = new DepartureTerminalEntrance(repository, arrivalLounge, arrivalTerminalExit);
+        arrivalTerminalExit.setDte(departureTerminalEntrance);
         TempStgArea tempStgArea = new TempStgArea(repository);
 
         // Initiate entities
-        BusDriver busDriver = new BusDriver(100, arrivalQuay, departureQuay);
+        BusDriver busDriver = new BusDriver(100, arrivalQuay, departureQuay, arrivalLounge);
         // Initiate Porter
         Porter porter = new Porter(arrivalLounge, bagColPoint, tempStgArea);
         // Initiate passengers
@@ -92,6 +93,7 @@ public class AirportRhapsody {
         // After, we wait till the porter and bus driver finished and close the program successfully
         for(int i = 0; i < flights.length; i++){
             repository.setFN(i + 1);
+            arrivalLounge.setFlightNumber(i+1);
             for(int z = 0; z < flights[i].length; z++){
                 flights[i][z].start();
             }

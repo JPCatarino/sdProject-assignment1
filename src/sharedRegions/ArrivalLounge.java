@@ -14,12 +14,17 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
 
     private List<int[]> plainBags;
     private boolean pWake;
-    int numberOfPassengers;
-    int maxNumberOfPassengers;
+    private int numberOfPassengers;
+    private final int maxNumberOfPassengers;
+    private final int maxNumberOfFlights;
+    private int flightNumber;
+    private int finishedPassengers;
+    private boolean finishedFlight;
 
-    public ArrivalLounge(Repository repo, List<int[]> plainBags, int N_PASSENGERS){
+    public ArrivalLounge(Repository repo, List<int[]> plainBags, int N_PASSENGERS, int K_LANDINGS){
         this.repo = repo;
         this.maxNumberOfPassengers = N_PASSENGERS;
+        this.maxNumberOfFlights = K_LANDINGS;
         this.plainBags = plainBags;
         repo.setBN(plainBags.size());
     }
@@ -37,7 +42,7 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
     public synchronized int takeARest() {
 
         try {
-            while (!pWake | plainBags.isEmpty()) {
+            while (!pWake || plainBags.isEmpty()) {
                 wait();
             }
         } catch (InterruptedException e) {
@@ -96,14 +101,55 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
         // If journey is ending, passenger should either collect bags or go home
         // otherwise, he takes a bus
         if(p.isJourneyEnding()){
+            repo.setSI(p.getID(), PassengerStates.FINAL_DESTINATION.getState());
             return p.getnBagsToCollect() != 0 ? PassengerDecisions.COLLECT_A_BAG : PassengerDecisions.GO_HOME;
         }
-
+        repo.setSI(p.getID(), PassengerStates.IN_TRANSIT.getState());
         return PassengerDecisions.TAKE_A_BUS;
 
     }
 
-    public void setPlainBags(List<int[]> plainBags) {
+    public synchronized void updateFinishedPassenger(){
+        finishedPassengers++;
+    }
+
+    public synchronized void gonePassenger(){
+        finishedPassengers--;
+    }
+
+    public synchronized boolean isFlightFinished(){
+        if(finishedPassengers == maxNumberOfPassengers){
+            this.finishedFlight = true;
+            return true;
+        }
+        return false;
+    }
+
+    public synchronized void setPlainBags(List<int[]> plainBags) {
         this.plainBags = plainBags;
+    }
+
+    public synchronized int getFlightNumber() {
+        return flightNumber;
+    }
+
+    public synchronized void setFlightNumber(int flightNumber) {
+        this.flightNumber = flightNumber;
+        this.finishedFlight = false;
+    }
+
+    public synchronized int getMaxNumberOfPassengers() {
+        return maxNumberOfPassengers;
+    }
+
+    public int getMaxNumberOfFlights() {
+        return maxNumberOfFlights;
+    }
+
+    public boolean isDayFinished() {
+        if((this.maxNumberOfFlights == this.flightNumber) && this.finishedFlight){
+            return true;
+        }
+        return false;
     }
 }

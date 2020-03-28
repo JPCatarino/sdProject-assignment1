@@ -51,6 +51,12 @@ public class DepartureQuay implements DTTQBusDriver, DTTQPassenger {
         repo.setD_Stat(BusDriverStates.DRIVING_BACKWARD.getState());
         repo.toString_debug();
         repo.reportStatus();
+        try {
+            bd.sleep(500);
+        }
+        catch(InterruptedException ex){
+            System.err.println("goToArrivalTerminal - Thread Interrupted");
+        }
     }
 
     @Override

@@ -1,5 +1,6 @@
 package entities;
 
+import sharedRegions.ArrivalLounge;
 import sharedRegions.ArrivalQuay;
 import sharedRegions.DepartureQuay;
 import states.BusDriverStates;
@@ -22,6 +23,7 @@ public class BusDriver extends Thread {
 
     private final ArrivalQuay aq;
     private final DepartureQuay dq;
+    private final ArrivalLounge al;
 
 
     /**
@@ -31,11 +33,12 @@ public class BusDriver extends Thread {
      * @param aq  Arrival Quay Shared Region
      * @param dq  Departure Quay Shared Region
      */
-    public BusDriver(int TTL, ArrivalQuay aq, DepartureQuay dq) {
+    public BusDriver(int TTL, ArrivalQuay aq, DepartureQuay dq, ArrivalLounge al) {
         this.busSeats = new ArrayList<>();
         this.TTL = TTL;
         this.aq = aq;
         this.dq = dq;
+        this.al = al;
         this.state = BusDriverStates.PARKING_AT_THE_ARRIVAL_TERMINAL;
     }
 
@@ -44,7 +47,7 @@ public class BusDriver extends Thread {
      * @return True, if the day has ended.
      */
     public boolean hasDaysWorkEnded (){
-        return false;
+        return al.isDayFinished();
     }
 
     /**
