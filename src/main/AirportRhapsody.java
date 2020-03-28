@@ -100,6 +100,10 @@ public class AirportRhapsody {
             try{
                 for(Passenger passenger: flights[i]){
                     passenger.join();
+                    repository.setST(passenger.getID(), "-");
+                    repository.setSI(passenger.getID(), "-");
+                    repository.setNR(passenger.getID(), 0);
+                    repository.setNA(passenger.getID(), 0);
                 }
             }
             catch(InterruptedException ex){}
