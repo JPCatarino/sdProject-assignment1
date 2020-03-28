@@ -1,6 +1,7 @@
 package sharedRegions;
 
 import entities.Passenger;
+import entities.Porter;
 import interfaces.ALPassenger;
 import interfaces.ALPorter;
 import states.PassengerDecisions;
@@ -42,17 +43,19 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
 
     @Override
     public synchronized int takeARest() {
+        Porter pt = (Porter) Thread.currentThread();
 
         try {
-            while (!pWake || plainBags.isEmpty()) {
+            while ((!pWake || (plainBags.isEmpty() && flightNumber != maxNumberOfFlights))) {
                 wait();
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        if (false)
+        if (flightNumber == maxNumberOfFlights && plainBags.isEmpty()) {
             return 2;
+        }
         else
             return 0;
     }
