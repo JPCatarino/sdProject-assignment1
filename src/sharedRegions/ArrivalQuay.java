@@ -64,7 +64,6 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
         bd.setBusSeats(parkedBus);
         bd.setBusDriverState(BusDriverStates.DRIVING_FORWARD);
         repo.setD_Stat(BusDriverStates.DRIVING_FORWARD.getState());
-        repo.toString_debug();
         repo.reportStatus();
     }
 
@@ -78,7 +77,6 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
         this.parkedBus = new ArrayList<>();
         bd.setBusDriverState(BusDriverStates.PARKING_AT_THE_ARRIVAL_TERMINAL);
         repo.setD_Stat(BusDriverStates.PARKING_AT_THE_ARRIVAL_TERMINAL.getState());
-        repo.toString_debug();
         repo.reportStatus();
         try {
             bd.sleep(500);
@@ -98,7 +96,6 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
 
         busWaitingLine.add(p.getID());
         repo.setQIn(busWaitingLine.size()-1,String.valueOf(p.getID()));
-        repo.toString_debug();
         repo.reportStatus();
 
         if(busWaitingLine.size() == maxNumberOfSeats){
@@ -114,11 +111,23 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
             System.exit(1);
         }
 
-        sitOnTheBus(p.getID());
+        boolean notOnBoard = true;
+        while(notOnBoard) {
+            if (busWaitingLine.peek() == p.getID()) {
+                sitOnTheBus(p.getID());
+                notOnBoard = false;
+            } else {
+                try {
+                    notifyAll();
+                    wait();
+                } catch (InterruptedException ex) {
+                    System.err.println("Enter the bus- thread was interrupted");
+                }
+            }
+        }
 
         p.setPassengerState(PassengerStates.TERMINAL_TRANSFER);
         repo.setST(p.getID(), PassengerStates.TERMINAL_TRANSFER.getState());
-        repo.toString_debug();
         repo.reportStatus();
 
         if(busWaitingLine.size() == 0 || parkedBus.size() == maxNumberOfSeats){
@@ -131,10 +140,9 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
 
         if(parkedBus.size() < maxNumberOfSeats){
             repo.setQOut();
-            busWaitingLine.remove(id);
+            busWaitingLine.remove();
             parkedBus.add(id);
             repo.setS(parkedBus.indexOf(id), String.valueOf(id));
-            repo.toString_debug();
             repo.reportStatus();
         }
     }
