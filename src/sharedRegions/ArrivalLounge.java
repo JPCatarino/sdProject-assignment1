@@ -7,6 +7,7 @@ import states.PassengerDecisions;
 import states.PassengerStates;
 import states.PorterStates;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,11 +23,11 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
     private int finishedPassengers;
     private boolean finishedFlight;
 
-    public ArrivalLounge(Repository repo, List<int[]> plainBags, int N_PASSENGERS, int K_LANDINGS){
+    public ArrivalLounge(Repository repo, int N_PASSENGERS, int K_LANDINGS){
         this.repo = repo;
         this.maxNumberOfPassengers = N_PASSENGERS;
         this.maxNumberOfFlights = K_LANDINGS;
-        this.plainBags = plainBags;
+        this.plainBags = new ArrayList<>();
         repo.setBN(plainBags.size());
     }
 

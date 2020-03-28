@@ -46,20 +46,10 @@ public class AirportRhapsody {
             }
         }
 
-        for (int j=0;j<N_passengers;j++) {
-            for (int i=0;i<numBagsPassenger[0][j][1];i++){
-                int[] tmpArr = new int[2];
-                tmpArr[0] = j;
-                tmpArr[1] = statePassenger[0][j];
-                //System.out.println("passager= " + tmpArr[0] + "    state= "+tmpArr[1] + " numbags= "+ numBagsPassenger[0][j][1]);
-                plainBags.add(tmpArr);
-            }
-        }
-
         // Initiate Shared Regions
 
         Repository repository = new Repository(N_passengers, T_seats,K_landings, M_luggage);
-        ArrivalLounge arrivalLounge = new ArrivalLounge(repository,plainBags,N_passengers,K_landings);
+        ArrivalLounge arrivalLounge = new ArrivalLounge(repository,N_passengers,K_landings);
         ArrivalQuay arrivalQuay = new ArrivalQuay(repository,T_seats);
         ArrivalTerminalExit arrivalTerminalExit = new ArrivalTerminalExit(repository, arrivalLounge);
         BagColPoint bagColPoint = new BagColPoint(repository);
@@ -94,8 +84,24 @@ public class AirportRhapsody {
         for(int i = 0; i < flights.length; i++){
             repository.setFN(i + 1);
             arrivalLounge.setFlightNumber(i+1);
-            List<int[]> tmp = new ArrayList<>(plainBags);
-            arrivalLounge.setPlainBags(tmp);
+
+            for (int j=0;j<N_passengers;j++) {
+                for (int l=0;l<numBagsPassenger[i][j][1];l++){
+                    int[] tmpArr = new int[2];
+                    tmpArr[0] = j;
+                    tmpArr[1] = statePassenger[i][j];
+                    System.out.println("passager= " + tmpArr[0] + "    state= "+tmpArr[1] + " numbags= "+ numBagsPassenger[i][j][1]);
+                    plainBags.add(tmpArr);
+                }
+                repository.setNR(j,numBagsPassenger[i][j][0]);
+            }
+            arrivalLounge.setPlainBags(plainBags);
+            repository.setBN(plainBags.size());
+            repository.setSR(0);
+            repository.setCB(0);
+
+
+
             for(int z = 0; z < flights[i].length; z++){
                 flights[i][z].start();
             }

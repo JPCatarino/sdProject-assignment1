@@ -29,4 +29,8 @@ public class TempStgArea implements TSAPorter {
         notifyAll();
 
     }
+
+    public synchronized void clearStoreroom() {
+        this.storeroom.clear();
+    }
 }
