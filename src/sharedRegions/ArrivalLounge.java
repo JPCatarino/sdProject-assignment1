@@ -81,6 +81,8 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
         repo.setP_Stat(PorterStates.WAITING_FOR_A_PLANE_TO_LAND.getState());
         repo.toString_debug();
         repo.reportStatus();
+        notifyAll();
+
 
     }
 

@@ -90,10 +90,13 @@ public class AirportRhapsody {
                     int[] tmpArr = new int[2];
                     tmpArr[0] = j;
                     tmpArr[1] = statePassenger[i][j];
-                    System.out.println("passager= " + tmpArr[0] + "    state= "+tmpArr[1] + " numbags= "+ numBagsPassenger[i][j][1]);
                     plainBags.add(tmpArr);
                 }
                 repository.setNR(j,numBagsPassenger[i][j][0]);
+                repository.setST(j, "-");
+                repository.setSI(j, "-");
+                repository.setNR(j,numBagsPassenger[i][j][0]);
+                repository.setNA(j, 0);
             }
             arrivalLounge.setPlainBags(plainBags);
             repository.setBN(plainBags.size());
@@ -102,17 +105,12 @@ public class AirportRhapsody {
             repository.setCB(0);
             bagColPoint.setNoMoreBags(false);
 
-
             for(int z = 0; z < flights[i].length; z++){
                 flights[i][z].start();
             }
             try{
                 for(Passenger passenger: flights[i]){
                     passenger.join();
-                    repository.setST(passenger.getID(), "-");
-                    repository.setSI(passenger.getID(), "-");
-                    repository.setNR(passenger.getID(), 0);
-                    repository.setNA(passenger.getID(), 0);
                 }
             }
             catch(InterruptedException ex){}

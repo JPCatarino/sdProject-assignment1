@@ -85,6 +85,6 @@ public class BagColPoint implements BCPPassenger, BCPPorter {
     @Override
     public synchronized void setNoMoreBags(boolean noMoreBags) {
         this.noMoreBags = noMoreBags;
+        notifyAll();
     }
-
 }
