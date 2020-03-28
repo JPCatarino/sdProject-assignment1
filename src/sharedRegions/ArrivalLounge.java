@@ -29,7 +29,6 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
         this.maxNumberOfPassengers = N_PASSENGERS;
         this.maxNumberOfFlights = K_LANDINGS;
         this.plainBags = new ArrayList<>();
-        repo.setBN(plainBags.size());
     }
 
     @Override
@@ -133,7 +132,6 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
     }
 
     public synchronized void setPlainBags(List<int[]> plainBags) {
-        System.out.println("set"+plainBags.size());
         this.plainBags = plainBags;
     }
 

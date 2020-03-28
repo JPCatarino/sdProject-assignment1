@@ -130,6 +130,11 @@ public class Repository {
 
     private String filename;
 
+    private int finalDest = 0;
+    private int transit = 0;
+    private int totalbags = 0;
+    private int bagslost = 0;
+
     /**
      * Repository Instanciation with custom number of passengers and seats.
      *
@@ -201,6 +206,11 @@ public class Repository {
 
     public void setSI(int num, String SI) {
         this.SI[num] = SI;
+        if ((SI.equals("TRT"))) {
+            transit++;
+        } else {
+            finalDest++;
+        }
     }
 
     public void setNR(int num, int NR) {
@@ -211,6 +221,18 @@ public class Repository {
         this.NA[num] = NA;
     }
 
+    public void reset_Porter() {
+        bagslost += SR;
+        this.SR = 0;
+    }
+    public void reset_Passenger(int num, int numBag) {
+        bagslost += NA[num];
+        totalbags += NR[num];
+        this.ST[num]="-";
+        this.SI[num]="-";
+        this.NR[num]=numBag;
+        this.NA[num]=0;
+    }
     public String header_requested() {
         String result;
         StringBuilder passagers = new StringBuilder();
@@ -371,17 +393,6 @@ public class Repository {
 
     public void finalReport(){
         FileWriter fw;
-        int finalDest = 0;
-        int transit = 0;
-        int totalbags = 0;
-        int bagslost = 0;
-
-        for (String tmp : SI){
-            if (tmp.equals("FDT"))
-                finalDest++;
-        }
-
-        transit = N_PASSENGERS -  finalDest;
 
         try {
             fw = new FileWriter(filename, true);
@@ -391,7 +402,7 @@ public class Repository {
                 pw.println("N. of passengers which have this airport as their final destination = " + finalDest);
                 pw.println("N. of passengers in transit = " + transit);
                 pw.println("N. of bags that should have been transported in the the planes hold = " + totalbags);
-                pw.println("N. of bags that were lost = " + bagslost);
+                pw.println("N. of bags that were lost = " + (totalbags-bagslost));
                 pw.println();
             }
         } catch (IOException e) {
