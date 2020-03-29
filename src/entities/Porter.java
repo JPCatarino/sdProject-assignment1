@@ -109,8 +109,7 @@ public class Porter extends Thread {
     /**
      *  Verify if there are bags in the plane hold.
      *
-     *  @return <li> true, if the Plane Hold is empty.
-     *          <li> false, if the Plane Hold is not empty.
+     *  @return True, if the Plane Hold is empty. False, if the Plane Hold is not empty.
      */
     public boolean isPlaneHoldEmpty() {
         return planeHoldEmpty;

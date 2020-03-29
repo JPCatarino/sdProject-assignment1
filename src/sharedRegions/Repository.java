@@ -329,6 +329,8 @@ public class Repository {
 
     /**
      * Header from the airport logger (Easier to analise and understand).
+     *
+     * @return Header from the airport logger.
      */
     public String header_debug() {
         String result;
@@ -355,6 +357,8 @@ public class Repository {
 
     /**
      * State actual from the airport (Easier to analise and understand).
+     *
+     * @return State actual from the airport.
      */
     public String toString_debug() {
         StringBuilder result;
@@ -378,6 +382,8 @@ public class Repository {
 
     /**
      * Header from the airport logger (Requested).
+     *
+     * @return Header from the airport logger.
      */
     public String header_requested() {
         String result;
@@ -436,9 +442,9 @@ public class Repository {
         FileWriter fw;
         long count=0;
 
-        if(!Files.exists(Paths.get("LOG"))) {
+        if(!Files.exists(Paths.get("./LOG"))) {
             try{
-                Files.createDirectory(Paths.get("LOG"));
+                Files.createDirectory(Paths.get("./LOG"));
             } catch (IOException e) {
                 System.out.print(e.getMessage());
             }
