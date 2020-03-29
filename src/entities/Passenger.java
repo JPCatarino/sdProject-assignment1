@@ -4,83 +4,95 @@ import sharedRegions.*;
 import states.PassengerDecisions;
 import states.PassengerStates;
 
-
 /**
  * Passenger thread and life cycle.
  * It stores all relevant information about the Passenger.
+ *
  * @author Fábio Alves
  * @author Jorge Catarino
  */
 public class Passenger extends Thread {
 
     /**
-     * Passengers's id
+     * Passengers's id.
+     *
      * @serialField id
      */
-    private int id; // Same as bag id?
+    private int id;
 
     /**
-     * Passenger's current state
+     * Passenger's current state.
+     *
      * @serialField PassengerStates
      */
     private PassengerStates state;
 
     /**
-     * Number of bags belonging to the passenger
+     * Number of bags belonging to the passenger.
+     *
      * @serialField nBagsToCollect
      */
     private int nBagsToCollect;
 
     /**
-     * Number of bags collected by the passenger
+     * Number of bags collected by the passenger.
+     *
      * @serialField nBagsCollected
      */
     private int nBagsCollected;
 
     /**
-     * True if the passenger has no subsequent flights
+     * True if the passenger has no subsequent flights.
+     *
      * @serialField journeyEnding
      */
     private boolean journeyEnding;
 
     /**
-     * Arrival Lounge Shared Memory
+     * Arrival Lounge Shared Memory.
+     *
      * @serialField al
      */
     private ArrivalLounge al;
 
     /**
-     * BagColPoint Shared Memory
+     * BagColPoint Shared Memory.
+     *
      * @serialField bcp
      */
     private BagColPoint bcp;
 
     /**
-     * BagRecOffice Shared Memory
+     * BagRecOffice Shared Memory.
+     *
      * @serialField bro
      */
     private BagRecOffice bro;
 
     /**
-     * ArrivalQuay Shared Memory
+     * ArrivalQuay Shared Memory.
+     *
      * @serialField aq
      */
     private ArrivalQuay aq;
 
     /**
-     * DepartureQuay Shared Memory
+     * DepartureQuay Shared Memory.
+     *
      * @serialField dq
      */
     private DepartureQuay dq;
 
     /**
-     * DepartureTerminalEntrance Shared Memory
+     * DepartureTerminalEntrance Shared Memory.
+     *
      * @serialField dte
      */
     private DepartureTerminalEntrance dte;
 
     /**
-     * ArrivalTerminalExit Shared Memory
+     * ArrivalTerminalExit Shared Memory.
+     *
      * @serialField ate
      */
     private ArrivalTerminalExit ate;
@@ -88,16 +100,17 @@ public class Passenger extends Thread {
     /**
      * Passenger Constructor.
      * It initiates a passenger thread.
+     *
      * @param id Passenger Identifier.
      * @param nBagsToCollect Number of Bags the Passenger has to collect.
      * @param journeyEnding  True if Passenger journey is ending.
-     * @param al  Arrival Lounge Shared Region
-     * @param bcp Baggage Collection Point Shared Region
-     * @param bro Baggage Reclaim Office Shared Region
-     * @param aq  Arrival Quay Shared Region
-     * @param dq  Departure Quay Shared Region
-     * @param dte Departure Terminal Exit Shared Region
-     * @param ate Arrival Terminal Exit Shared Region
+     * @param al  Arrival Lounge Shared Region.
+     * @param bcp Baggage Collection Point Shared Region.
+     * @param bro Baggage Reclaim Office Shared Region.
+     * @param aq  Arrival Quay Shared Region.
+     * @param dq  Departure Quay Shared Region.
+     * @param dte Departure Terminal Exit Shared Region.
+     * @param ate Arrival Terminal Exit Shared Region.
      */
     public Passenger(int id, int nBagsToCollect, boolean journeyEnding, ArrivalLounge al, BagColPoint bcp, BagRecOffice bro, ArrivalQuay aq, DepartureQuay dq, DepartureTerminalEntrance dte, ArrivalTerminalExit ate) {
         this.id = id;
@@ -145,9 +158,9 @@ public class Passenger extends Thread {
         System.out.println("Passenger " + id + " died");
     }
 
-
     /**
-     * Getter for the passenger ID
+     * Getter for the passenger ID.
+     *
      * @return Passenger ID
      */
     public int getID() {
@@ -155,39 +168,43 @@ public class Passenger extends Thread {
     }
 
     /**
-     * Increments the number of bags collected by the passenger
+     * Increments the number of bags collected by the passenger.
      */
     public void collectedABag(){
         this.nBagsCollected++;
     }
 
     /**
-     * Getter for nBagsToCollect
-     * @return the number of bags the passenger has to collect
+     * Getter for nBagsToCollect.
+     *
+     * @return the number of bags the passenger has to collect.
      */
     public int getnBagsToCollect() {
         return nBagsToCollect;
     }
 
     /**
-     * Getter for nBagsCollected
-     * @return the number of bags the passenger has collected
+     * Getter for nBagsCollected.
+     *
+     * @return the number of bags the passenger has collected.
      */
     public int getnBagsCollected() {
         return nBagsCollected;
     }
 
     /**
-     * Checks if the passenger has no more flights
-     * @return true if the passenger is going home
+     * Checks if the passenger has no more flights.
+     *
+     * @return true if the passenger is going home.
      */
     public boolean isJourneyEnding() {
         return journeyEnding;
     }
 
     /**
-     * Set Passenger state
-     * @param state new state of the Passenger
+     * Set Passenger state.
+     *
+     * @param state new state of the Passenger.
      */
     public void setPassengerState(PassengerStates state) {
         this.state = state;
