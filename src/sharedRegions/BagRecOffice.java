@@ -35,6 +35,7 @@ public class BagRecOffice implements BROPassenger {
         Passenger p = (Passenger) Thread.currentThread();
         p.setPassengerState(PassengerStates.AT_THE_BAGGAGE_RECLAIM_OFFICE);
         repo.setST(p.getID(), PassengerStates.AT_THE_BAGGAGE_RECLAIM_OFFICE.getState());
+        repo.addBagsLost();
         repo.reportStatus();
         try {
             Thread.sleep(100);

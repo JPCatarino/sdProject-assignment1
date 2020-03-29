@@ -308,6 +308,13 @@ public class Repository {
     }
 
     /**
+     * Add one to the number of piece of luggage lost.
+     */
+    public void addBagsLost() {
+        this.bagsLost ++;
+    }
+
+    /**
      * Count number of pieces of luggage that the passenger has presently collected (all passengers in all flight).
      * Reset passenger to the initial state.
      *
