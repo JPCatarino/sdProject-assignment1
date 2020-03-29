@@ -9,12 +9,36 @@ import states.PassengerStates;
 
 import java.util.List;
 
+/**
+ * Implementation of the Departure Quay Shared Memory.
+ * The bus driver drops off the transiting passengers here
+ * and goes back to the Arrival Quay.
+ */
 public class DepartureQuay implements DTTQBusDriver, DTTQPassenger {
 
+    /**
+     * General Repository of Information
+     * @serialField repo
+     */
     Repository repo;
+
+    /**
+     * Flag that lets the passenger know it's okay to drop off the bus.
+     * True if the bus is parked.
+     * @serialField busHasArrived
+     */
     boolean busHasArrived;          // To let passengers knows it's okay to leave the bus
+
+    /**
+     * Represents the parked bus, from where the passengers drop
+     * @serialField parkedBus
+     */
     List<Integer> parkedBus;
 
+    /**
+     * Constructor method for DepartureQuay
+     * @param repo General Information Repository
+     */
     public DepartureQuay(Repository repo){
         this.repo = repo;
         this.busHasArrived = false;
