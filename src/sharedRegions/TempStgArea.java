@@ -6,11 +6,28 @@ import states.PorterStates;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implementation of the Temporary Storage Area Shared Memory
+ * The porter stores the transiting passengers baggage here.
+ */
 public class TempStgArea implements TSAPorter {
 
+    /**
+     * General Repo of Information
+     * @serialField repo
+     */
     Repository repo;
+
+    /**
+     * Data structure simulating a storeroom, where the porter stores the baggage.
+     * @serialField storeroom
+     */
     private List<int[]> storeroom;
 
+    /**
+     * Constructor method for TempStgArea
+     * @param repo General Information Repository.
+     */
     public TempStgArea(Repository repo){
         this.repo = repo;
         this.storeroom = new ArrayList<>();
@@ -29,6 +46,9 @@ public class TempStgArea implements TSAPorter {
 
     }
 
+    /**
+     * Clears the store room at the end of each flight
+     */
     public synchronized void clearStoreroom() {
         this.storeroom.clear();
     }
