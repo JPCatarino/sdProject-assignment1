@@ -1,6 +1,5 @@
 package interfaces;
 
-
 /**
  * Arrival Terminal Transfer Quay Passenger Interface
  *
@@ -13,15 +12,17 @@ package interfaces;
  * @author Jorge Catarino
  */
 public interface ATTQPassenger {
+
     /**
      * Simulates the entrance of a passenger on the bus.
      * The passenger gets in the queue and waits orders from the BusDriver to board.
      */
-    public void enterTheBus();
+    void enterTheBus();
 
     /**
-     * Simulated the entrance of a passenger on the bus
-     * @param id Id of the passenger entering the bus
+     * Simulated the entrance of a passenger on the bus.
+     *
+     * @param id Id of the passenger entering the bus.
      */
-    public void sitOnTheBus(int id);
+    void sitOnTheBus(int id);
 }

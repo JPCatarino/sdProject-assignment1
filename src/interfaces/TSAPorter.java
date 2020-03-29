@@ -1,4 +1,5 @@
 package interfaces;
+
 /**
  * Temporary Storage Area Porter Interface
  *
@@ -11,9 +12,11 @@ package interfaces;
  * @author Jorge Catarino
  */
 public interface TSAPorter {
+
     /**
      * Move a bag from the plane hold to the temporary storage area.
+     *
      * @param bag Bag to be moved to the temporary storage area.
      */
-    public void carryItToAppropriateStore(int [] bag);
+    void carryItToAppropriateStore(int [] bag);
 }

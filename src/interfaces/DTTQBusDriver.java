@@ -11,16 +11,15 @@ package interfaces;
  * @author Fabio Alves
  * @author Jorge Catarino
  */
-
 public interface DTTQBusDriver {
 
     /**
      * The busDriver parks the bus and waits till every passenger has gotten off.
      */
-    public void parkTheBusAndLetPassOff ();
+    void parkTheBusAndLetPassOff ();
 
     /**
      * After letting the passengers off, the bus driver goes back to the Arrival Terminal.
      */
-    public void goToArrivalTerminal ();
+    void goToArrivalTerminal ();
 }

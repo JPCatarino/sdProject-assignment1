@@ -11,7 +11,6 @@ package interfaces;
  * @author Fabio Alves
  * @author Jorge Catarino
  */
-
 public interface BCPPassenger {
 
     /**
@@ -20,7 +19,5 @@ public interface BCPPassenger {
      * If it's one of their bags, they go try to collect it.
      * A passenger can only collect one bag per attempt.
      */
-    public void goCollectABag ();
-
-
+    void goCollectABag ();
 }

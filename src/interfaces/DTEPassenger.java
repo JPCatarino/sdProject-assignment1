@@ -11,10 +11,10 @@ package interfaces;
  * @author Fabio Alves
  * @author Jorge Catarino
  */
-
 public interface DTEPassenger {
+
     /**
      *  Waits till every passenger is finished to transit to the terminal state.
      */
-    public void prepareNextLeg();
+    void prepareNextLeg();
 }

@@ -11,11 +11,11 @@ package interfaces;
  * @author Fabio Alves
  * @author Jorge Catarino
  */
-
 public interface BROPassenger {
+
     /**
      *  Simulates a passenger reporting a missing bag.
      *  It puts the Passenger to sleep for some milliseconds before transitioning to the next state.
      */
-    public void reportMissingBags();
+    void reportMissingBags();
 }
