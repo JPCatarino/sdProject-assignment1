@@ -17,32 +17,11 @@ import states.PorterStates;
 public class Repository {
 
     /**
-     * Number of landings for this simulation.
-     *
-     * @serialField K_LANDINGS
-     */
-    private int K_LANDINGS;
-
-    /**
      * Number of passengers for this simulation.
      *
      * @serialField N_PASSENGERS
      */
     private int N_PASSENGERS;
-
-    /**
-     * Number of luggage allowed on plane hold for this simulation.
-     *
-     * @serialField M_LUGGAGE
-     */
-    private int M_LUGGAGE;
-
-    /**
-     * Capacity of the transfer bus.
-     *
-     * @serialField T_SEATS
-     */
-    private int T_SEATS;
 
     /**
      * Flight number.
@@ -63,7 +42,7 @@ public class Repository {
      *
      * @serialField P_Stat
      */
-    private String P_Stat = PorterStates.WAITING_FOR_A_PLANE_TO_LAND.getState();
+    private String P_Stat;
 
     /**
      * Number of pieces of luggage presently on the conveyor belt.
@@ -84,7 +63,7 @@ public class Repository {
      *
      * @serialField D_Stat
      */
-    private String D_Stat = BusDriverStates.PARKING_AT_THE_ARRIVAL_TERMINAL.getState();
+    private String D_Stat;
 
     /**
      * Occupation state for the waiting queue (passenger id / - (empty))
@@ -128,45 +107,84 @@ public class Repository {
      */
     private int[] NA;
 
+    /**
+     * Name of the file where the log file will be saved.
+     *
+     * @serialField filename
+     */
     private String filename;
 
+    /**
+     * Number of passengers that arrive to the destination airport.
+     *
+     * @serialField finalDest
+     */
     private int finalDest = 0;
-    private int transit = 0;
-    private int totalbags = 0;
-    private int bagslost = 0;
 
     /**
-     * Repository Instanciation with custom number of passengers and seats.
+     * Number of passengers that are doing scale in this airport.
+     *
+     * @serialField transit
+     */
+    private int transit = 0;
+
+    /**
+     * Total number of bags from all passengers in in all the landings.
+     *
+     * @serialField totalBags
+     */
+    private int totalBags = 0;
+
+    /**
+     * Total number of bags lost from all passengers in in all the landings.
+     *
+     * @serialField bagsLost
+     */
+    private int bagsLost = 0;
+
+    /**
+     * Repository Instantiation.
      *
      * @param N_passengers Number of passengers for this simulation.
      * @param T_seats      Capacity of the transfer bus.
-     * @param K_landings   Number of flights.
-     * @param M_luggage    Number max of bags by passenger.
      */
-    public Repository(int N_passengers, int T_seats, int K_landings, int M_luggage) {
+    public Repository(int N_passengers, int T_seats) {
 
-        this.K_LANDINGS = K_landings;
-        this.M_LUGGAGE = M_luggage;
         this.N_PASSENGERS = N_passengers;
-        this.T_SEATS = T_seats;
         this.Q = new LinkedList<>();
-        for(int i = 0; i < N_PASSENGERS; i++)
-            Q.add("-");
-        this.S = new String[T_SEATS];
-        Arrays.fill(this.S, "-");
+        this.S = new String[T_seats];
         this.ST = new String[N_PASSENGERS];
-        Arrays.fill(this.ST, "-");
         this.SI = new String[N_PASSENGERS];
-        Arrays.fill(this.SI, "-");
         this.NR = new int[N_PASSENGERS];
         this.NA = new int[N_PASSENGERS];
+
+        for(int i = 0; i < N_PASSENGERS; i++)
+            Q.add("-");
+
+        Arrays.fill(this.S, "-");
+        Arrays.fill(this.ST, "-");
+        Arrays.fill(this.SI, "-");
+
+        this.P_Stat = PorterStates.WAITING_FOR_A_PLANE_TO_LAND.getState();
+        this.D_Stat = BusDriverStates.PARKING_AT_THE_ARRIVAL_TERMINAL.getState();
+
         reportInitialStatus();
     }
 
+    /**
+     * Set flight number
+     *
+     * @param FN number of the actual flight.
+     */
     public void setFN(int FN) {
         this.FN = FN;
     }
 
+    /**
+     * Set flight number
+     *
+     * @param BN number of the actual flight.
+     */
     public void setBN(int BN) {
         this.BN = BN;
     }
@@ -214,7 +232,7 @@ public class Repository {
     }
 
     public void setNR(int num, int NR) {
-        totalbags += NR;
+        totalBags += NR;
         this.NR[num] = NR;
     }
 
@@ -223,11 +241,11 @@ public class Repository {
     }
 
     public void reset_Porter() {
-        bagslost += SR;
+        bagsLost += SR;
         this.SR = 0;
     }
     public void reset_Passenger(int num) {
-        bagslost += NA[num];
+        bagsLost += NA[num];
         this.ST[num]="-";
         this.SI[num]="-";
         this.NR[num]=0;
@@ -405,8 +423,8 @@ public class Repository {
                 pw.println("Final report");
                 pw.println("N. of passengers which have this airport as their final destination = " + finalDest);
                 pw.println("N. of passengers in transit = " + transit);
-                pw.println("N. of bags that should have been transported in the the planes hold = " + totalbags);
-                pw.println("N. of bags that were lost = " + (totalbags-(bagslost + tmp)));
+                pw.println("N. of bags that should have been transported in the the planes hold = " + totalBags);
+                pw.println("N. of bags that were lost = " + (totalBags -(bagsLost + tmp)));
                 pw.println();
             }
         } catch (IOException e) {

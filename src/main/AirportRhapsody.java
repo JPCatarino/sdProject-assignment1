@@ -5,9 +5,14 @@ import entities.Passenger;
 import entities.Porter;
 import sharedRegions.*;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Stream;
 
 /**
  * Main class for the Airport Rhapsody Problem
@@ -33,7 +38,7 @@ public class AirportRhapsody {
         for (int i=0;i<K_landings;i++){
             for (int j=0;j<N_passengers;j++) {
                 statePassenger[i][j] = (Math.random() < 0.40) ? TRANSIT : FINAL_DESTINATION;
-                numBagsPassenger[i][j][0] = new Random().nextInt(2 + 1);
+                numBagsPassenger[i][j][0] = new Random().nextInt(M_luggage + 1);
                 if( numBagsPassenger[i][j][0] > 0){
                     if(Math.random() < 0.10)
                         numBagsPassenger[i][j][1] = new Random().nextInt(numBagsPassenger[i][j][0]);
@@ -48,7 +53,7 @@ public class AirportRhapsody {
 
         // Initiate Shared Regions
 
-        Repository repository = new Repository(N_passengers, T_seats,K_landings, M_luggage);
+        Repository repository = new Repository(N_passengers, T_seats);
         ArrivalLounge arrivalLounge = new ArrivalLounge(repository,N_passengers,K_landings);
         ArrivalQuay arrivalQuay = new ArrivalQuay(repository,T_seats);
         ArrivalTerminalExit arrivalTerminalExit = new ArrivalTerminalExit(repository, arrivalLounge);
@@ -84,7 +89,6 @@ public class AirportRhapsody {
         for(int i = 0; i < flights.length; i++){
             repository.setFN(i + 1);
             arrivalLounge.setFlightNumber(i+1);
-            System.out.println("Flight  "+ (i+1));
             for (int j=0;j<N_passengers;j++) {
                 for (int l=0;l<numBagsPassenger[i][j][1];l++){
                     int[] tmpArr = new int[2];
@@ -122,6 +126,18 @@ public class AirportRhapsody {
         catch(InterruptedException ex){}
 
         repository.finalReport();
+
+
+        long count=0;
+
+        try (Stream<Path> walk = Files.walk(Paths.get("./LOG"))) {
+            count = walk.filter(Files::isRegularFile).count();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Run  "+ count);
+
 
         // TODO Ver se é necessário meter aqui alguma coisa do repo
     }
