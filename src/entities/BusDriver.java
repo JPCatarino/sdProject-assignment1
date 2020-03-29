@@ -43,14 +43,6 @@ public class BusDriver extends Thread {
     }
 
     /**
-     * Let's the BusDriver know his shift as ended, so he can enter terminal state.
-     * @return True, if the day has ended.
-     */
-    public boolean hasDaysWorkEnded (){
-        return al.isDayFinished();
-    }
-
-    /**
      * BusDriver lifecycle
      * <p>
      * While he is on is shift, the BusDriver follows a routine: <p>
@@ -62,7 +54,7 @@ public class BusDriver extends Thread {
      */
     @Override
     public void run(){
-        while(!hasDaysWorkEnded()){
+        while(!aq.hasDaysWorkEnded()){
             aq.announcingBusBoarding();
             aq.goToDepartureTerminal();
             dq.parkTheBusAndLetPassOff();

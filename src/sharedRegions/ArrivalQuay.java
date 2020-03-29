@@ -20,12 +20,31 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
     boolean boardingTheBus;             // To let passengers know it's okay to board the bus
     int maxNumberOfSeats;
 
-    public ArrivalQuay(Repository repo, int T_SEATS){
+    ArrivalLounge al;
+
+    public ArrivalQuay(Repository repo, int T_SEATS, ArrivalLounge al){
         this.repo = repo;
         this.boardingTheBus = false;
         this.parkedBus = new ArrayList<>();
         this.busWaitingLine = new LinkedList<>();
         this.maxNumberOfSeats = T_SEATS;
+        this.al = al;
+    }
+
+    @Override
+    public synchronized boolean hasDaysWorkEnded(){
+        BusDriver bd = (BusDriver)Thread.currentThread();
+
+        try {
+            while (((busWaitingLine.size() != maxNumberOfSeats) && busWaitingLine.isEmpty()) && !al.isDayFinished()) {
+                wait(bd.getTTL());                                          // Block while passengers enter queue
+            }
+        }
+        catch(InterruptedException ex){
+            System.out.println("hasDaysWorkEnded - Interrupted Thread");
+        }
+
+        return al.isDayFinished();
     }
 
     /**
@@ -36,10 +55,6 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
     public synchronized void announcingBusBoarding(){
         BusDriver bd = (BusDriver)Thread.currentThread();
         try {
-            while ((busWaitingLine.size() != maxNumberOfSeats) && busWaitingLine.isEmpty()) {
-                wait(bd.getTTL());                                          // Block while passengers enter queue
-            }
-
             boardingTheBus = true;
 
             while(!busWaitingLine.isEmpty() && parkedBus.size() < maxNumberOfSeats){

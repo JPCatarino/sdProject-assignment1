@@ -15,6 +15,12 @@ package interfaces;
 public interface ATTQBusDriver {
 
     /**
+     *   Let's the BusDriver know his shift as ended, so he can enter terminal state.
+     *   @return True, if the day has ended.
+     */
+    public boolean hasDaysWorkEnded();
+
+    /**
      * The bus driver waits until there's passengers in the queue or it's time to leave
      * After this, he notifies all passengers that the bus is ready to board.
      */

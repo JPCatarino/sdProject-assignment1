@@ -55,7 +55,7 @@ public class AirportRhapsody {
 
         Repository repository = new Repository(N_passengers, T_seats);
         ArrivalLounge arrivalLounge = new ArrivalLounge(repository,N_passengers,K_landings);
-        ArrivalQuay arrivalQuay = new ArrivalQuay(repository,T_seats);
+        ArrivalQuay arrivalQuay = new ArrivalQuay(repository,T_seats, arrivalLounge);
         ArrivalTerminalExit arrivalTerminalExit = new ArrivalTerminalExit(repository, arrivalLounge);
         BagColPoint bagColPoint = new BagColPoint(repository);
         BagRecOffice bagRecOffice = new BagRecOffice(repository);
