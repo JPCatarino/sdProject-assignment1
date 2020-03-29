@@ -308,22 +308,12 @@ public class Repository {
     }
 
     /**
-     * Count number of pieces of luggage in the storeroom in the final of the flight (all flight).
-     * Reset number of luggage in storeroom.
-     */
-    public void reset_Porter() {
-        bagsLost += SR;
-        this.SR = 0;
-    }
-
-    /**
      * Count number of pieces of luggage that the passenger has presently collected (all passengers in all flight).
      * Reset passenger to the initial state.
      *
      * @param num passenger to be put in the initial state.
      */
     public void reset_Passenger(int num) {
-        bagsLost += NA[num];
         this.ST[num]="-";
         this.SI[num]="-";
         this.NR[num]=0;
@@ -488,11 +478,6 @@ public class Repository {
      */
     public void finalReport(){
         FileWriter fw;
-        int tmp=SR;
-
-        for (int k=0; k<N_PASSENGERS;k++ ){
-            tmp += NA[k];
-        }
 
         try {
             fw = new FileWriter(filename, true);
@@ -502,7 +487,7 @@ public class Repository {
                 pw.println("N. of passengers which have this airport as their final destination = " + finalDest);
                 pw.println("N. of passengers in transit = " + transit);
                 pw.println("N. of bags that should have been transported in the the planes hold = " + totalBags);
-                pw.println("N. of bags that were lost = " + (totalBags -(bagsLost + tmp)));
+                pw.println("N. of bags that were lost = " + bagsLost);
                 pw.println();
             }
         } catch (IOException e) {

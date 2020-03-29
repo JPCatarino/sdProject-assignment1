@@ -104,8 +104,6 @@ public class AirportRhapsody {
                 }
                 repository.reset_Passenger(j);
             }
-            tempStgArea.clearStoreroom();
-            repository.reset_Porter();
             arrivalLounge.setPlainBags(plainBags);
             repository.setBN(plainBags.size());
             bagColPoint.setNoMoreBags(false);
