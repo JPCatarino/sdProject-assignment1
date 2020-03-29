@@ -16,53 +16,45 @@ package states;
  * </ul>
  */
 public enum PassengerStates {
+
     /**
-     * The passenger is waiting to collect a bag
+     * The passenger is waiting to collect a bag.
      */
     AT_THE_LUGGAGE_COLLECTION_POINT("LCP"),
-
     /**
-     * After failing to collect a bag, the passenger goes to complain
+     * After failing to collect a bag, the passenger goes to complain.
      */
     AT_THE_BAGGAGE_RECLAIM_OFFICE("BRO"),
-
     /**
-     * Terminal state after passenger goes home
+     * Terminal state after passenger goes home.
      */
     EXITING_THE_ARRIVAL_TERMINAL("EAT"),
-
     /**
-     * The passenger is waiting for the bus
+     * The passenger is waiting for the bus.
      */
     AT_THE_ARRIVAL_TRANSFER_TERMINAL("ATT"),
-
     /**
-     * On the bus, the passenger is being driven to the next terminal
+     * On the bus, the passenger is being driven to the next terminal.
      */
     TERMINAL_TRANSFER("TRT"),
-
     /**
-     * The bus driver drops off the passenger here
+     * The bus driver drops off the passenger here.
      */
     AT_THE_DEPARTURE_TRANSFER_TERMINAL("DTT"),
-
     /**
-     * Initial State, the passenger just arrived at the airport
+     * Initial State, the passenger just arrived at the airport.
      */
     AT_THE_DISEMBARKING_ZONE("ATD"),
-
     /**
-     * Terminal State, the passenger is getting ready to enter another flight
+     * Terminal State, the passenger is getting ready to enter another flight.
      */
     ENTERING_THE_DEPARTURE_TERMINAL("EDT"),
-
     /**
-     * Signals the passenger is catching another plane
+     * Signals the passenger is catching another plane.
      */
     IN_TRANSIT("TRT"),
-
     /**
-     * Signals this is the passenger last flight and he is going home
+     * Signals this is the passenger last flight and he is going home.
      */
     FINAL_DESTINATION("FDT");
 
