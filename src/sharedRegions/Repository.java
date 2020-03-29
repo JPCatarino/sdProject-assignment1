@@ -10,7 +10,6 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.stream.Stream;
 
-import UI.Color;
 import states.BusDriverStates;
 import states.PorterStates;
 
@@ -292,7 +291,7 @@ public class Repository {
     }
 
     /**
-     * Set number of pieces of luggage the passenger # (# - 0 .. 5) she has presently collected.
+     * Set number of pieces of luggage the passenger # (# - 0 .. 5) he has presently collected.
      *
      * @param num passenger that has presently collected the pieces of luggage.
      * @param na number of pieces of luggage that the passenger has presently collected.
@@ -302,7 +301,7 @@ public class Repository {
     }
 
     /**
-     * Count number of bags in the storeroom in the final of the flight (all flight).
+     * Count number of pieces of luggage in the storeroom in the final of the flight (all flight).
      * Reset number of luggage in storeroom.
      */
     public void reset_Porter() {
@@ -311,7 +310,7 @@ public class Repository {
     }
 
     /**
-     * XXX
+     * Count number of pieces of luggage that the passenger has presently collected (all passengers in all flight).
      * Reset passenger to the initial state.
      *
      * @param num passenger to be put in the initial state.
@@ -323,7 +322,11 @@ public class Repository {
         this.NR[num]=0;
         this.NA[num]=0;
     }
-    public String header_requested() {
+
+    /**
+     * Header from the airport logger (Easier to analise and understand).
+     */
+    public String header_debug() {
         String result;
         StringBuilder passagers = new StringBuilder();
 
@@ -346,40 +349,10 @@ public class Repository {
         return result;
     }
 
-    public String header_debug() {
-        String result;
-        StringBuilder passagers = new StringBuilder();
-        int count = (19 * N_PASSENGERS - 14) / 2;
-
-        result = Color.BB_GREEN + "PLANE" + Color.RESET + "    ";
-        result += Color.BB_BLUE + "  PORTER   " + Color.RESET + "    ";
-        result += Color.BB_RED + "              DRIVER             " + Color.RESET + "    ";
-        result += Color.BB_MAGENTA + new String(new char[count]) + "PASSENGERS";
-        result += new String(new char[(19 * N_PASSENGERS - 14) - count]) + Color.RESET + "\n";
-        result += Color.BACK_BLACK + "FN BN" + Color.RESET + "    ";
-        result += Color.BACK_BLACK + "Stat  CB SR" + Color.RESET + "    ";
-        result += Color.BACK_BLACK + "Stat  Q1 Q2 Q3 Q4 Q5 Q6  S1 S2 S3" + Color.RESET + "    ";
-
-        for (int num_passager = 1; num_passager < N_PASSENGERS; num_passager++) {
-            passagers.append("St").append(num_passager)
-                    .append(" Si").append(num_passager)
-                    .append(" NR").append(num_passager)
-                    .append(" NA").append(num_passager)
-                    .append("    ");
-        }
-
-        passagers.append("St").append(N_PASSENGERS)
-                .append(" Si").append(N_PASSENGERS)
-                .append(" NR").append(N_PASSENGERS)
-                .append(" NA").append(N_PASSENGERS);
-
-        result += Color.BACK_BLACK + passagers.toString() + Color.RESET + "\n";
-
-        return result;
-    }
-
-    @Override
-    public String toString() {
+    /**
+     * State actual from the airport (Easier to analise and understand).
+     */
+    public String toString_debug() {
         StringBuilder result;
 
         result = new StringBuilder(String.format("%-2d %-2d    ", FN, BN));
@@ -399,24 +372,46 @@ public class Repository {
         return result.toString();
     }
 
-    public String toString_debug() {
+    /**
+     * Header from the airport logger (Requested).
+     */
+    public String header_requested() {
+        String result;
+        StringBuilder passagers = new StringBuilder();
+
+        result = "PLANE";
+        result += "      PORTER";
+        result += "                   DRIVER\n";
+        result += "FN BN    Stat  CB SR    Stat  Q1 Q2 Q3 Q4 Q5 Q6  S1 S2 S3\n";
+        result += new String(new char[(19 * N_PASSENGERS - 14) / 2]);
+        result +="PASSENGERS\n";
+
+        for (int num_passager = 1; num_passager <= N_PASSENGERS; num_passager++) {
+            passagers.append("St").append(num_passager)
+                    .append(" Si").append(num_passager)
+                    .append(" NR").append(num_passager)
+                    .append(" NA").append(num_passager)
+                    .append("    ");
+        }
+        result += passagers + "\n";
+
+        return result;
+    }
+
+    /**
+     * State actual from the airport (Requested).
+     */
+    @Override
+    public String toString() {
+
         StringBuilder result;
 
-        result = new StringBuilder(Color.BACK_BLACK + String.format("%-2d %-2d", FN, BN) + Color.RESET + "    ");
+        result = new StringBuilder(String.format("%-2d %-2d    ", FN, BN));
+        result.append(String.format("%-4s  %-2d %-2d    ", P_Stat, CB, SR));
+        result.append(String.format("%-4s  %-2s %-2s %-2s %-2s %-2s %-2s  %-2s %-2s %-2s    ", D_Stat, Q.get(0), Q.get(1), Q.get(2), Q.get(3), Q.get(4), Q.get(5), S[0], S[1], S[2]));
+        result.append("\n");
 
-        result.append(Color.BACK_BLACK)
-                .append(String.format("%-4s  %-2d %-2d", P_Stat, CB, SR))
-                .append(Color.RESET)
-                .append("    ");
-
-        result.append(Color.BACK_BLACK)
-                .append(String.format("%-4s  %-2s %-2s %-2s %-2s %-2s %-2s  %-2s %-2s %-2s", D_Stat, Q.get(0), Q.get(1), Q.get(2), Q.get(3), Q.get(4), Q.get(5), S[0], S[1], S[2]))
-                .append(Color.RESET)
-                .append("    ");
-
-        result.append(Color.BACK_BLACK);
-
-        for (int num_passager = 1; num_passager < N_PASSENGERS; num_passager++) {
+        for (int num_passager = 1; num_passager <= N_PASSENGERS; num_passager++) {
             result.append(String.format("%-3s", ST[num_passager - 1]))
                     .append(String.format(" %-3s", SI[num_passager - 1]))
                     .append(String.format(" %-3s", NR[num_passager - 1]))
@@ -424,20 +419,13 @@ public class Repository {
                     .append("    ");
         }
 
-        result.append(String.format("%-3s", ST[N_PASSENGERS - 1]))
-                .append(String.format(" %-3s", SI[N_PASSENGERS - 1]))
-                .append(String.format(" %-3s", NR[N_PASSENGERS - 1]))
-                .append(String.format(" %-3s", NA[N_PASSENGERS - 1]));
-
-        result.append(Color.RESET);
-
         result.append("\n");
 
         return result.toString();
     }
 
     /**
-     * Write the initial State (Create file and header).
+     * Write the initial State (Calculate logger file name, create logger file and add header to the logger file).
      */
     public void reportInitialStatus() {
         FileWriter fw;
@@ -458,7 +446,7 @@ public class Repository {
             try (PrintWriter pw = new PrintWriter(fw)) {
                 pw.print(new String(new char[31 + (19 * N_PASSENGERS - 4) / 2 - 34]) + "AIRPORT RHAPSODY - Description of the internal state of the problem\n");
                 pw.println();
-                pw.print(header_requested());
+                pw.print(header_debug());
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -466,20 +454,24 @@ public class Repository {
     }
 
     /**
-     * Write the current State.
+     * Append the current State to the logger file.
      */
     public void reportStatus() {
         FileWriter fw;
         try {
             fw = new FileWriter(filename, true);
             try (PrintWriter pw = new PrintWriter(fw)) {
-                pw.print(toString());
+                pw.print(toString_debug());
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Calculate the number of pieces of luggage missing.
+     * Append the final report to the logger file.
+     */
     public void finalReport(){
         FileWriter fw;
         int tmp=SR;
