@@ -47,11 +47,4 @@ public class TempStgArea implements TSAPorter {
 
         notifyAll();
     }
-
-    /**
-     * Clears the store room at the end of each flight.
-     */
-    public synchronized void clearStoreroom() {
-        this.storeroom.clear();
-    }
 }
