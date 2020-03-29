@@ -17,6 +17,8 @@ import java.util.stream.Stream;
 /**
  * Main class for the Airport Rhapsody Problem
  * It launches the threads for all entities of the problem
+ * @author Fábio Alves
+ * @author Jorge Catarino
  */
 public class AirportRhapsody {
 

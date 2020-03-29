@@ -12,16 +12,56 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+/**
+ * Implementation of the Arrival Quay Shared Memory
+ * The BusDriver waits here for passengers to come
+ * so he can drive them to departure terminal.
+ * @author Fábio Alves
+ * @author Jorge Catarino
+ */
 public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
 
+    /**
+     * Information Repository
+     * @serialField repo
+     */
     Repository repo;
+
+    /**
+     * Bus Queue, where the passengers reside while waiting to board
+     * @serialField  busWaitingLine
+     */
     Queue<Integer> busWaitingLine;
+
+    /**
+     * Represents a parked bus, which the passengers board.
+     * @serialField parkedBus
+     */
     List<Integer> parkedBus;
+
+    /**
+     * Tells the passengers that it's okay to board the bus
+     * @serialField boardingTheBus
+     */
     boolean boardingTheBus;             // To let passengers know it's okay to board the bus
+
+    /**
+     * Dictates the capacity of the bus.
+     * @serialField maxNumberOfSeats
+     */
     int maxNumberOfSeats;
 
+    /**
+     * Shared Memory ArrivalLounge that has the latest information on the flights.
+     */
     ArrivalLounge al;
 
+    /**
+     * Arrival Quay Constructor
+     * @param repo General Repository of information
+     * @param T_SEATS Maximum capacity of the bus
+     * @param al Arrival Lounge Shared Memory
+     */
     public ArrivalQuay(Repository repo, int T_SEATS, ArrivalLounge al){
         this.repo = repo;
         this.boardingTheBus = false;

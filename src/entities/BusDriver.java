@@ -32,6 +32,7 @@ public class BusDriver extends Thread {
      * @param TTL Time the bus driver waits before leaving the Arrival Quay.
      * @param aq  Arrival Quay Shared Region
      * @param dq  Departure Quay Shared Region
+     * @param al Arrival Lounge Shared Region
      */
     public BusDriver(int TTL, ArrivalQuay aq, DepartureQuay dq, ArrivalLounge al) {
         this.busSeats = new ArrayList<>();
