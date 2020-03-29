@@ -45,13 +45,14 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
 
         try {
             while (!pWake) {
+                pt.setPlaneHoldEmpty(false);
                 wait();
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        if (flightNumber == maxNumberOfFlights && plainBags.isEmpty()) {
+        if (flightNumber == maxNumberOfFlights && pt.isPlaneHoldEmpty()) {
             return 2;
         }
         else

@@ -97,4 +97,12 @@ public class Porter extends Thread {
     private void noMoreBagsToCollect() {
         bcp.setNoMoreBags(true);
     }
+
+    public boolean isPlaneHoldEmpty() {
+        return planeHoldEmpty;
+    }
+
+    public void setPlaneHoldEmpty(boolean planeHoldEmpty) {
+        this.planeHoldEmpty = planeHoldEmpty;
+    }
 }
