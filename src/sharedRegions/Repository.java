@@ -435,13 +435,20 @@ public class Repository {
      * Write the initial State (Calculate logger file name, create logger file and add header to the logger file).
      */
     public void reportInitialStatus() {
-        FileWriter fw;
 
+        FileWriter fw;
         long count=0;
+
+        if(!Files.exists(Paths.get("LOG"))) {
+            try{
+                Files.createDirectory(Paths.get("LOG"));
+            } catch (IOException e) {
+                System.out.print(e.getMessage());
+            }
+        }
 
         try (Stream<Path> walk = Files.walk(Paths.get("./LOG"))) {
             count = walk.filter(Files::isRegularFile).count();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
