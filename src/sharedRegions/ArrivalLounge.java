@@ -15,6 +15,8 @@ import java.util.List;
 /**
  * Implementation of the Arrival Lounge Shared Memory
  * The passengers arrive here and get the whole airport moving.
+ * @author Fábio Alves
+ * @author Jorge Catarino
  */
 public class ArrivalLounge implements ALPassenger, ALPorter {
 
