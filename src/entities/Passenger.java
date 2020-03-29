@@ -155,7 +155,6 @@ public class Passenger extends Thread {
                 dte.prepareNextLeg();
                 break;
         }
-        System.out.println("Passenger " + id + " died");
     }
 
     /**

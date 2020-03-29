@@ -136,17 +136,5 @@ public class AirportRhapsody {
         }
 
         repository.finalReport();
-
-        // Remover antes da entrega.
-        long count=0;
-
-        try (Stream<Path> walk = Files.walk(Paths.get("./LOG"))) {
-            count = walk.filter(Files::isRegularFile).count();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println("Run  "+ count);
-
     }
 }
