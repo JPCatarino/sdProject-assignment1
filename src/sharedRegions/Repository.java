@@ -52,7 +52,7 @@ public class Repository {
     private int CB;
 
     /**
-     * Number of pieces of luggage belonging to passengers in transit presently stored at the storeroom
+     * Number of pieces of luggage belonging to passengers in transit presently stored at the storeroom.
      *
      * @serialField SR
      */
@@ -66,42 +66,42 @@ public class Repository {
     private String D_Stat;
 
     /**
-     * Occupation state for the waiting queue (passenger id / - (empty))
+     * Occupation state for the waiting queue (passenger id / - (empty)).
      *
      * @serialField Q
      */
     private LinkedList<String> Q;
 
     /**
-     * Occupation state for seat in the bus (passenger id / - (empty))
+     * Occupation state for seat in the bus (passenger id / - (empty)).
      *
      * @serialField S
      */
     private String[] S;
 
     /**
-     * State of passenger # (# - 0 .. 5)
+     * State of passenger # (# - 0 .. 5).
      *
      * @serialField ST
      */
     private String[] ST;
 
     /**
-     * Situation of passenger # (# - 0 .. 5) – TRT (in transit) / FDT (has this airport as her final destination)
+     * Situation of passenger # (# - 0 .. 5) – TRT (in transit) / FDT (has this airport as her final destination).
      *
      * @serialField SI
      */
     private String[] SI;
 
     /**
-     * Number of pieces of luggage the passenger # (# - 0 .. 5) carried at the start of her journey
+     * Number of pieces of luggage the passenger # (# - 0 .. 5) carried at the start of her journey.
      *
      * @serialField NR
      */
     private int[] NR;
 
     /**
-     * Number of pieces of luggage the passenger # (# - 0 .. 5) she has presently collected
+     * Number of pieces of luggage the passenger # (# - 0 .. 5) she has presently collected.
      *
      * @serialField NA
      */
@@ -172,78 +172,150 @@ public class Repository {
     }
 
     /**
-     * Set flight number
+     * Set flight number.
      *
-     * @param FN number of the actual flight.
+     * @param fn number of the actual flight.
      */
-    public void setFN(int FN) {
-        this.FN = FN;
+    public void setFN(int fn) {
+        this.FN = fn;
     }
 
     /**
-     * Set flight number
+     * Set luggage number.
      *
-     * @param BN number of the actual flight.
+     * @param bn number of pieces of luggage presently at the plane's hold.
      */
-    public void setBN(int BN) {
-        this.BN = BN;
+    public void setBN(int bn) {
+        this.BN = bn;
     }
 
-    public void setCB(int CB) {
-        this.CB = CB;
+    /**
+     * Set conveyor belt.
+     *
+     * @param cb number of pieces of luggage presently on the conveyor belt.
+     */
+    public void setCB(int cb) {
+        this.CB = cb;
     }
 
-    public void setSR(int SR) {
-        this.SR = SR;
+    /**
+     * Set storeroom.
+     *
+     * @param sr number of pieces of luggage belonging to passengers in transit presently stored at the storeroom.
+     */
+    public void setSR(int sr) {
+        this.SR = sr;
     }
 
+    /**
+     * Set porter state.
+     *
+     * @param p_Stat state of the porter.
+     */
     public void setP_Stat(String p_Stat) {
         P_Stat = p_Stat;
     }
 
+    /**
+     * Set driver state.
+     *
+     * @param d_Stat state of the driver.
+     */
     public void setD_Stat(String d_Stat) {
         D_Stat = d_Stat;
     }
 
-    public void setQIn(int num,String q) {
+    /**
+     * Set occupation state for the waiting queue (passenger id / - (empty)).
+     *
+     * @param num position of the queue to add one passenger.
+     * @param q passenger to put in the queue position.
+     */
+    public synchronized void setQIn(int num, String q) {
         this.Q.add(num,q);
     }
 
+    /**
+     * Remove first element from the waiting queue and add '-' (empty) to the last position.
+     */
     public synchronized void setQOut(){
         this.Q.removeFirst();
         this.Q.add("-");
     }
 
+    /**
+     * Set occupation state for seat in the bus (passenger id / - (empty)).
+     *
+     * @param num seat position to put the passenger.
+     * @param s passenger to put in the seat position.
+     */
     public void setS(int num, String s) {
         this.S[num] = s;
     }
 
-    public void setST(int num, String ST) {
-        this.ST[num] = ST;
+    /**
+     * Set state of passenger # (# - 0 .. 5).
+     *
+     * @param num passenger to set state.
+     * @param st state of the passenger.
+     */
+    public void setST(int num, String st) {
+        this.ST[num] = st;
     }
 
-    public void setSI(int num, String SI) {
-        this.SI[num] = SI;
-        if ((SI.equals("TRT"))) {
+    /**
+     * Set situation of passenger # (# - 0 .. 5) – TRT (in transit) / FDT (has this airport as her final destination).
+     * Count total number of passengers in transit and with this airport as final destination (all flights).
+     *
+     * @param num passenger to set situation.
+     * @param si situation of the passenger.
+     */
+    public void setSI(int num, String si) {
+        this.SI[num] = si;
+        if ((si.equals("TRT"))) {
             transit++;
         } else {
             finalDest++;
         }
     }
 
-    public void setNR(int num, int NR) {
-        totalBags += NR;
-        this.NR[num] = NR;
+    /**
+     * Set number of pieces of luggage the passenger # (# - 0 .. 5) carried at the start of her journey.
+     * Count total number of pieces of luggage (all flights).
+     *
+     * @param num passenger that carried the pieces of luggage at the start of her journey.
+     * @param nr number of pieces of luggage the passenger carried at the start of her journey.
+     */
+    public void setNR(int num, int nr) {
+        totalBags += nr;
+        this.NR[num] = nr;
     }
 
-    public void setNA(int num, int NA) {
-        this.NA[num] = NA;
+    /**
+     * Set number of pieces of luggage the passenger # (# - 0 .. 5) she has presently collected.
+     *
+     * @param num passenger that has presently collected the pieces of luggage.
+     * @param na number of pieces of luggage that the passenger has presently collected.
+     */
+    public void setNA(int num, int na) {
+        this.NA[num] = na;
     }
 
+    /**
+     * Count number of bags in the storeroom in the final of the flight (all flight).
+     * Reset number of luggage in storeroom.
+     */
     public void reset_Porter() {
         bagsLost += SR;
         this.SR = 0;
     }
+
+    /**
+     * XXX
+     * Reset passenger to the initial state.
+     *
+     * @param num passenger to be put in the initial state.
+     */
     public void reset_Passenger(int num) {
         bagsLost += NA[num];
         this.ST[num]="-";
