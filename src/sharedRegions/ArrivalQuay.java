@@ -16,51 +16,60 @@ import java.util.Queue;
  * Implementation of the Arrival Quay Shared Memory
  * The BusDriver waits here for passengers to come
  * so he can drive them to departure terminal.
+ *
  * @author Fábio Alves
  * @author Jorge Catarino
  */
 public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
 
     /**
-     * Information Repository
+     * Information Repository.
+     *
      * @serialField repo
      */
-    Repository repo;
+    private Repository repo;
 
     /**
-     * Bus Queue, where the passengers reside while waiting to board
+     * Bus Queue, where the passengers reside while waiting to board.
+     *
      * @serialField  busWaitingLine
      */
-    Queue<Integer> busWaitingLine;
+    private Queue<Integer> busWaitingLine;
 
     /**
      * Represents a parked bus, which the passengers board.
+     *
      * @serialField parkedBus
      */
-    List<Integer> parkedBus;
+    private List<Integer> parkedBus;
 
     /**
-     * Tells the passengers that it's okay to board the bus
+     * Tells the passengers that it's okay to board the bus.
+     *
      * @serialField boardingTheBus
      */
-    boolean boardingTheBus;             // To let passengers know it's okay to board the bus
+    private boolean boardingTheBus;
 
     /**
      * Dictates the capacity of the bus.
+     *
      * @serialField maxNumberOfSeats
      */
-    int maxNumberOfSeats;
+    private int maxNumberOfSeats;
 
     /**
      * Shared Memory ArrivalLounge that has the latest information on the flights.
+     *
+     * @serialField al
      */
-    ArrivalLounge al;
+    private ArrivalLounge al;
 
     /**
-     * Arrival Quay Constructor
-     * @param repo General Repository of information
-     * @param T_SEATS Maximum capacity of the bus
-     * @param al Arrival Lounge Shared Memory
+     * Arrival Quay Constructor.
+     *
+     * @param repo General Repository of information.
+     * @param T_SEATS Maximum capacity of the bus.
+     * @param al Arrival Lounge Shared Memory.
      */
     public ArrivalQuay(Repository repo, int T_SEATS, ArrivalLounge al){
         this.repo = repo;
@@ -87,10 +96,6 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
         return al.isDayFinished();
     }
 
-    /**
-     * Announcing the boarding, the Bus Driver is letting the Passenger in the queue know it's okay
-     * to get inside the bus.
-     */
     @Override
     public synchronized void announcingBusBoarding(){
         BusDriver bd = (BusDriver)Thread.currentThread();
@@ -109,10 +114,6 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
         boardingTheBus = false;
     }
 
-    /**
-     * After boarding all passangers, the bus driver then drives to the DepartureTerminal
-     * This function changes state to DRIVING_FORWARD and unparks the bus.
-     */
     @Override
     public synchronized void goToDepartureTerminal(){
         BusDriver bd = (BusDriver) Thread.currentThread();
@@ -122,17 +123,13 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
         repo.reportStatus();
 
         try {
-            bd.sleep(10);
+            Thread.sleep(10);
         }
         catch(InterruptedException ex){
             System.err.println("goToDepartureTerminal - Thread Interrupted");
         }
     }
 
-    /**
-     * Parks the bus after returning from Departure Terminal
-     * It assumes the Bus comes back empty from the terminal.
-     */
     @Override
     public synchronized void parkTheBus(){
         BusDriver bd = (BusDriver) Thread.currentThread();
@@ -141,17 +138,13 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
         repo.setD_Stat(BusDriverStates.PARKING_AT_THE_ARRIVAL_TERMINAL.getState());
         repo.reportStatus();
         try {
-            bd.sleep(500);
+            Thread.sleep(500);
         }
         catch(InterruptedException ex){
             System.err.println("goToArrivalTerminal - Thread Interrupted");
         }
     }
 
-    /**
-     * Simulates the entrance of a passenger on the bus.
-     * The passenger gets in the queue and waits orders from the BusDriver to board.
-     */
     @Override
     public synchronized void enterTheBus(){
         Passenger p = (Passenger) Thread.currentThread();
@@ -208,5 +201,4 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
             repo.reportStatus();
         }
     }
-    
 }

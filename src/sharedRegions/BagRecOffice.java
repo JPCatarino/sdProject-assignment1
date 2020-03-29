@@ -8,20 +8,23 @@ import states.PassengerStates;
  * Implementation of the Baggage Reclaim Office Shared Memory
  * The passenger comes here in case he loses any baggage, to
  * report the occurrence.
+ *
  * @author Fábio Alves
  * @author Jorge Catarino
  */
 public class BagRecOffice implements BROPassenger {
 
     /**
-     * General Repository of Information
+     * General Repository of Information.
+     *
      * @serialField repo
      */
-    Repository repo;
+    private Repository repo;
 
     /**
-     * Constructor for BagRecOffice
-     * @param repo General Repo Of Information
+     * Constructor for BagRecOffice.
+     *
+     * @param repo General Repo Of Information.
      */
     public BagRecOffice(Repository repo){
         this.repo = repo;
@@ -39,5 +42,5 @@ public class BagRecOffice implements BROPassenger {
         catch(InterruptedException ex){
             System.err.println("reportMissingBags - Thread Interrupted");
         }
-    };
+    }
 }

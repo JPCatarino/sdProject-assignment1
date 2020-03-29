@@ -15,67 +15,78 @@ import java.util.List;
 /**
  * Implementation of the Arrival Lounge Shared Memory
  * The passengers arrive here and get the whole airport moving.
+ *
  * @author Fábio Alves
  * @author Jorge Catarino
  */
 public class ArrivalLounge implements ALPassenger, ALPorter {
 
     /**
-     * Repository of Information
+     * Repository of Information.
+     *
      * @serialField repo
      */
     private Repository repo;
 
     /**
-     * List of passengers bags for this flight
+     * List of passengers bags for this flight.
+     *
      * @serialField plainBags
      */
     private List<int[]> plainBags;
 
     /**
-     * Condition Variable that lets the porter wake up
+     * Condition Variable that lets the porter wake up.
+     *
      * @serialField pWake
      */
     private boolean pWake;
 
     /**
-     * Number of Passengers in the arrival lounge
+     * Number of Passengers in the arrival lounge.
+     *
      * @serialField numberOfPassengers
      */
     private int numberOfPassengers;
 
     /**
-     * Max Number of Passengers per flight
+     * Max Number of Passengers per flight.
+     *
      * @serialField maxNumberOfPassengers
      */
     private final int maxNumberOfPassengers;
 
     /**
-     * Number of flights that are arriving
+     * Number of flights that are arriving.
+     *
      * @serialField maxNumberOfFlights
      */
     private final int maxNumberOfFlights;
 
     /**
-     * Number of the flight that just landed
+     * Number of the flight that just landed.
+     *
      * @serialField flightNumber
      */
     private int flightNumber;
 
     /**
-     * Number of Passengers of this flight that have finished their lifecycle
+     * Number of Passengers of this flight that have finished their lifecycle.
+     *
      * @serialField finishedPassengers
      */
     private int finishedPassengers;
 
     /**
-     * True if all the current flight passengers have left the airport
+     * True if all the current flight passengers have left the airport.
+     *
      * @serialField finishedFlight
      */
     private boolean finishedFlight;
 
     /**
      * Arrival Lounge Constructor.
+     *
      * @param repo General Repository of Information
      * @param N_PASSENGERS Total Number of Passengers
      * @param K_LANDINGS Max number of flights for the day
@@ -96,7 +107,7 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
     }
 
     @Override
-    public synchronized int takeARest() {
+    public synchronized boolean takeARest() {
         Porter pt = (Porter) Thread.currentThread();
 
         try {
@@ -108,11 +119,7 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
             e.printStackTrace();
         }
 
-        if (flightNumber == maxNumberOfFlights && pt.isPlaneHoldEmpty()) {
-            return 2;
-        }
-        else
-            return 0;
+        return flightNumber != maxNumberOfFlights || !pt.isPlaneHoldEmpty();
     }
 
     @Override
@@ -188,6 +195,7 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
 
     /**
      * Checks if the flight of the day is finished.
+     *
      * @return true if all passengers have finished their run.
      */
     public synchronized boolean isFlightFinished(){
@@ -200,6 +208,7 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
 
     /**
      * Setter for PlainBags.
+     *
      * @param plainBags List of bags for the flight
      */
     public synchronized void setPlainBags(List<int[]> plainBags) {
@@ -208,6 +217,7 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
 
     /**
      * Setter for the FlightNumber
+     *
      * @param flightNumber Current flight number.
      */
     public synchronized void setFlightNumber(int flightNumber) {
@@ -219,12 +229,10 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
      * Checks if all the flights of the day have finished.
      * This is given by comparing the current flight to the total number of flights
      * and checking if it has finished.
+     *
      * @return true if the flights have finished
      */
     public boolean isDayFinished() {
-        if((this.maxNumberOfFlights == this.flightNumber) && this.finishedFlight){
-            return true;
-        }
-        return false;
+        return (this.maxNumberOfFlights == this.flightNumber) && this.finishedFlight;
     }
 }

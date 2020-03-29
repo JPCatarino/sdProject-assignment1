@@ -13,19 +13,22 @@ import java.util.List;
 public class TempStgArea implements TSAPorter {
 
     /**
-     * General Repo of Information
+     * General Repo of Information.
+     *
      * @serialField repo
      */
-    Repository repo;
+    private Repository repo;
 
     /**
      * Data structure simulating a storeroom, where the porter stores the baggage.
+     *
      * @serialField storeroom
      */
     private List<int[]> storeroom;
 
     /**
-     * Constructor method for TempStgArea
+     * Constructor method for TempStgArea.
+     *
      * @param repo General Information Repository.
      */
     public TempStgArea(Repository repo){
@@ -43,11 +46,10 @@ public class TempStgArea implements TSAPorter {
         repo.reportStatus();
 
         notifyAll();
-
     }
 
     /**
-     * Clears the store room at the end of each flight
+     * Clears the store room at the end of each flight.
      */
     public synchronized void clearStoreroom() {
         this.storeroom.clear();

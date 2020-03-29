@@ -15,39 +15,45 @@ import java.util.List;
  * The passenger come here to fetch their baggage, put on the
  * conveyor belt by the porter. It waits till the Porter
  * flags that there's no more baggage on the plane hold.
+ *
  * @author Fábio Alves
  * @author Jorge Catarino
  */
 public class BagColPoint implements BCPPassenger, BCPPorter {
 
     /**
-     * General Repository of Information
+     * General Repository of Information.
+     *
      * @serialField repo
      */
     private Repository repo;
 
     /**
-     * Data structure that simulates the conveyor belt
+     * Data structure that simulates the conveyor belt.
+     *
      * @serialField conveyorBelt
      */
     private List<int[]> conveyorBelt;
 
     /**
-     * Flag that signal the passenger that there's no more bags
+     * Flag that signal the passenger that there's no more bags.
+     *
      * @serialField noMoreBags
      */
     private boolean noMoreBags;
 
     /**
      * Flag that signals the passenger that there's a bag available to collect
-     * on the conveyor belt
+     * on the conveyor belt.
+     *
      * @serialField bagsInTheConveyorBelt
      */
     private boolean bagsInTheConveyorBelt;
 
     /**
-     * Constructor for the BagColPoint
-     * @param repo General repository of information
+     * Constructor for the BagColPoint.
+     *
+     * @param repo General repository of information.
      */
     public BagColPoint(Repository repo){
         this.repo = repo;
@@ -95,7 +101,6 @@ public class BagColPoint implements BCPPassenger, BCPPorter {
 
     @Override
     public synchronized void carryItToAppropriateStore(int [] bag){
-        Porter pt = (Porter) Thread.currentThread();
 
         this.conveyorBelt.add(bag);
         this.bagsInTheConveyorBelt = true;
@@ -107,7 +112,12 @@ public class BagColPoint implements BCPPassenger, BCPPorter {
         notifyAll();
     };
 
-    @Override
+    /**
+     * Set the variable no more bags.
+     * Notifies all threads.
+     *
+     * @param noMoreBags True if there are no more bags in the plane hold or False otherwise.
+     */
     public synchronized void setNoMoreBags(boolean noMoreBags) {
         this.noMoreBags = noMoreBags;
         notifyAll();

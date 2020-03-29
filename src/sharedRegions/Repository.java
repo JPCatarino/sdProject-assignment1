@@ -13,6 +13,13 @@ import java.util.stream.Stream;
 import states.BusDriverStates;
 import states.PorterStates;
 
+/**
+ * Implementation of the Repository Shared Memory.
+ * Responsible for logging all changes during the program run.
+ *
+ * @author Fábio Alves
+ * @author Jorge Catarino
+ */
 public class Repository {
 
     /**
@@ -456,7 +463,7 @@ public class Repository {
     /**
      * Append the current State to the logger file.
      */
-    public void reportStatus() {
+    public synchronized void reportStatus() {
         FileWriter fw;
         try {
             fw = new FileWriter(filename, true);
