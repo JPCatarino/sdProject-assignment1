@@ -15,28 +15,32 @@ import java.util.Random;
 import java.util.stream.Stream;
 
 /**
- * Main class for the Airport Rhapsody Problem
- * It launches the threads for all entities of the problem
+ * Main class for the Airport Rhapsody Problem.
+ * It launches the threads for all entities of the problem.
+ *
  * @author Fábio Alves
  * @author Jorge Catarino
  */
 public class AirportRhapsody {
 
-    public static void main(String args[]){
+    public static void main(String[] args){
 
+        // Global variables.
         int K_landings = 5;
         int N_passengers = 6;
         int M_luggage = 2;
         int T_seats = 3;
 
+        // Constant that characterize the state of the passenger/piece of luggage.
         final int TRANSIT = 0,
                   FINAL_DESTINATION = 1;
 
+        // Initiate data structures.
         int[][] statePassenger = new int[K_landings][N_passengers];
         int[][][] numBagsPassenger = new int[K_landings][N_passengers][2];
-
         List<int[]> plainBags = new ArrayList<>();
 
+        // Generation of the number of the total of pieces of luggage, how many where lost and the state for all the passengers.
         for (int i=0;i<K_landings;i++){
             for (int j=0;j<N_passengers;j++) {
                 statePassenger[i][j] = (Math.random() < 0.40) ? TRANSIT : FINAL_DESTINATION;
@@ -54,7 +58,6 @@ public class AirportRhapsody {
         }
 
         // Initiate Shared Regions
-
         Repository repository = new Repository(N_passengers, T_seats);
         ArrivalLounge arrivalLounge = new ArrivalLounge(repository,N_passengers,K_landings);
         ArrivalQuay arrivalQuay = new ArrivalQuay(repository,T_seats, arrivalLounge);
@@ -67,12 +70,12 @@ public class AirportRhapsody {
         TempStgArea tempStgArea = new TempStgArea(repository);
 
         // Initiate entities
-        BusDriver busDriver = new BusDriver(100, arrivalQuay, departureQuay, arrivalLounge);
+
+        // Initiate Bus Driver
+        BusDriver busDriver = new BusDriver(100, arrivalQuay, departureQuay);
         // Initiate Porter
         Porter porter = new Porter(arrivalLounge, bagColPoint, tempStgArea);
-        // Initiate passengers
-        // For each flight
-        // initiate N passenger
+        // Initiate passengers (For each flight, initiate N passenger)
         Passenger[][] flights = new Passenger [K_landings][N_passengers];
         for(int i = 0; i < flights.length; i++) {
             for (int z = 0; z < flights[i].length; z++){
@@ -83,7 +86,8 @@ public class AirportRhapsody {
         // Join BusDriver and Porter
         porter.start();
         busDriver.start();
-        // for each flight join the different passengers.
+
+        // Join the different passengers for each flight.
 
         // We start the threads for a flight and wait till the flight as ended
         // before starting another batch of passengers.
@@ -114,22 +118,28 @@ public class AirportRhapsody {
                     passenger.join();
                 }
             }
-            catch(InterruptedException ex){}
+            catch(InterruptedException ex){
+                System.out.println(ex.getMessage());
+            }
         }
 
         try {
             porter.join();
         }
-        catch(InterruptedException ex){}
+        catch(InterruptedException ex){
+            System.out.println(ex.getMessage());
+        }
 
         try {
             busDriver.join();
         }
-        catch(InterruptedException ex){}
+        catch(InterruptedException ex){
+            System.out.println(ex.getMessage());
+        }
 
         repository.finalReport();
 
-
+        // Remover antes da entrega.
         long count=0;
 
         try (Stream<Path> walk = Files.walk(Paths.get("./LOG"))) {
@@ -140,7 +150,5 @@ public class AirportRhapsody {
         }
         System.out.println("Run  "+ count);
 
-
-        // TODO Ver se é necessário meter aqui alguma coisa do repo
     }
 }
