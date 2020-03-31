@@ -20,8 +20,6 @@ public interface DTTQPassenger {
 
     /**
      * Simulates a passenger leaving the bus.
-     *
-     * @param id Identifier of the passenger leaving the bus.
      */
-    void getOffTheSeat(int id);
+    void getOffTheSeat();
 }

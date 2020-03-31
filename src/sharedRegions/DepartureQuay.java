@@ -98,9 +98,8 @@ public class DepartureQuay implements DTTQBusDriver, DTTQPassenger {
             System.err.println("leaveTheBus - Thread Interrupted");
             System.exit(1);
         }
-        repo.setS(p.getBusSeat(), "-");
-        repo.reportStatus();
-        parkedBus.remove(Integer.valueOf(p.getID()));
+
+        getOffTheSeat();
 
         p.setPassengerState(PassengerStates.AT_THE_DEPARTURE_TRANSFER_TERMINAL);
         repo.setST(p.getID(), PassengerStates.AT_THE_DEPARTURE_TRANSFER_TERMINAL.getState());
@@ -112,15 +111,16 @@ public class DepartureQuay implements DTTQBusDriver, DTTQPassenger {
     }
 
     @Override
-    public synchronized void getOffTheSeat(int id){
+    public synchronized void getOffTheSeat(){
+        Passenger p = (Passenger) Thread.currentThread();
         try{
-        repo.setS(parkedBus.indexOf(id), "-");
-        repo.reportStatus();
-        parkedBus.remove(Integer.valueOf(id));
+            repo.setS(p.getBusSeat(), "-");
+            repo.reportStatus();
+            parkedBus.remove(Integer.valueOf(p.getID()));
         }
         catch(ArrayIndexOutOfBoundsException ex){
-            System.out.println("Passenger id " + id);
-            System.out.println(parkedBus.indexOf(id));
+            System.out.println("Passenger id " + p.getID());
+            System.out.println(parkedBus.indexOf(p.getBusSeat()));
             System.out.println(parkedBus.toString());
             System.out.println("Passengers probably ended");
         }
