@@ -70,7 +70,7 @@ public class BagColPoint implements BCPPassenger, BCPPorter {
         // While there's bags on the hold the passenger waits
         // If there's bags on the conveyor belt it tries to collect one with it's ID
         // In case the passengers find one, it collects it.
-
+        // TODO Fix Logic
         try{
             while(!noMoreBags && !(p.getnBagsToCollect() == p.getnBagsCollected())){
                 if(bagsInTheConveyorBelt){
