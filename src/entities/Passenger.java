@@ -41,6 +41,8 @@ public class Passenger extends Thread {
      */
     private int nBagsCollected;
 
+    private int busSeat;
+
     /**
      * True if the passenger has no subsequent flights.
      *
@@ -207,5 +209,13 @@ public class Passenger extends Thread {
      */
     public void setPassengerState(PassengerStates state) {
         this.state = state;
+    }
+
+    public void setBusSeat(int busSeat) {
+        this.busSeat = busSeat;
+    }
+
+    public int getBusSeat() {
+        return busSeat;
     }
 }

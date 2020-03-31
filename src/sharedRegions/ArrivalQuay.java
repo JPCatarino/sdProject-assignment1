@@ -153,7 +153,6 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
         busWaitingLine.add(p.getID());
         repo.setQIn(busWaitingLine.size()-1,String.valueOf(p.getID()));
         repo.reportStatus();
-
         while(notOnBoard) {
 
             if (busWaitingLine.size() == maxNumberOfSeats) {
@@ -167,9 +166,17 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
                 System.err.println("enterTheBus - Thread was interrupted");
                 System.exit(1);
             }
-
+            //System.out.println("Peek: " + busWaitingLine.peek());
+            //System.out.println("id: " + p.getID());
             if (busWaitingLine.peek() == p.getID() && parkedBus.size() != maxNumberOfSeats) {
-                sitOnTheBus(p.getID());
+                if(parkedBus.size() < maxNumberOfSeats){
+                    repo.setQOut();
+                    busWaitingLine.remove();
+                    parkedBus.add(p.getID());
+                    p.setBusSeat(parkedBus.indexOf(p.getID()));
+                    repo.setS(p.getBusSeat(), String.valueOf(p.getID()));
+                    repo.reportStatus();
+                }
                 notOnBoard = false;
             } else {
                 try {
@@ -180,6 +187,8 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
                 }
             }
         }
+
+        // TODO check this function
 
         p.setPassengerState(PassengerStates.TERMINAL_TRANSFER);
         repo.setST(p.getID(), PassengerStates.TERMINAL_TRANSFER.getState());
@@ -193,12 +202,5 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
     @Override
     public synchronized void sitOnTheBus(int id){
 
-        if(parkedBus.size() < maxNumberOfSeats){
-            repo.setQOut();
-            busWaitingLine.remove();
-            parkedBus.add(id);
-            repo.setS(parkedBus.indexOf(id), String.valueOf(id));
-            repo.reportStatus();
-        }
     }
 }

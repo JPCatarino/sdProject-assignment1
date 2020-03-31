@@ -98,7 +98,10 @@ public class DepartureQuay implements DTTQBusDriver, DTTQPassenger {
             System.err.println("leaveTheBus - Thread Interrupted");
             System.exit(1);
         }
-        getOffTheSeat(p.getID());
+        repo.setS(p.getBusSeat(), "-");
+        repo.reportStatus();
+        parkedBus.remove(Integer.valueOf(p.getID()));
+
         p.setPassengerState(PassengerStates.AT_THE_DEPARTURE_TRANSFER_TERMINAL);
         repo.setST(p.getID(), PassengerStates.AT_THE_DEPARTURE_TRANSFER_TERMINAL.getState());
         repo.reportStatus();
