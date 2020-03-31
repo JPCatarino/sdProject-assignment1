@@ -146,61 +146,66 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
     }
 
     @Override
-    public synchronized void enterTheBus(){
+    public void enterTheBus(){
         Passenger p = (Passenger) Thread.currentThread();
         boolean notOnBoard = true;
 
-        busWaitingLine.add(p.getID());
-        repo.setQIn(busWaitingLine.size()-1,String.valueOf(p.getID()));
-        repo.reportStatus();
+        synchronized (this) {
+            busWaitingLine.add(p.getID());
+            repo.setQIn(busWaitingLine.size() - 1, String.valueOf(p.getID()));
+            repo.reportStatus();
+        }
         while(notOnBoard) {
+            synchronized (this) {
+                if (busWaitingLine.size() == maxNumberOfSeats) {
+                    notifyAll();
+                }
+                try {
+                    while (!boardingTheBus) {
+                        wait();
+                    }
+                } catch (InterruptedException ex) {
+                    System.err.println("enterTheBus - Thread was interrupted");
+                    System.exit(1);
+                }
+            }
 
-            if (busWaitingLine.size() == maxNumberOfSeats) {
-                notifyAll();
-            }
-            try {
-                while (!boardingTheBus) {
-                    wait();
-                }
-            } catch (InterruptedException ex) {
-                System.err.println("enterTheBus - Thread was interrupted");
-                System.exit(1);
-            }
-            //System.out.println("Peek: " + busWaitingLine.peek());
-            //System.out.println("id: " + p.getID());
             if (busWaitingLine.peek() == p.getID() && parkedBus.size() != maxNumberOfSeats) {
-                if(parkedBus.size() < maxNumberOfSeats){
-                    repo.setQOut();
-                    busWaitingLine.remove();
-                    parkedBus.add(p.getID());
-                    p.setBusSeat(parkedBus.indexOf(p.getID()));
-                    repo.setS(p.getBusSeat(), String.valueOf(p.getID()));
-                    repo.reportStatus();
-                }
+                sitOnTheBus();
                 notOnBoard = false;
             } else {
-                try {
-                    notifyAll();
-                    wait();
-                } catch (InterruptedException ex) {
-                    System.err.println("Enter the bus- thread was interrupted");
+                synchronized (this) {
+                    try {
+                        notifyAll();
+                        wait();
+                    } catch (InterruptedException ex) {
+                        System.err.println("Enter the bus- thread was interrupted");
+                    }
                 }
             }
         }
 
         // TODO check this function
-
-        p.setPassengerState(PassengerStates.TERMINAL_TRANSFER);
-        repo.setST(p.getID(), PassengerStates.TERMINAL_TRANSFER.getState());
-        repo.reportStatus();
-
-        if(busWaitingLine.size() == 0 || parkedBus.size() == maxNumberOfSeats){
-            notifyAll();
+        synchronized (this) {
+            p.setPassengerState(PassengerStates.TERMINAL_TRANSFER);
+            repo.setST(p.getID(), PassengerStates.TERMINAL_TRANSFER.getState());
+            repo.reportStatus();
+            if (busWaitingLine.size() == 0 || parkedBus.size() == maxNumberOfSeats) {
+                notifyAll();
+            }
         }
     }
 
     @Override
-    public synchronized void sitOnTheBus(int id){
-
+    public synchronized void sitOnTheBus(){
+        Passenger p = (Passenger) Thread.currentThread();
+        if(parkedBus.size() < maxNumberOfSeats){
+            repo.setQOut();
+            busWaitingLine.remove();
+            parkedBus.add(p.getID());
+            p.setBusSeat(parkedBus.indexOf(p.getID()));
+            repo.setS(p.getBusSeat(), String.valueOf(p.getID()));
+            repo.reportStatus();
+        }
     }
 }

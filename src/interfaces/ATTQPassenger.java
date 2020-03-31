@@ -21,8 +21,6 @@ public interface ATTQPassenger {
 
     /**
      * Simulated the entrance of a passenger on the bus.
-     *
-     * @param id Id of the passenger entering the bus.
      */
-    void sitOnTheBus(int id);
+    void sitOnTheBus();
 }
