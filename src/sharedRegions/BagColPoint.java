@@ -72,11 +72,14 @@ public class BagColPoint implements BCPPassenger, BCPPorter {
         // In case the passengers find one, it collects it.
         // TODO Fix Logic
         try{
-            while(!noMoreBags && !(p.getnBagsToCollect() == p.getnBagsCollected())){
+            while((!noMoreBags || bagsInTheConveyorBelt) && !(p.getnBagsToCollect() == p.getnBagsCollected())){
                 if(bagsInTheConveyorBelt){
                     for(int i = 0; i < conveyorBelt.size(); i++){
                         if(conveyorBelt.get(i)[0] == p.getID()){
                             conveyorBelt.remove(i);
+                            if(conveyorBelt.isEmpty()){
+                                bagsInTheConveyorBelt = false;
+                            }
                             p.collectedABag();
                             repo.setCB(conveyorBelt.size());
                             repo.setNA(p.getID(), p.getnBagsCollected());
