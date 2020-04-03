@@ -1,5 +1,7 @@
 package interfaces;
 
+import exceptions.SharedRegException;
+
 /**
  * Departure Terminal Transfer Quay Passenger Interface
  *
@@ -20,6 +22,7 @@ public interface DTTQPassenger {
 
     /**
      * Simulates a passenger leaving the bus.
+     * @throws SharedRegException When it tries to remove a non existent passenger
      */
-    void getOffTheSeat();
+    void getOffTheSeat() throws SharedRegException;
 }

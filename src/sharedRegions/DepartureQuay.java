@@ -2,6 +2,7 @@ package sharedRegions;
 
 import entities.BusDriver;
 import entities.Passenger;
+import exceptions.SharedRegException;
 import interfaces.DTTQBusDriver;
 import interfaces.DTTQPassenger;
 import states.BusDriverStates;
@@ -99,7 +100,14 @@ public class DepartureQuay implements DTTQBusDriver, DTTQPassenger {
             System.exit(1);
         }
 
-        getOffTheSeat();
+        try {
+            getOffTheSeat();
+        }
+        catch(SharedRegException ex){
+            System.out.println("Thread " + p.getName() + "terminated");
+            System.out.println("Error on operation :" + ex.getMessage());
+            System.exit(1);
+        }
 
         p.setPassengerState(PassengerStates.AT_THE_DEPARTURE_TRANSFER_TERMINAL);
         repo.setST(p.getID(), PassengerStates.AT_THE_DEPARTURE_TRANSFER_TERMINAL.getState());
@@ -111,7 +119,7 @@ public class DepartureQuay implements DTTQBusDriver, DTTQPassenger {
     }
 
     @Override
-    public synchronized void getOffTheSeat(){
+    public synchronized void getOffTheSeat() throws SharedRegException{
         Passenger p = (Passenger) Thread.currentThread();
         try{
             repo.setS(p.getBusSeat(), "-");
@@ -119,10 +127,7 @@ public class DepartureQuay implements DTTQBusDriver, DTTQPassenger {
             parkedBus.remove(Integer.valueOf(p.getID()));
         }
         catch(ArrayIndexOutOfBoundsException ex){
-            System.out.println("Passenger id " + p.getID());
-            System.out.println(parkedBus.indexOf(p.getBusSeat()));
-            System.out.println(parkedBus.toString());
-            System.out.println("Passengers probably ended");
+            throw new SharedRegException("Passenger with id " + p.getID() + " is not on the Parked Bus", ex);
         }
     }
 }
