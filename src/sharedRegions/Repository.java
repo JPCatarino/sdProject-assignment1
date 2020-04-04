@@ -463,7 +463,7 @@ public class Repository {
             try (PrintWriter pw = new PrintWriter(fw)) {
                 pw.print(new String(new char[31 + (19 * N_PASSENGERS - 4) / 2 - 34]) + "AIRPORT RHAPSODY - Description of the internal state of the problem\n");
                 pw.println();
-                pw.print(header_debug());
+                pw.print(header_requested());
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -478,7 +478,7 @@ public class Repository {
         try {
             fw = new FileWriter(filename, true);
             try (PrintWriter pw = new PrintWriter(fw)) {
-                pw.print(toString_debug());
+                pw.print(toString());
             }
         } catch (IOException e) {
             e.printStackTrace();
