@@ -3,6 +3,7 @@ package main;
 import entities.BusDriver;
 import entities.Passenger;
 import entities.Porter;
+import exceptions.SharedRegException;
 import sharedRegions.*;
 
 import java.util.ArrayList;
@@ -18,13 +19,17 @@ import java.util.Random;
  */
 public class AirportRhapsody {
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws SharedRegException{
 
         // Global variables.
         int K_landings = 5;
         int N_passengers = 6;
         int M_luggage = 2;
         int T_seats = 3;
+
+        if(K_landings <= 0 || N_passengers <= 0 || M_luggage < 0 || T_seats <= 0){
+            throw new SharedRegException("Invalid Global Parameters");
+        }
 
         // Constant that characterize the state of the passenger/piece of luggage.
         final int TRANSIT = 0,
@@ -113,6 +118,7 @@ public class AirportRhapsody {
             }
             catch(InterruptedException ex){
                 System.out.println(ex.getMessage());
+                System.exit(1);
             }
         }
 
@@ -121,6 +127,7 @@ public class AirportRhapsody {
         }
         catch(InterruptedException ex){
             System.out.println(ex.getMessage());
+            System.exit(1);
         }
 
         try {
@@ -128,6 +135,7 @@ public class AirportRhapsody {
         }
         catch(InterruptedException ex){
             System.out.println(ex.getMessage());
+            System.exit(1);
         }
 
         repository.finalReport();
