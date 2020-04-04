@@ -134,7 +134,6 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
         }
 
         repo.reportStatus();
-        notifyAll();
 
         return bag;
     }
