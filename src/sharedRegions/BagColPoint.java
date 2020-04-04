@@ -61,8 +61,9 @@ public class BagColPoint implements BCPPassenger, BCPPorter {
     }
 
     @Override
-    public synchronized void goCollectABag (){
+    public  void goCollectABag (){
         Passenger p = (Passenger) Thread.currentThread();
+
         p.setPassengerState(PassengerStates.AT_THE_LUGGAGE_COLLECTION_POINT);
         repo.setST(p.getID(), PassengerStates.AT_THE_LUGGAGE_COLLECTION_POINT.getState());
         repo.reportStatus();
@@ -71,36 +72,42 @@ public class BagColPoint implements BCPPassenger, BCPPorter {
         // If there's bags on the conveyor belt it tries to collect one with it's ID
         // In case the passengers find one, it collects it.
         // TODO Fix Logic
+
+
+
         try{
-            while((!noMoreBags || bagsInTheConveyorBelt) && !(p.getnBagsToCollect() == p.getnBagsCollected())){
-                if(bagsInTheConveyorBelt){
-                    for(int i = 0; i < conveyorBelt.size(); i++){
-                        if(conveyorBelt.get(i)[0] == p.getID()){
-                            conveyorBelt.remove(i);
-                            if(conveyorBelt.isEmpty()){
-                                bagsInTheConveyorBelt = false;
-                            }
-                            p.collectedABag();
-                            repo.setCB(conveyorBelt.size());
-                            repo.setNA(p.getID(), p.getnBagsCollected());
-                            repo.reportStatus();
-                            break;
-                        }
-                    }
-                }
-                if(!(p.getnBagsToCollect() == p.getnBagsCollected())) {
+            if(noMoreBags && !bagsInTheConveyorBelt){
+                synchronized(this) {
+
                     wait();
                 }
-                else{
-                    break;
+            }
+
+            while((!noMoreBags || bagsInTheConveyorBelt) && !(p.getnBagsToCollect() == p.getnBagsCollected())){
+                synchronized(this) {
+
+                    if (bagsInTheConveyorBelt) {
+                        for (int i = 0; i < conveyorBelt.size(); i++) {
+                            if (conveyorBelt.get(i)[0] == p.getID()) {
+                                conveyorBelt.remove(i);
+                                if (conveyorBelt.isEmpty()) {
+                                    bagsInTheConveyorBelt = false;
+                                }
+                                p.collectedABag();
+                                repo.setCB(conveyorBelt.size());
+                                repo.setNA(p.getID(), p.getnBagsCollected());
+                                repo.reportStatus();
+                                break;
+                            }
+                        }
+                    }
                 }
             }
         }
         catch(InterruptedException ex){
             System.err.println("goCollectABag - Thread Interrupted");
         }
-
-    };
+    }
 
     @Override
     public synchronized void carryItToAppropriateStore(int [] bag){
