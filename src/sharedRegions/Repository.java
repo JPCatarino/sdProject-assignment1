@@ -309,9 +309,10 @@ public class Repository {
 
     /**
      * Add one to the number of piece of luggage lost.
+     * @param nBagsLost Number of bags the passengers reported lost.
      */
-    public void addBagsLost() {
-        this.bagsLost ++;
+    public void addBagsLost(int nBagsLost) {
+        this.bagsLost += nBagsLost;
     }
 
     /**
