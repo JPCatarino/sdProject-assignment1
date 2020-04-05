@@ -179,33 +179,6 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
     }
 
     /**
-     * Increments the number of finished passengers.
-     */
-    public void updateFinishedPassenger(){
-        finishedPassengers++;
-    }
-
-    /**
-     * Decrements the number of finished passengers when they leave the airport.
-     */
-    public void gonePassenger(){
-        finishedPassengers--;
-    }
-
-    /**
-     * Checks if the flight of the day is finished.
-     *
-     * @return true if all passengers have finished their run.
-     */
-    public boolean isFlightFinished(){
-        if(finishedPassengers == maxNumberOfPassengers){
-            this.finishedFlight = true;
-            return true;
-        }
-        return false;
-    }
-
-    /**
      * Setter for PlainBags.
      *
      * @param plainBags List of bags for the flight
@@ -235,14 +208,26 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
         return (this.maxNumberOfFlights == this.flightNumber) && this.finishedFlight;
     }
 
+    /**
+     * Getter for the maximum number of passengers per flight.
+     * @return maximum number of passengers per flight
+     */
     public int getMaxNumberOfPassengers() {
         return maxNumberOfPassengers;
     }
 
+    /**
+     * Setter for finishedFlight, true if every passenger has finished.
+     * @param finishedFlight True if every passenger has finished.
+     */
     public void setFinishedFlight(boolean finishedFlight) {
         this.finishedFlight = finishedFlight;
     }
 
+    /**
+     * Checks if porter has finished is cycle and is asleep
+     * @return true if porter is still active.
+     */
     public boolean ispWake() {
         return pWake;
     }

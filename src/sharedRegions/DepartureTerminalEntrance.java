@@ -42,8 +42,16 @@ public class DepartureTerminalEntrance implements DTEPassenger {
      */
     private ArrivalTerminalExit ate;
 
+    /**
+     * Number of passengers currently waiting on this terminal.
+     * @serialField passengersATE
+     */
     private int passengersDTE;
 
+    /**
+     * Maximum number of passengers on this flight.
+     * @serialField maxNumberOfPassengers
+     */
     private int maxNumberOfPassengers;
 
 
@@ -105,6 +113,11 @@ public class DepartureTerminalEntrance implements DTEPassenger {
         }
     }
 
+    /**
+     * Getter for number of passengers on this terminal.
+     * Used by ATE to check the number of passengers here.
+     * @return number of passengers on this terminal.
+     */
     public int getPassengersDTE() {
         return passengersDTE;
     }

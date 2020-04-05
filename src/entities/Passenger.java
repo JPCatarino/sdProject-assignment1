@@ -211,10 +211,18 @@ public class Passenger extends Thread {
         this.state = state;
     }
 
+    /**
+     * Setter for passenger bus seat.
+     * @param busSeat Number of the bus seat passenger is using.
+     */
     public void setBusSeat(int busSeat) {
         this.busSeat = busSeat;
     }
 
+    /**
+     * Getter for passenger bus seat.
+     * @return Number of the seat the passenger is using.
+     */
     public int getBusSeat() {
         return busSeat;
     }
