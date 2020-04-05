@@ -73,39 +73,25 @@ public class BagColPoint implements BCPPassenger, BCPPorter {
         // In case the passengers find one, it collects it.
         // TODO Fix Logic
 
+        while((!noMoreBags || bagsInTheConveyorBelt) && !(p.getnBagsToCollect() == p.getnBagsCollected())){
+            synchronized(this) {
 
-
-        try{
-            if(noMoreBags && !bagsInTheConveyorBelt){
-                synchronized(this) {
-
-                    wait();
-                }
-            }
-
-            while((!noMoreBags || bagsInTheConveyorBelt) && !(p.getnBagsToCollect() == p.getnBagsCollected())){
-                synchronized(this) {
-
-                    if (bagsInTheConveyorBelt) {
-                        for (int i = 0; i < conveyorBelt.size(); i++) {
-                            if (conveyorBelt.get(i)[0] == p.getID()) {
-                                conveyorBelt.remove(i);
-                                if (conveyorBelt.isEmpty()) {
-                                    bagsInTheConveyorBelt = false;
-                                }
-                                p.collectedABag();
-                                repo.setCB(conveyorBelt.size());
-                                repo.setNA(p.getID(), p.getnBagsCollected());
-                                repo.reportStatus();
-                                break;
+                if (bagsInTheConveyorBelt) {
+                    for (int i = 0; i < conveyorBelt.size(); i++) {
+                        if (conveyorBelt.get(i)[0] == p.getID()) {
+                            conveyorBelt.remove(i);
+                            if (conveyorBelt.isEmpty()) {
+                                bagsInTheConveyorBelt = false;
                             }
+                            p.collectedABag();
+                            repo.setCB(conveyorBelt.size());
+                            repo.setNA(p.getID(), p.getnBagsCollected());
+                            repo.reportStatus();
+                            break;
                         }
                     }
                 }
             }
-        }
-        catch(InterruptedException ex){
-            System.err.println("goCollectABag - Thread Interrupted");
         }
     }
 
@@ -130,6 +116,5 @@ public class BagColPoint implements BCPPassenger, BCPPorter {
      */
     public synchronized void setNoMoreBags(boolean noMoreBags) {
         this.noMoreBags = noMoreBags;
-        notifyAll();
     }
 }
