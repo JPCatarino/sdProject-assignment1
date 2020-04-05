@@ -42,6 +42,10 @@ public class ArrivalTerminalExit implements ATEPassenger{
      */
     private DepartureTerminalEntrance dte;
 
+    private int passengersATE;
+
+    private int maxNumberOfPassengers;
+
     /**
      * ArrivalTerminalExit Constructor.
      *
@@ -51,7 +55,9 @@ public class ArrivalTerminalExit implements ATEPassenger{
     public ArrivalTerminalExit(Repository repo, ArrivalLounge al) {
         this.repo = repo;
         this.al = al;
+        this.maxNumberOfPassengers = al.getMaxNumberOfPassengers();
         this.allPassengersFinished = false;
+        this.passengersATE = 0;
     }
 
     @Override
@@ -61,9 +67,12 @@ public class ArrivalTerminalExit implements ATEPassenger{
         repo.setST(p.getID(), PassengerStates.EXITING_THE_ARRIVAL_TERMINAL.getState());
         repo.reportStatus();
 
+        passengersATE++;
         al.updateFinishedPassenger();
-        this.allPassengersFinished = al.isFlightFinished();
-
+        this.allPassengersFinished = ((dte.getPassengersDTE() + passengersATE) == maxNumberOfPassengers);
+        if(allPassengersFinished) {
+            al.setFinishedFlight(allPassengersFinished);
+        }
         if(this.allPassengersFinished){
             notifyAll();
             dte.setAllPassengersFinished(this.allPassengersFinished);
@@ -78,6 +87,10 @@ public class ArrivalTerminalExit implements ATEPassenger{
             }
         }
         al.gonePassenger();
+        this.passengersATE--;
+        if (passengersATE == 0){
+            this.allPassengersFinished = false;
+        }
     }
 
     /**
@@ -100,5 +113,9 @@ public class ArrivalTerminalExit implements ATEPassenger{
         if(this.allPassengersFinished){
             notifyAll();
         }
+    }
+
+    public int getPassengersATE() {
+        return passengersATE;
     }
 }

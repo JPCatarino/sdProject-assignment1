@@ -181,14 +181,14 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
     /**
      * Increments the number of finished passengers.
      */
-    public synchronized void updateFinishedPassenger(){
+    public void updateFinishedPassenger(){
         finishedPassengers++;
     }
 
     /**
      * Decrements the number of finished passengers when they leave the airport.
      */
-    public synchronized void gonePassenger(){
+    public void gonePassenger(){
         finishedPassengers--;
     }
 
@@ -197,7 +197,7 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
      *
      * @return true if all passengers have finished their run.
      */
-    public synchronized boolean isFlightFinished(){
+    public boolean isFlightFinished(){
         if(finishedPassengers == maxNumberOfPassengers){
             this.finishedFlight = true;
             return true;
@@ -233,5 +233,13 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
      */
     public boolean isDayFinished() {
         return (this.maxNumberOfFlights == this.flightNumber) && this.finishedFlight;
+    }
+
+    public int getMaxNumberOfPassengers() {
+        return maxNumberOfPassengers;
+    }
+
+    public void setFinishedFlight(boolean finishedFlight) {
+        this.finishedFlight = finishedFlight;
     }
 }

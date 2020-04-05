@@ -42,6 +42,11 @@ public class DepartureTerminalEntrance implements DTEPassenger {
      */
     private ArrivalTerminalExit ate;
 
+    private int passengersDTE;
+
+    private int maxNumberOfPassengers;
+
+
     /**
      * DepartureTerminalEntrance Shared Memory.
      *
@@ -52,8 +57,10 @@ public class DepartureTerminalEntrance implements DTEPassenger {
     public DepartureTerminalEntrance(Repository repo, ArrivalLounge al, ArrivalTerminalExit ate){
         this.repo = repo;
         this.al = al;
+        this.maxNumberOfPassengers = al.getMaxNumberOfPassengers();
         this.allPassengersFinished = false;
         this.ate = ate;
+        this.passengersDTE = 0;
     }
 
     @Override
@@ -62,8 +69,12 @@ public class DepartureTerminalEntrance implements DTEPassenger {
         p.setPassengerState(PassengerStates.ENTERING_THE_DEPARTURE_TERMINAL);
         repo.setST(p.getID(), PassengerStates.ENTERING_THE_DEPARTURE_TERMINAL.getState());
 
+        passengersDTE++;
         al.updateFinishedPassenger();
-        this.allPassengersFinished = al.isFlightFinished();
+        this.allPassengersFinished = ((ate.getPassengersATE() + passengersDTE) == maxNumberOfPassengers);
+        if(allPassengersFinished) {
+            al.setFinishedFlight(allPassengersFinished);
+        }
 
         if(this.allPassengersFinished){
             notifyAll();
@@ -77,6 +88,10 @@ public class DepartureTerminalEntrance implements DTEPassenger {
             }
         }
         al.gonePassenger();
+        this.passengersDTE--;
+        if (passengersDTE == 0){
+            this.allPassengersFinished = false;
+        }
     }
 
     /**
@@ -90,5 +105,9 @@ public class DepartureTerminalEntrance implements DTEPassenger {
         if(this.allPassengersFinished){
             notifyAll();
         }
+    }
+
+    public int getPassengersDTE() {
+        return passengersDTE;
     }
 }
