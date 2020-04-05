@@ -70,7 +70,6 @@ public class DepartureTerminalEntrance implements DTEPassenger {
         repo.setST(p.getID(), PassengerStates.ENTERING_THE_DEPARTURE_TERMINAL.getState());
 
         passengersDTE++;
-        al.updateFinishedPassenger();
         this.allPassengersFinished = ((ate.getPassengersATE() + passengersDTE) == maxNumberOfPassengers);
         if(allPassengersFinished) {
             al.setFinishedFlight(true);
@@ -87,7 +86,6 @@ public class DepartureTerminalEntrance implements DTEPassenger {
                 System.out.println("prepareNextLeg - Interrupted Thread");
             }
         }
-        al.gonePassenger();
         this.passengersDTE--;
         if (passengersDTE == 0){
             this.allPassengersFinished = false;

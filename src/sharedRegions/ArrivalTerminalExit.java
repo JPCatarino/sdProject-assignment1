@@ -68,7 +68,6 @@ public class ArrivalTerminalExit implements ATEPassenger{
         repo.reportStatus();
 
         passengersATE++;
-        al.updateFinishedPassenger();
         this.allPassengersFinished = ((dte.getPassengersDTE() + passengersATE) == maxNumberOfPassengers);
         if(allPassengersFinished) {
             al.setFinishedFlight(true);
@@ -86,7 +85,6 @@ public class ArrivalTerminalExit implements ATEPassenger{
                 System.out.println("goHome - Interrupted Thread");
             }
         }
-        al.gonePassenger();
         this.passengersATE--;
         if (passengersATE == 0){
             this.allPassengersFinished = false;
