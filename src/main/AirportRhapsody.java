@@ -120,6 +120,8 @@ public class AirportRhapsody {
                 System.out.println(ex.getMessage());
                 System.exit(1);
             }
+            // check if porter has collected all baggage
+            while(arrivalLounge.ispWake() && i+1 != K_landings);
         }
 
         try {

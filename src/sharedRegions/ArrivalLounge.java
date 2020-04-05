@@ -242,4 +242,8 @@ public class ArrivalLounge implements ALPassenger, ALPorter {
     public void setFinishedFlight(boolean finishedFlight) {
         this.finishedFlight = finishedFlight;
     }
+
+    public boolean ispWake() {
+        return pWake;
+    }
 }
