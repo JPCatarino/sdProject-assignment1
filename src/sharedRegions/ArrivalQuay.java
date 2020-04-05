@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.concurrent.ArrayBlockingQueue;
 
 /**
  * Implementation of the Arrival Quay Shared Memory
@@ -34,7 +35,7 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
      *
      * @serialField  busWaitingLine
      */
-    private Queue<Integer> busWaitingLine;
+    private ArrayBlockingQueue<Integer> busWaitingLine;
 
     /**
      * Represents a parked bus, which the passengers board.
@@ -75,7 +76,7 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
         this.repo = repo;
         this.boardingTheBus = false;
         this.parkedBus = new ArrayList<>();
-        this.busWaitingLine = new LinkedList<>();
+        this.busWaitingLine = new ArrayBlockingQueue<>(6);
         this.maxNumberOfSeats = T_SEATS;
         this.al = al;
     }
@@ -170,19 +171,24 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
                 }
             }
 
-            if (busWaitingLine.peek() == p.getID() && parkedBus.size() != maxNumberOfSeats) {
-                sitOnTheBus();
-                notOnBoard = false;
-            } else {
+            try {
                 synchronized (this) {
-                    try {
-                        notifyAll();
-                        wait();
-                    } catch (InterruptedException ex) {
-                        System.err.println("Enter the bus- thread was interrupted");
+                    if (busWaitingLine.peek() == p.getID() && parkedBus.size() != maxNumberOfSeats) {
+                        sitOnTheBus();
+                        notOnBoard = false;
+                    } else {
+                        synchronized (this) {
+                            try {
+                                notifyAll();
+                                wait();
+                            } catch (InterruptedException ex) {
+                                System.err.println("Enter the bus- thread was interrupted");
+                            }
+                        }
                     }
                 }
             }
+            catch(NullPointerException ex){}
         }
 
         // TODO check this function
