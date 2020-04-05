@@ -71,7 +71,7 @@ public class ArrivalTerminalExit implements ATEPassenger{
         al.updateFinishedPassenger();
         this.allPassengersFinished = ((dte.getPassengersDTE() + passengersATE) == maxNumberOfPassengers);
         if(allPassengersFinished) {
-            al.setFinishedFlight(allPassengersFinished);
+            al.setFinishedFlight(true);
         }
         if(this.allPassengersFinished){
             notifyAll();

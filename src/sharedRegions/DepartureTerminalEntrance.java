@@ -73,7 +73,7 @@ public class DepartureTerminalEntrance implements DTEPassenger {
         al.updateFinishedPassenger();
         this.allPassengersFinished = ((ate.getPassengersATE() + passengersDTE) == maxNumberOfPassengers);
         if(allPassengersFinished) {
-            al.setFinishedFlight(allPassengersFinished);
+            al.setFinishedFlight(true);
         }
 
         if(this.allPassengersFinished){
