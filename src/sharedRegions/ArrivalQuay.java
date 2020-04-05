@@ -171,8 +171,8 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
                 }
             }
 
-            try {
-                synchronized (this) {
+            synchronized (this) {
+                try {
                     if (busWaitingLine.peek() == p.getID() && parkedBus.size() != maxNumberOfSeats) {
                         sitOnTheBus();
                         notOnBoard = false;
@@ -187,8 +187,9 @@ public class ArrivalQuay implements ATTQBusDriver, ATTQPassenger {
                         }
                     }
                 }
+                catch(NullPointerException ignored){
+                }
             }
-            catch(NullPointerException ex){}
         }
 
         // TODO check this function

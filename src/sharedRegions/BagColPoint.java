@@ -51,13 +51,6 @@ public class BagColPoint implements BCPPassenger, BCPPorter {
     private boolean bagsInTheConveyorBelt;
 
     /**
-     * Number of Passengers waiting for their baggage
-     *
-     * @serialField passengersHere
-     */
-    private int passengersHere;
-
-    /**
      * Constructor for the BagColPoint.
      *
      * @param repo General repository of information.
@@ -74,7 +67,6 @@ public class BagColPoint implements BCPPassenger, BCPPorter {
         p.setPassengerState(PassengerStates.AT_THE_LUGGAGE_COLLECTION_POINT);
         repo.setST(p.getID(), PassengerStates.AT_THE_LUGGAGE_COLLECTION_POINT.getState());
         repo.reportStatus();
-        passengersHere++;
 
         // While there's bags on the hold the passenger waits
         // If there's bags on the conveyor belt it tries to collect one with it's ID
@@ -100,7 +92,6 @@ public class BagColPoint implements BCPPassenger, BCPPorter {
                 }
             }
         }
-        passengersHere--;
     }
 
     @Override
@@ -123,9 +114,7 @@ public class BagColPoint implements BCPPassenger, BCPPorter {
      * @param noMoreBags True if there are no more bags in the plane hold or False otherwise.
      */
     public synchronized void setNoMoreBags(boolean noMoreBags) {
-        if(passengersHere > 0) {
             this.noMoreBags = noMoreBags;
-        }
     }
 
     /**
