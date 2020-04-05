@@ -106,7 +106,7 @@ public class AirportRhapsody {
             }
             arrivalLounge.setPlainBags(plainBags);
             repository.setBN(plainBags.size());
-            bagColPoint.setNoMoreBags(false);
+            bagColPoint.resetBagColPoint();
 
             for(int z = 0; z < flights[i].length; z++){
                 flights[i][z].start();
